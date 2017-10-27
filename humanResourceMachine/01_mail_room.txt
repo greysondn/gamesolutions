@@ -1,0 +1,30 @@
+-- HUMAN RESOURCE MACHINE PROGRAM --
+--
+-- Level: 01
+-- Name:  Mail Room
+--
+-- Size:
+-- Target: 6
+--
+-- Speed:
+-- Target: 6
+--
+-- In-game Description:
+-- Drag commands into this area
+-- to build a program.
+--
+-- Your program should tell your
+-- worker to grab each thing
+-- from the INBOX, and drop it
+-- into the OUTBOX.
+--
+-- Available Commands:
+-- INBOX
+-- OUTBOX
+
+    INBOX   
+    OUTBOX  
+    INBOX   
+    OUTBOX  
+    INBOX   
+    OUTBOX  
