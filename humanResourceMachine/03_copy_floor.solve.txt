@@ -1,0 +1,48 @@
+-- HUMAN RESOURCE MACHINE PROGRAM --
+--
+-- Level:   03
+-- Name:    Copy Floor
+-- Variant: Solve
+--
+-- Size:   8
+-- Target: 6
+--
+-- Speed:  8
+-- Target: 6
+--
+-- AVAILABLE COMMANDS:
+-- INBOX
+-- OUTBOX
+-- COPYFROM
+-- JUMP
+-- ?
+--
+-- PREFILLED TILES:
+-- [0] U
+-- [1] J
+-- [2] X
+-- [3] G
+-- [4] B
+-- [5] E
+--
+-- In-game Description:
+-- Ignore the INBOX for now, and
+-- just send the following 3
+-- letters to the OUTBOX:
+--
+-- B U G
+--
+-- The Facilities Management
+-- staff has placed some items
+-- over there on the carpet for
+-- you. If only there were a way
+-- you could pick them up...
+--
+    INBOX      -- what was I thinking?
+    COPYFROM 4
+    OUTBOX  
+    INBOX      -- again?
+    COPYFROM 0
+    OUTBOX  
+    COPYFROM 3
+    OUTBOX  
