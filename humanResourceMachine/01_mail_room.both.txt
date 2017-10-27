@@ -1,7 +1,8 @@
 -- HUMAN RESOURCE MACHINE PROGRAM --
 --
--- Level: 01
--- Name:  Mail Room
+-- Level:   01
+-- Name:    Mail Room
+-- Variant: Both
 --
 -- Size:   6
 -- Target: 6
