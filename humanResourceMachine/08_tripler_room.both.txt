@@ -1,0 +1,35 @@
+-- HUMAN RESOURCE MACHINE PROGRAM --
+--
+-- Level:   08
+-- Name:    Tripler Room
+-- Variant: Both
+--
+-- Size:   6
+-- Target: 6
+--
+-- Speed:  24
+-- Target: 24
+--
+-- AVAILABLE COMMANDS:
+-- INBOX
+-- OUTBOX
+-- COPYFROM
+-- COPYTO
+-- ADD
+-- JUMP
+-- 
+-- PREFILLED TILES:
+-- N/A
+--
+-- In-game Description:
+-- TODO
+--
+start:
+    INBOX   
+    COPYTO   0
+    ADD      0
+    ADD      0
+    OUTBOX  
+    JUMP     start
+
+
