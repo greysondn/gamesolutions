@@ -1,0 +1,32 @@
+-- HUMAN RESOURCE MACHINE PROGRAM --
+--
+-- Level:   07
+-- Name:    Zero Exterminator
+-- Variant: Both
+--
+-- Size:   4
+-- Target: 4
+--
+-- Speed:  23
+-- Target: 23
+--
+-- AVAILABLE COMMANDS:
+-- INBOX
+-- OUTBOX
+-- COPYFROM
+-- COPYTO
+-- ADD
+-- JUMP
+-- JUMPZ
+-- 
+-- PREFILLED TILES:
+-- N/A
+--
+-- In-game Description:
+-- TODO
+--
+start:
+    INBOX   
+    JUMPZ    start
+    OUTBOX  
+    JUMP     start
