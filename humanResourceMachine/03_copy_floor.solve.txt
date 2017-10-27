@@ -2,12 +2,12 @@
 --
 -- Level:   03
 -- Name:    Copy Floor
--- Variant: Solve
+-- Variant: Both
 --
--- Size:   8
+-- Size:   6
 -- Target: 6
 --
--- Speed:  8
+-- Speed:  6
 -- Target: 6
 --
 -- AVAILABLE COMMANDS:
@@ -38,10 +38,8 @@
 -- you. If only there were a way
 -- you could pick them up...
 --
-    INBOX      -- what was I thinking?
     COPYFROM 4
     OUTBOX  
-    INBOX      -- again?
     COPYFROM 0
     OUTBOX  
     COPYFROM 3
