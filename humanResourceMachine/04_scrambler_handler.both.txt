@@ -1,0 +1,43 @@
+-- HUMAN RESOURCE MACHINE PROGRAM --
+--
+-- Level:   04
+-- Name:    Scrambler Handler
+-- Variant: Both
+--
+-- Size:   7
+-- Target: 7
+--
+-- Speed:  21
+-- Target: 21
+--
+-- AVAILABLE COMMANDS:
+-- INBOX
+-- OUTBOX
+-- COPYFROM
+-- COPYTO
+-- JUMP
+-- ?
+--
+-- PREFILLED TILES:
+-- N/A
+--
+-- In-game Description:
+-- Grab the first TWO things from
+-- the INBOX and drop them into
+-- the OUTBOX in the reverse
+-- order. Repeat until the INBOX
+-- is empty.
+--
+-- You got a new command! Feel
+-- free to COPYTO wherever you
+-- like on the carpet. It will be
+-- cleaned later.
+--
+start:
+    INBOX   
+    COPYTO   0
+    INBOX   
+    OUTBOX  
+    COPYFROM 0
+    OUTBOX  
+    JUMP     start
