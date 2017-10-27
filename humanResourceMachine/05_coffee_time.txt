@@ -1,0 +1,26 @@
+-- HUMAN RESOURCE MACHINE PROGRAM --
+--
+-- Level:   05
+-- Name:    Coffee Time
+-- Variant: N/A
+--
+-- Size:   N/A
+-- Target: N/A
+--
+-- Speed:  N/A
+-- Target: N/A
+--
+-- AVAILABLE COMMANDS:
+-- N/A
+--
+-- PREFILLED TILES:
+-- N/A
+--
+-- In-game Description:
+-- N/A
+--
+
+-- This is actually an animation in game.
+--
+-- Spoiler alert:
+-- https://www.youtube.com/watch?v=sBdRRMyrHAI
