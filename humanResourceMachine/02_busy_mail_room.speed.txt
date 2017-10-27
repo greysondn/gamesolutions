@@ -1,0 +1,55 @@
+-- HUMAN RESOURCE MACHINE PROGRAM --
+--
+-- Level:   02
+-- Name:    Busy Mail Room
+-- Variant: Speed
+--
+-- Size:   24
+-- Target:  3
+--
+-- Speed:  20
+-- Target: 25
+--
+-- AVAILABLE COMMANDS:
+-- INBOX
+-- OUTBOX
+-- JUMP
+--
+-- In-game Description:
+-- Grab each thing from the
+-- INBOX, and drop each one into
+-- the OUTBOX.
+--
+-- You got a new command! You
+-- can drag JUMP's arrow to
+-- jump to different lines within
+-- your program.
+--
+-- With this new ability, you can
+-- complete this assignment
+-- using only 3 total commands.
+
+    INBOX   
+    OUTBOX  
+    INBOX   
+    OUTBOX  
+    INBOX   
+    OUTBOX  
+    INBOX   
+    OUTBOX  
+    INBOX   
+    OUTBOX  
+    INBOX   
+    OUTBOX  
+    INBOX   
+    OUTBOX  
+    INBOX   
+    OUTBOX  
+    INBOX   
+    OUTBOX  
+    INBOX   
+    OUTBOX  
+    INBOX   
+    OUTBOX  
+    INBOX   
+    OUTBOX  
