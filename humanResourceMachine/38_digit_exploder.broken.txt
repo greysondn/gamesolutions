@@ -35,20 +35,24 @@
 -- to the OUTBOX. For example,
 -- 123 becomes 1, 2, 3.
 --
-    -- initialize
-    INBOX   
-    COPYTO   0
-    COPYTO   8
-    COPYFROM 9
-    COPYTO   5
-    COPYTO   4
-    COPYTO   3
-    COPYTO   7
-    COPYTO   6
-    -- count hundreds
-a:
-    SUB      5
-    JUMPN    b
-    BUMPUP   5
-    JUMP     a
-b:
+    -- some notes to help here
+    
+    -- some tiles have special meanings
+    -- tile  4 - swap           ( swap)
+    -- tile  6 - ones count     (  ct1)
+    -- tile  7 - tens count     ( ct10)
+    -- tile  8 - hundreds count (ct100)
+    -- tile  9 - CONST   0      (    0)
+    -- tile 10 - CONST  10      (   10)
+    -- tile 11 - CONST 100      (  100)
+    
+start:
+    -- initialization
+    COPYFROM 9         -- hands = 0;
+    COPYTO   8         -- ct100 = hands;
+    COPYTO   7         -- ct10  = hands;
+    COPYTO   6         -- ct1   = hands;
+    INBOX              -- hands = in();
+    COPYTO   4         -- swap  = hands;
+    -- end loop
+    JUMP start
