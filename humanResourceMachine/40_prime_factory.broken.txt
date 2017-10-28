@@ -1,0 +1,86 @@
+-- HUMAN RESOURCE MACHINE PROGRAM --
+--
+-- Level:   40
+-- Name:    Prime Factory
+-- Variant: Broken
+--
+-- Size:   N/A
+-- Target:  28
+--
+-- Speed:  N/A
+-- Target: 399
+--
+-- AVAILABLE COMMANDS:
+-- INBOX
+-- OUTBOX
+-- COPYFROM
+-- COPYTO
+-- ADD
+-- SUB
+-- BUMPUP
+-- BUMPDN
+-- JUMP
+-- JUMPZ
+-- JUMPN
+-- COMMENT
+-- 
+-- PREFILLED TILES:
+-- [24] 0
+--
+-- In-game Description:
+-- For each thing in the INBOX,
+-- send its PRIME FACTORS to the
+-- OUTBOX in order from
+-- smallest to largest.
+--
+    -- some notes to help here
+    
+    -- some tiles have special meanings
+    -- tile 20 - copy of input          (iCopy)
+    -- tile 21 - end of factor list     (flEnd)
+    -- tile 22 - factor counter         ( fact)
+    -- tile 23 - RTCONST  2             (    2)
+    -- tile 24 - CONST    0             (    0)
+    
+    -- set up RTCONST
+    COPYFROM 24                 -- hands = 0;
+    COPYTO   23                 -- t[23] = 0;
+    BUMPUP   23                 -- t[23]++;
+    BUMPUP   23                 -- t[23]++;
+
+    -- start    
+start:
+    -- set first factor at 2
+    COPYFROM 23                 -- hands = 2;
+    COPYTO   22                 -- fact  = hands;
+    
+    -- set valid factor endpoint at 0
+    COPYFROM 24                 -- hands = 0;
+    COPYTO   21                 -- flEnd = hands;
+    
+    -- get input
+    INBOX                       -- hands = in();
+    COPYTO   20                 -- iCopy = hands;
+    
+    -- hands has a copy of the input, saves one instruction
+tryfactor:
+    -- right, to try a factor, we just keep subtracting it.
+    -- until we hit zero or a negative number so this is boring
+    SUB 22                       -- hands = hands - fact;
+    JUMPN donefact               -- if (hands M 0) {goto donefact;}
+procfact:                        
+    JUMPN nextfactor             -- if (hands < 0) {goto nextfactor;}
+    JUMPZ goodfactor             -- if (hands = 0) {goto goodfactor;}
+    SUB 22                       -- hands = hands - fact;
+    JUMP procfact                -- goto procfact;
+goodfactor:
+    COPYFROM  22                 -- hands = fact
+    COPYTO   [21]                -- tile[flEnd] = hands;
+    BUMPUP    21                 -- flEnd++;
+nextfactor:
+    BUMPUP 22
+    COPYFROM 20
+    JUMP tryfactor
+donefact:
+    -- end loop
+    JUMP start
