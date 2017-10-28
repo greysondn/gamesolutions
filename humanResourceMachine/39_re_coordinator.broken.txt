@@ -1,0 +1,46 @@
+-- HUMAN RESOURCE MACHINE PROGRAM --
+--
+-- Level:   39
+-- Name:    Re-Coordinator
+-- Variant: Broken
+--
+-- Size:   N/A
+-- Target:  14
+--
+-- Speed:  N/A
+-- Target:  76
+--
+-- AVAILABLE COMMANDS:
+-- INBOX
+-- OUTBOX
+-- COPYFROM
+-- COPYTO
+-- ADD
+-- SUB
+-- BUMPUP
+-- BUMPDN
+-- JUMP
+-- JUMPZ
+-- JUMPN
+-- COMMENT
+-- 
+-- PREFILLED TILES:
+-- [14] 0
+-- [15] 4
+--
+-- In-game Description:
+-- todo
+--
+    -- some notes to help here
+    
+    -- some tiles have special meanings
+    -- tile 11 - copy of input          (iCopy)
+    -- tile 12 - MOD result             (  mod)
+    -- tile 13 - DIV result             (  div)
+    -- tile 14 - CONST    0             (    0)
+    -- tile 15 - CONST    4             (    4)
+    
+    -- start    
+start:
+    -- end loop
+    JUMP start
