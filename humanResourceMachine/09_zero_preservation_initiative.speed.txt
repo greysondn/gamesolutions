@@ -1,0 +1,37 @@
+-- HUMAN RESOURCE MACHINE PROGRAM --
+--
+-- Level:   09
+-- Name:    Zero Preservation Initiative
+-- Variant: Speed
+--
+-- Size:   7
+-- Target: 5
+--
+-- Speed:  25
+-- Target: 25
+--
+-- AVAILABLE COMMANDS:
+-- INBOX
+-- OUTBOX
+-- COPYFROM
+-- COPYTO
+-- ADD
+-- JUMP
+-- JUMPZ
+-- 
+-- PREFILLED TILES:
+-- N/A
+--
+-- In-game Description:
+-- Send only the ZEROs to the
+-- OUTBOX
+--
+start:
+    INBOX   
+    JUMPZ    output
+    INBOX
+    JUMPZ    output
+    JUMP     start
+output:
+    OUTBOX  
+    JUMP     start
