@@ -1,0 +1,65 @@
+-- HUMAN RESOURCE MACHINE PROGRAM --
+--
+-- Level:   11
+-- Name:    Sub Hallway
+-- Variant: Both
+--
+-- Size:   10
+-- Target: 10
+--
+-- Speed:  40
+-- Target: 40
+--
+-- AVAILABLE COMMANDS:
+-- INBOX
+-- OUTBOX
+-- COPYFROM
+-- COPYTO
+-- ADD
+-- SUB
+-- JUMP
+-- JUMPZ
+-- 
+-- PREFILLED TILES:
+-- N/A
+--
+-- In-game Description:
+-- For each two things in the
+-- INBOX, first subtract the 1st
+-- from the 2nd and put the
+-- result in the OUTBOX. AND
+-- THEN, subtract the 2nd from
+-- the 1st and put the result in
+-- the OUTBOX. Repeat.
+--
+-- You got a new command!
+-- SUBtracts the contents of a tile
+-- on the floor FROM whatever
+-- value you're currently holding.
+--
+    -- let's say that has the form of in(a, b)
+    --                                out c (where c = b - a)
+    --                                out d (where d = a - b)
+start:
+    -- in(a, b)
+    INBOX        -- in a
+    COPYTO   0   -- store a in 0
+    INBOX        -- in b
+    COPYTO   1   -- store b in 0
+    -- out c
+    SUB      0 -- hands now have c (b - a)
+    OUTBOX     -- out c
+    -- out d
+    COPYFROM 0 -- put a in hands
+    SUB      1 -- hands now have d (a - b)
+    OUTBOX     -- out d
+    -- repeat
+    JUMP     start
+    --
+    -- This one stumped me, I recall, because I wanted to solve it as
+    -- an in-place swap. I couldn't solve it that way, which makes me
+    -- sad, but I did get a double-optimized solution, which is always
+    -- good, at least in terms of the game.
+    --
+    -- Astute observers will notice that my desired solution is
+    -- impossible because your hands empty on output.
