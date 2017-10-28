@@ -1,0 +1,53 @@
+-- HUMAN RESOURCE MACHINE PROGRAM --
+--
+-- Level:   10
+-- Name:    Octoplier Suite
+-- Variant: Both
+--
+-- Size:   9
+-- Target: 9
+--
+-- Speed:  36
+-- Target: 36
+--
+-- AVAILABLE COMMANDS:
+-- INBOX
+-- OUTBOX
+-- COPYFROM
+-- COPYTO
+-- ADD
+-- JUMP
+-- 
+-- PREFILLED TILES:
+-- N/A
+--
+-- In-game Description:
+-- For each thing in the INBOX,
+-- multiply it by 8, and put the
+-- result in the OUTBOX.
+--
+-- Using a bunch of ADD
+-- commands is easy, but
+-- WASTEFUL! Can you do it using
+-- only 3 ADD commands?
+-- Management is watching.
+--
+start:
+    INBOX   
+    COPYTO   0
+    -- 1 ADD --> 1X + 1X = 2X
+    ADD      0
+    COPYTO   1
+    -- 2 ADD --> 2X + 2X = 4X
+    ADD      1 
+    COPYTO   2
+    -- 3 ADD --> 4X + 4X = 8X
+    ADD      2
+    OUTBOX
+    --
+    -- I'm not sure if their speed and size optimizations are checking
+    -- for precisely the solution mentioned in the description - this
+    -- one, probably - but I did want to point out I fulfilled it,
+    -- too. Why? Because extra cheese is the best cheese.
+    --
+    JUMP     start
