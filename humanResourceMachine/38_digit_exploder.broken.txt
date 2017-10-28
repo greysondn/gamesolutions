@@ -2,12 +2,12 @@
 --
 -- Level:   38
 -- Name:    Digit Exploder
--- Variant: Broken
+-- Variant: Solve
 --
--- Size:   N/A
+-- Size:   34
 -- Target: 30
 --
--- Speed:  N/A
+-- Speed:  228
 -- Target: 165
 --
 -- AVAILABLE COMMANDS:
@@ -81,11 +81,25 @@ tencleanup:
     -- we're holding them
     COPYTO    6                 -- ct1 = hands;
     
-    -- output
+    -- output hundreds
     COPYFROM  8                 -- hands = ct100;
+    JUMPZ    outten             -- if (hands == 0){goto outten;}
     OUTBOX                      -- out();
+    
+    -- output tens
+outten:
     COPYFROM  7                 -- hands = ct10;
+    JUMPZ    tenzero            -- if (hands == 0) {goto tenzero;)
+    JUMP     tenneedsout         -- goto tennonzero;
+tenzero:
+    SUB      8                  -- hands = hands - ct100;
+    JUMPZ    outone             -- if (hands == 0) {goto outone;}
+    COPYFROM 7                  -- hands = ct10;
+tenneedsout:
     OUTBOX                      -- out();
+    
+    -- output ones
+outone:
     COPYFROM  6                 -- hands = ct1;
     OUTBOX                      -- out();
     
