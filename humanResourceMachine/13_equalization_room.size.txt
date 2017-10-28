@@ -1,0 +1,49 @@
+-- HUMAN RESOURCE MACHINE PROGRAM --
+--
+-- Level:   13
+-- Name:    Equalization Room
+-- Variant: Size
+--
+-- Size:   9
+-- Target: 9
+--
+-- Speed:  28
+-- Target: 27
+--
+-- AVAILABLE COMMANDS:
+-- INBOX
+-- OUTBOX
+-- COPYFROM
+-- COPYTO
+-- ADD
+-- SUB
+-- JUMP
+-- JUMPZ
+-- COMMENT
+-- 
+-- PREFILLED TILES:
+-- N/A
+--
+-- In-game Description:
+-- Get two things from the
+-- INBOX. If they are EQUAL, put
+-- ONE of them in the OUTBOX.
+-- Discard non-equal pairs.
+-- Repeat!
+--
+-- You got... COMMENTS! You
+-- can use them, if you like, to
+-- mark sections of your
+-- program.
+--
+start:
+    INBOX   
+    COPYTO   0
+    INBOX   
+    SUB      0
+    JUMPZ    output
+    JUMP     start
+output:
+    COPYFROM 0
+    OUTBOX  
+    JUMP     start
