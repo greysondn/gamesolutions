@@ -1,0 +1,45 @@
+-- HUMAN RESOURCE MACHINE PROGRAM --
+--
+-- Level:   12
+-- Name:    Tetracontiplier
+-- Variant: Both
+--
+-- Size:   14
+-- Target: 14
+--
+-- Speed:  56
+-- Target: 56
+--
+-- AVAILABLE COMMANDS:
+-- INBOX
+-- OUTBOX
+-- COPYFROM
+-- COPYTO
+-- ADD
+-- JUMP
+-- 
+-- PREFILLED TILES:
+-- N/A
+--
+-- In-game Description:
+-- For each thing in the INBOX,
+-- multiply it by 40, and put the
+-- result in the OUTBOX
+--
+start:
+    -- I'll trace the hands for you
+    --           -- NULL
+    INBOX        -- 1X
+    COPYTO   0   -- PUT 0 (1X)
+    ADD      0   -- 2X
+    COPYTO   1   -- PUT 1 (2X)
+    ADD      1   -- 4X
+    COPYTO   2   -- PUT 2 (4X)
+    ADD      2   -- 8X
+    COPYTO   3   -- PUT 3 (8X)
+    ADD      3   -- 16X
+    ADD      3   -- 24X
+    ADD      3   -- 32X
+    ADD      3   -- 40X
+    OUTBOX       -- NULL
+    JUMP     start
