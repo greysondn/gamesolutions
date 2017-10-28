@@ -48,23 +48,25 @@
     
 start:
     -- initialization
-    COPYFROM  9               -- hands = 0;
-    COPYTO    8               -- ct100 = hands;
-    COPYTO    7               -- ct10  = hands;
-    COPYTO    6               -- ct1   = hands;
-    INBOX                     -- hands = in();
-    COPYTO    4               -- swap  = hands;
+    COPYFROM  9                 -- hands = 0;
+    COPYTO    8                 -- ct100 = hands;
+    COPYTO    7                 -- ct10  = hands;
+    COPYTO    6                 -- ct1   = hands;
+    INBOX                       -- hands = in();
+    COPYTO    4                 -- swap  = hands;
     
     -- count hundreds
 hundred:
-    SUB      11               -- hands = hands - 100;
-    JUMPN    hundredcleanup   -- if (hands < 0){goto hundredcleanup;}
-    COPYTO    4               -- swap = hands;
-    BUMPUP    8               -- ct100++; hands = ct100;
-    COPYFROM  4               -- hands = swap;
-    JUMP      hundred         -- goto hundred;
+    SUB      11                 -- hands = hands - 100;
+    JUMPN    hundredcleanup     -- if (hands < 0){goto hundredcleanup;}
+    COPYTO    4                 -- swap = hands;
+    BUMPUP    8                 -- ct100++; hands = ct100;
+    COPYFROM  4                 -- hands = swap;
+    JUMP     hundred            -- goto hundred;
 hundredcleanup:
-    ADD      11               -- hands = hands + 100;
+    ADD      11                 -- hands = hands + 100;
+
+    -- count tens
     
     -- end loop
     JUMP start
