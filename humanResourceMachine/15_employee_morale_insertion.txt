@@ -1,0 +1,26 @@
+-- HUMAN RESOURCE MACHINE PROGRAM --
+--
+-- Level:   15
+-- Name:    Employee Morale Insertion
+-- Variant: N/A
+--
+-- Size:   N/A
+-- Target: N/A
+--
+-- Speed:  N/A
+-- Target: N/A
+--
+-- AVAILABLE COMMANDS:
+-- N/A
+--
+-- PREFILLED TILES:
+-- N/A
+--
+-- In-game Description:
+-- N/A
+--
+
+-- This is actually an animation in game.
+--
+-- Spoiler alert:
+-- ... actually, I've not located this animation online yet...
