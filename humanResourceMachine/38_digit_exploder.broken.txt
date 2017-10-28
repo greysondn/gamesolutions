@@ -67,6 +67,27 @@ hundredcleanup:
     ADD      11                 -- hands = hands + 100;
 
     -- count tens
+ten:
+    SUB      10                 -- hands = hands - 10;
+    JUMPN    tencleanup         -- if (hands < 0){goto hundredcleanup;}
+    COPYTO    4                 -- swap = hands;
+    BUMPUP    7                 -- ct10++; hands = ct10;
+    COPYFROM  4                 -- hands = swap;
+    JUMP     ten
+tencleanup:
+    ADD      10                 -- hands = hands + 10;
+    
+    -- count ones
+    -- we're holding them
+    COPYTO    6                 -- ct1 = hands;
+    
+    -- output
+    COPYFROM  8                 -- hands = ct100;
+    OUTBOX                      -- out();
+    COPYFROM  7                 -- hands = ct10;
+    OUTBOX                      -- out();
+    COPYFROM  6                 -- hands = ct1;
+    OUTBOX                      -- out();
     
     -- end loop
     JUMP start
