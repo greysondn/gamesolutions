@@ -23,7 +23,8 @@
 -- N/A
 --
 -- In-game Description:
--- TODO
+-- Send only the ZEROs to the
+-- OUTBOX
 --
 start:
     INBOX   
