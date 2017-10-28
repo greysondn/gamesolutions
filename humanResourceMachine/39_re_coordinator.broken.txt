@@ -2,12 +2,12 @@
 --
 -- Level:   39
 -- Name:    Re-Coordinator
--- Variant: Broken
+-- Variant: Solve
 --
--- Size:   N/A
+-- Size:    19
 -- Target:  14
 --
--- Speed:  N/A
+-- Speed:   95
 -- Target:  76
 --
 -- AVAILABLE COMMANDS:
@@ -42,5 +42,34 @@
     
     -- start    
 start:
+    COPYFROM 14
+    COPYTO   13
+    COPYTO   12
+    INBOX
+    COPYTO   11
+    
+    -- div
+divstart:
+    SUB 15
+    JUMPN divend
+    COPYTO 10
+    BUMPUP 13
+    COPYFROM 10
+    JUMPZ output
+    JUMP divstart
+divend:
+    ADD 15
+    
+    -- mod
+mod:
+    COPYTO 12
+    
+    -- output
+output:
+    COPYFROM 12
+    OUTBOX
+    COPYFROM 13
+    OUTBOX
+    
     -- end loop
     JUMP start
