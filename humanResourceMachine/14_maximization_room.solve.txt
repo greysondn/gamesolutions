@@ -2,12 +2,12 @@
 --
 -- Level:   14
 -- Name:    Maximization Room
--- Variant: Solve
+-- Variant: Both
 --
--- Size:   11
+-- Size:   10
 -- Target: 10
 --
--- Speed:  38
+-- Speed:  34
 -- Target: 34
 --
 -- AVAILABLE COMMANDS:
@@ -42,10 +42,9 @@ start:
     INBOX   
     COPYTO   0
     INBOX   
-    COPYTO   1
     SUB      0
     JUMPN    firstlarger
-    COPYFROM 1
+    ADD      0
     JUMP     output
 firstlarger:
     COPYFROM 0
