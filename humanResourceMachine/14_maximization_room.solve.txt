@@ -1,0 +1,54 @@
+-- HUMAN RESOURCE MACHINE PROGRAM --
+--
+-- Level:   14
+-- Name:    Maximization Room
+-- Variant: Solve
+--
+-- Size:   11
+-- Target: 10
+--
+-- Speed:  38
+-- Target: 34
+--
+-- AVAILABLE COMMANDS:
+-- INBOX
+-- OUTBOX
+-- COPYFROM
+-- COPYTO
+-- ADD
+-- SUB
+-- JUMP
+-- JUMPZ
+-- JUMPN
+-- COMMENT
+-- 
+-- PREFILLED TILES:
+-- N/A
+--
+-- In-game Description:
+-- Grab TWO things from the
+-- INBOX, and put only the
+-- BIGGER of the two in the
+-- OUTBOX. If they are equal, just
+-- pick either one. Repeat!
+--
+-- You got a new command!
+-- Jumps only if the thing you're
+-- holding is negative. (Less than
+-- zero.) Otherwise continues to
+-- the next line.
+--
+start:
+    INBOX   
+    COPYTO   0
+    INBOX   
+    COPYTO   1
+    SUB      0
+    JUMPN    firstlarger
+    COPYFROM 1
+    JUMP     output
+firstlarger:
+    COPYFROM 0
+output:
+    OUTBOX  
+    JUMP     start
