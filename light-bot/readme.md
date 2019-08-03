@@ -57,4 +57,4 @@ Func 2:
 This Folder
 -----------
 
-I've written these as basic text files. So enjoy!
+I've written these as basic markdown files. So enjoy!
