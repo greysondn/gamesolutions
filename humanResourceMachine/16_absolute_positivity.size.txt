@@ -2,12 +2,12 @@
 --
 -- Level:   16
 -- Name:    Absolute Positivity
--- Variant: Size
+-- Variant: Both
 --
 -- Size:   8
 -- Target: 8
 --
--- Speed:  48
+-- Speed:  34
 -- Target: 36
 --
 -- AVAILABLE COMMANDS:
@@ -19,17 +19,14 @@
 -- In-game Description:
 -- TODO
 --
-start:
-    INBOX   
-b:
-    JUMPN    c
-    OUTBOX  
     JUMP     start
-c:
+negative:
     COPYTO   0
-d:
     SUB      0
-    JUMPZ    d
-    JUMP     b
-
-
+    SUB      0
+output:
+    OUTBOX
+start:
+    INBOX
+    JUMPN    negative
+    JUMP     output
