@@ -1,6 +1,32 @@
 -- HUMAN RESOURCE MACHINE PROGRAM --
-
-a:
+--
+-- Level:   17
+-- Name:    Exclusive Loungue
+-- Variant: Solve
+--
+-- Size:   16
+-- Target: 12
+--
+-- Speed:  32
+-- Target: 28
+--
+-- AVAILABLE COMMANDS:
+-- INBOX
+-- OUTBOX
+-- COPYFROM
+-- COPYTO
+-- JUMP
+-- JUMPZ
+-- JUMPN
+-- ?
+--
+-- PREFILLED TILES:
+-- N/A
+--
+-- In-game Description:
+-- TODO
+--
+start:
     INBOX   
     JUMPN    c
     COMMENT  4
@@ -8,29 +34,26 @@ a:
     JUMPN    b
     COMMENT  5
     COPYFROM 4
-    JUMP     e
+    JUMP     output
 b:
     COMMENT  6
     COPYFROM 5
-    JUMP     g
+    JUMP     output
 c:
     COMMENT  1
     INBOX   
     JUMPN    d
     COMMENT  3
     COPYFROM 5
-    JUMP     f
+    JUMP     output
 d:
     COMMENT  2
     COPYFROM 4
-    JUMP     h
+    JUMP     output
     COMMENT  0
-e:
-f:
-g:
-h:
+output:
     OUTBOX  
-    JUMP     a
+    JUMP     start
 
 -- lovely and actually legible comments done using
 -- http://hrm-labelgen.appspot.com/advanced.jsp
