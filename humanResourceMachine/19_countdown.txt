@@ -1,4 +1,26 @@
 -- HUMAN RESOURCE MACHINE PROGRAM --
+--
+-- Level:   19
+-- Name:    Countdown
+-- Variant: Solve
+--
+-- Size:   13
+-- Target: 10
+--
+-- Speed:  87
+-- Target: 82
+--
+-- AVAILABLE COMMANDS:
+-- TODO
+--
+-- PREFILLED TILES:
+-- N/A
+--
+-- In-game Description:
+-- TODO
+--
+
+-- HUMAN RESOURCE MACHINE PROGRAM --
 
 a:
     INBOX   
