@@ -1,0 +1,72 @@
+-- HUMAN RESOURCE MACHINE PROGRAM --
+--
+-- Level:   17
+-- Name:    Exclusive Loungue
+-- Variant: Queen of Innefficiency
+--
+-- Size:   23
+-- Target: 12
+--
+-- Speed:  116
+-- Target: 28
+--
+-- AVAILABLE COMMANDS:
+-- INBOX
+-- OUTBOX
+-- COPYFROM
+-- COPYTO
+-- JUMP
+-- JUMPZ
+-- JUMPN
+-- ?
+--
+-- PREFILLED TILES:
+-- N/A
+--
+-- In-game Description:
+-- TODO
+--
+-- Aside:
+-- Queen of Innefficiency is an achievement ingame.
+-- As you might imagine, it's not a compliment.
+-- However, this may be useful for those struggling
+-- to find a way to get it.
+--
+
+init:
+    COPYFROM 5
+    COPYTO   3
+
+-- figure a numbers itself out
+loopStart:
+    INBOX
+    JUMPN    negative
+positive:
+    COPYFROM 4
+    JUMP     loopEnd
+negative:
+    COPYFROM 5
+loopEnd:
+    -- swap
+    COPYTO   0
+
+    -- decide if we need to loop again or what
+    COPYFROM  3
+    SUB       3
+    SUB       3
+    COPYTO    3
+    
+    JUMPN     again
+    JUMP      decide
+again:
+    COPYFROM 0
+    COPYTO   1
+    JUMP     loopStart
+decide:
+    COPYFROM 0
+    SUB      1
+    JUMPZ    output
+    COPYFROM 5
+output:
+    OUTBOX
+    JUMP loopStart
