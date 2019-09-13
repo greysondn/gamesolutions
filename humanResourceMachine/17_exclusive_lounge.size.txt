@@ -2,7 +2,7 @@
 --
 -- Level:   17
 -- Name:    Exclusive Loungue
--- Variant: Solve
+-- Variant: Size
 --
 -- Size:   11
 -- Target: 12
