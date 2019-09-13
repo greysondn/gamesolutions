@@ -2,12 +2,12 @@
 --
 -- Level:   17
 -- Name:    Exclusive Loungue
--- Variant: Size
+-- Variant: Both
 --
 -- Size:   11
 -- Target: 12
 --
--- Speed:  29
+-- Speed:  26
 -- Target: 28
 --
 -- AVAILABLE COMMANDS:
@@ -27,6 +27,15 @@
 -- TODO
 --
 
+-- appears we all converged on this solution, sadly.
+    JUMP     start
+firstNegative:
+    INBOX
+    JUMPN    match
+mismatch:
+    COPYFROM 5
+output:
+    OUTBOX
 start:
     INBOX
     JUMPN    firstNegative
@@ -35,11 +44,3 @@ start:
 match:
     COPYFROM 4
     JUMP     output
-firstNegative:
-    INBOX
-    JUMPN    match
-mismatch:
-    COPYFROM 5
-output:
-    OUTBOX
-    JUMP     start
