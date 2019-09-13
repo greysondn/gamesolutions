@@ -7,7 +7,7 @@
 -- Size:   16
 -- Target: 12
 --
--- Speed:  32
+-- Speed:  50
 -- Target: 28
 --
 -- AVAILABLE COMMANDS:
@@ -26,63 +26,35 @@
 -- In-game Description:
 -- TODO
 --
-start:
-    INBOX   
-    JUMPN    c
-    COMMENT  4
-    INBOX   
-    JUMPN    b
-    COMMENT  5
+
+-- figure the numbers themselves out
+firstStart:
+    INBOX
+    JUMPN    firstNegative
+firstPositive:
     COPYFROM 4
-    JUMP     output
-b:
-    COMMENT  6
+    JUMP     firstEnd
+firstNegative:
     COPYFROM 5
-    JUMP     output
-c:
-    COMMENT  1
-    INBOX   
-    JUMPN    d
-    COMMENT  3
-    COPYFROM 5
-    JUMP     output
-d:
-    COMMENT  2
+firstEnd:
+    COPYTO   2
+
+secondStart:
+    INBOX
+    JUMPN    secondNegative
+secondPositive:
     COPYFROM 4
-    JUMP     output
-    COMMENT  0
+    JUMP     secondEnd
+secondNegative:
+    COPYFROM 5
+secondEnd:
+
+-- now figure out if they shared a sign
+    SUB      2
+    JUMPZ    output
+    COPYFROM 5
+
+-- and output
 output:
-    OUTBOX  
-    JUMP     start
-
--- lovely and actually legible comments done using
--- http://hrm-labelgen.appspot.com/advanced.jsp
-
-DEFINE COMMENT 0
-eJztjCEOAjEQRUdUriyusoogVzYBUYFArEBWVqFXIlciwVUgVpBVHICEU3AJNBLBm6S3YH/y8qf/T2cj
-yIwHMfuFWHC3pdjvWgyoOzpVoPMKWQvqni7UPuKRviNPeKp5s7uIBXedxG1fYstbGjDMhkx7lcc92Yqu
-hcAcahfxBJ1Cp8p45t3DkTv95ykZVAPZwP8TO2cozKXeGvEH3JV6a9asP9YPm6hKOQ;
-
-DEFINE COMMENT 1
-eJyTYgACliVZDCwhogwiQCyzQotB5I89AwsQg2gZoBwI2ADlVEAYKGYCxCBaBShnA5V3AdIuQPkAoHgM
-kI6BinN82c8gAcSjYBSMgkEJAGUEGSY;
-
-DEFINE COMMENT 2
-eJyTZQACliVZDCwhogwiQCyzQotB5I89AwsQg2gZoBwI2ADlVEAYKGYCxCBaBShnA5V3AdIuQPkAoHgM
-kI6BinN82c8gAcQg4AGkI6DsUTAKRsGgAADWXB0v;
-
-DEFINE COMMENT 3
-eJxTYAACliVZDCwhogwiQCyzQotB5I89AwsQg2gZoBwI2ADlVEAYKGYCxCBaBShnA5V3AdIuQPkAoHgM
-kI6BinN82c8gAcQg4AGkI6DsgAWrGAI8rjKMglEwCgYUAACTQCA5;
-
-DEFINE COMMENT 4
-eJyTZQACliVZDCwhogwiQCyzQotB5I89AwsQg2gZoBwI2ADlVEAYKGYCxCBaBShnA5V3AdIuQPkAoHgM
-kI6BinN82c8gAcQgILBgFYOAx1WGUTAKRsGgAQB7nhuw;
-
-DEFINE COMMENT 5
-eJxTZgACliVZDCwhogwiQCyzQotB5I89AwsQg2gZoBwI2ADlVEAYKGYCxCBaBShnA5V3AdIuQPkAoHgM
-kI6BinN82c8gAcQgILBgFYOAx1Uw2wMoFgEVDwCKB0DFR8EoGAV0BQBVPiLD;
-
-DEFINE COMMENT 6
-eJxTYAACliVZDCwhogwiQCyzQotB5I89AwsQg2gZoBwI2ADlVEAYKGYCxCBaBShnA5V3AdIuQPkAoHgM
-kI6BinN82c8gAcQgILBgFYOAx1Uw2wMoFgEVHwWjYBQMGAAAvK4fuQ;
+    OUTBOX
+    JUMP     firstStart
