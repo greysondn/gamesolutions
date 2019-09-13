@@ -4,10 +4,10 @@
 -- Name:    Exclusive Loungue
 -- Variant: Solve
 --
--- Size:   16
+-- Size:   11
 -- Target: 12
 --
--- Speed:  50
+-- Speed:  29
 -- Target: 28
 --
 -- AVAILABLE COMMANDS:
@@ -27,34 +27,19 @@
 -- TODO
 --
 
--- figure the numbers themselves out
-firstStart:
+start:
     INBOX
     JUMPN    firstNegative
-firstPositive:
-    COPYFROM 4
-    JUMP     firstEnd
-firstNegative:
-    COPYFROM 5
-firstEnd:
-    COPYTO   2
-
-secondStart:
     INBOX
-    JUMPN    secondNegative
-secondPositive:
+    JUMPN    mismatch
+match:
     COPYFROM 4
-    JUMP     secondEnd
-secondNegative:
+    JUMP     output
+firstNegative:
+    INBOX
+    JUMPN    match
+mismatch:
     COPYFROM 5
-secondEnd:
-
--- now figure out if they shared a sign
-    SUB      2
-    JUMPZ    output
-    COPYFROM 5
-
--- and output
 output:
     OUTBOX
-    JUMP     firstStart
+    JUMP     start
