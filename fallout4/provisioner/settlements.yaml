@@ -1,0 +1,259 @@
+centre:
+    # Hangman's Alley?
+    x: 1150
+    y:  875
+settlements:
+    # commonwealth, base game
+    -
+        index:  1
+        name: Sanctuary Hills
+        x: 476
+        y: 165
+    -
+        index:  2
+        name: Red Rocket Truck Stop
+        x: 563
+        y: 227
+    -
+        index:  3
+        name: Boston Airport
+        x: 1474
+        y: 873
+    -
+        index:  4
+        # can't be connected, literally
+        name: Home Plate
+        x: 965
+        y: 1079
+    -
+        index:  5
+        name: Bunker Hill
+        x: 1241
+        y: 736
+    -
+        index:  6
+        name: The Castle
+        x: 1474
+        y: 1211
+    -
+        index:  7
+        name: Coastal Cottage
+        x: 1639
+        y: 157
+    -
+        index:  8
+        name: County Crossing
+        x: 1402
+        y:  605
+    -
+        index:  9
+        name: Covenant
+        x: 1040
+        y:  486
+    -
+        index: 10
+        name: Croup Manor
+        x: 1809
+        y:  561
+    -
+        index: 11
+        name: Egret Tours Marina
+        x: 860
+        y: 1335
+    -
+        index: 12
+        name: Finch Farm
+        x: 1528
+        y: 478
+    -
+        index: 13
+        name: Graygarden
+        x: 729
+        y: 704
+    -
+        index: 14
+        name: Greentop Nursery
+        x: 1331
+        y: 325
+    -
+        index: 15
+        name: Hangman's Alley
+        x: 939
+        y: 988
+    -
+        index: 16
+        name: Jamaica Plain
+        x: 1179
+        y: 1339
+    -
+        index: 17
+        name: Kingsport Lighthouse
+        x: 1794
+        y: 383
+    -
+        index: 18
+        name: Murkwater Construction Site
+        x: 1142
+        y: 1586
+    -
+        index: 19
+        name: Nordhagen Beach
+        x: 1597
+        y:  820
+    -
+        index: 20
+        name: Oberland Station
+        x: 744
+        y: 886
+    -
+        index: 21
+        name: Outpost Zimonja
+        x: 1019
+        y: 72
+    -
+        index: 22
+        name: The Slog
+        x: 1505
+        y:  306
+    -
+        index: 23
+        name: Somerville Place
+        x: 821
+        y: 1559
+    -
+        index: 24
+        name: Spectacle Island
+        x: 1683
+        y: 1308
+    -
+        index: 25
+        name: Starlight Drive In
+        x: 799
+        y: 402
+    -
+        index: 26
+        name: Sunshine Tidings Co-op
+        x: 431
+        y: 553
+    -
+        index: 27
+        name: Taffington Boathouse
+        x: 1153
+        y:  496
+    -
+        index: 28
+        name: Tenpines Bluff
+        x: 930
+        y: 158
+    -
+        index: 29
+        name: Warwick Homestead
+        x: 1547
+        y: 1428
+    # Automaton Workshop
+    -
+        index: 30
+        name: The Mechanist's Lair
+        x: 1427
+        y:  725
+    # Far Harbor, different map
+    -
+        index: 31
+        name: Dalton Farm
+        x: 0
+        y: 0
+    -
+        index: 32
+        name: Echo Lake Lumber
+        x: 0
+        y: 0
+    -
+        index: 33
+        name: Longfellow's Cabin
+        x: 0
+        y: 0
+    -
+        index: 34
+        name: National Park Visitor's Center
+        x: 0
+        y: 0
+    # Nuka World, different map
+    -
+        index: 35
+        name: Nuka-World Red Rocket
+        x: 0
+        y: 0
+    # Vault-Tec Workshop
+    -
+        index: 36
+        name: Vault 88
+        x: 1212
+        y: 1479
+circuits:
+    # it's just a list of indexes that are in the circuit
+    # this way certain subsets could conceivably be solved
+    # which has several applications in-game.
+    -
+        name: vancommonwealth
+        nodes:
+            - 1
+            - 2
+            - 3
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+            - 14
+            - 15
+            - 16
+            - 17
+            - 18
+            - 19
+            - 20
+            - 21
+            - 22
+            - 23
+            - 24
+            - 25
+            - 26
+            - 27
+            - 28
+            - 29
+    -
+        name: gotycommonwealth
+        nodes:
+            - 1
+            - 2
+            - 3
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+            - 14
+            - 15
+            - 16
+            - 17
+            - 18
+            - 19
+            - 20
+            - 21
+            - 22
+            - 23
+            - 24
+            - 25
+            - 26
+            - 27
+            - 28
+            - 29
+            - 30
+            - 36
