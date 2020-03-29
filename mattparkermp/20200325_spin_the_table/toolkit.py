@@ -1,31 +1,23 @@
 from tqdm import tqdm
 
 def main():
+    # some very basic config
     minSeatCount    = 0
     maxSeatCount    = 9
 
-    # build table:
-    # table = []
-    # for i in range(seatCount):
-        # table.append(i)
-
-    # print(f"start table:  {table}")
-    print("")
-
     for i in range(minSeatCount, maxSeatCount + 1):
+        # build table
         table = []
         for j in range(i):
             table.append(j)
+
+        #actual test process
         for j in range(i - 1):
-            swp = buildAndTestTake2(j, table, table, [], ([], [], len(table) + 1))
+            swp = buildAndTest(j, table, table, [], ([], [], len(table) + 1))
             tqdm.write(f"{i}:{j} --> {swp[2]} : {swp[1]}")
 
-    swp = buildAndTestTake2(startCorrect, table, table, [], ([], [], len(table) + 1))
-    # swp = buildAndTestSeatArrangements(startCorrect, table, table, [], [], len(table) + 1, "")
-    print(f"{swp}")
 
-
-def buildAndTestTake2(startCorrect, table, remaining, current, worst):
+def buildAndTest(startCorrect, table, remaining, current, worst):
     retWorst = (worst[0].copy(), worst[1].copy(), worst[2])
     
     # limit check
@@ -35,16 +27,6 @@ def buildAndTestTake2(startCorrect, table, remaining, current, worst):
                 curMax = getMaxArrangement(table, current)
                 if (curMax[2] < retWorst[2]):
                     retWorst = (curMax[0].copy(), curMax[1].copy(), curMax[2])
-    # wrapper recursive so we can TQDM
-    elif (((len(remaining) + 5) > len(table)) and False):
-        # just a copy of the recursive function, with more TQDM. Honest.
-        for i in tqdm(range(len(remaining)), leave=False):
-            curChop = current.copy()
-            remChop = remaining.copy()
-            curChop.append(remChop.pop(i))
-
-            # pump downwards
-            retWorst = buildAndTestTake2(startCorrect, table, remChop, curChop, retWorst)
     else:
         # recursive function
         
@@ -55,52 +37,8 @@ def buildAndTestTake2(startCorrect, table, remaining, current, worst):
             curChop.append(remChop.pop(i))
 
             # pump downwards
-            retWorst = buildAndTestTake2(startCorrect, table, remChop, curChop, retWorst)
+            retWorst = buildAndTest(startCorrect, table, remChop, curChop, retWorst)
     return retWorst
-
-
-def buildAndTestSeatArrangements(startCorrect, table, remaining, current, worst, worstCount, prefix):
-    print(f"{prefix}- START -")
-    print(f"{prefix}INPUT: startCorrect: {startCorrect}")
-    print(f"{prefix}INPUT: table: {table}")
-    print(f"{prefix}INPUT: remaining: {remaining}")
-    print(f"{prefix}INPUT: current: {current}")
-    print(f"{prefix}INPUT: worst: {worst}")
-    print(f"{prefix}INPUT: worstCount: {worstCount}")
-    retWorst      = worst
-    retWorstCount = worstCount
-
-    print(f"{prefix}DEBUG: LIMIT CHECK FORK")
-    if (len(remaining) == 0):
-        print(f"{prefix}DEBUG: LIMIT")
-        # limit step
-        # make sure we have the correct number of starting matches
-        if (countMatches(table, current) == startCorrect):
-            # see if we've gotten a worse arrangement
-            curMax = getMaxArrangement(table, current)
-            mCount = curMax[2]
-
-            if (mCount < retWorstCount):
-                print(f"{prefix}INFO :found worse!")
-                retWorstCount = mCount
-                retWorst = (curMax[0], curMax[1])
-                print(f"{prefix}INF0 : m    : {mCount}")
-                print(f"{prefix}INFO : r    : {retWorstCount}")
-                print(f"{prefix}INFO : cMax : {curMax}")
-                print(f"{prefix}INFO : ret  : {retWorst}")
-    else:
-        # recursive step
-        print(f"{prefix}DEBUG: RECURSIVE")
-        for i in range(len(remaining)):
-            remSwp     = remaining.copy()
-            curSwp     = current.copy()
-            curSwp.append(remSwp.pop(i))
-            retWorst, retWorstCount = buildAndTestSeatArrangements(startCorrect, table, remSwp, curSwp, worst, worstCount, (prefix + "    "))
-        print(f" INFO: return planned: {retWorstCount} {retWorst}")
-    print(f"INFO: returning: {retWorstCount} {retWorst}")
-    print(f"{prefix}- RETURN -")
-    return retWorst, retWorstCount
-    
 
 def rotBackwards(someList):
     ret = []
