@@ -1,14 +1,25 @@
-def main():
-    startCorrect = 15
-    seatCount    = 20
-    
-    # build table:
-    table = []
-    for i in range(seatCount):
-        table.append(i)
+from tqdm import tqdm
 
-    print(f"start table:  {table}")
+def main():
+    minSeatCount    = 0
+    maxSeatCount    = 9
+
+    # build table:
+    # table = []
+    # for i in range(seatCount):
+        # table.append(i)
+
+    # print(f"start table:  {table}")
     print("")
+
+    for i in range(minSeatCount, maxSeatCount + 1):
+        table = []
+        for j in range(i):
+            table.append(j)
+        for j in range(i - 1):
+            swp = buildAndTestTake2(j, table, table, [], ([], [], len(table) + 1))
+            tqdm.write(f"{i}:{j} --> {swp[2]} : {swp[1]}")
+
     swp = buildAndTestTake2(startCorrect, table, table, [], ([], [], len(table) + 1))
     # swp = buildAndTestSeatArrangements(startCorrect, table, table, [], [], len(table) + 1, "")
     print(f"{swp}")
@@ -24,12 +35,21 @@ def buildAndTestTake2(startCorrect, table, remaining, current, worst):
                 curMax = getMaxArrangement(table, current)
                 if (curMax[2] < retWorst[2]):
                     retWorst = (curMax[0].copy(), curMax[1].copy(), curMax[2])
-            
+    # wrapper recursive so we can TQDM
+    elif (((len(remaining) + 5) > len(table)) and False):
+        # just a copy of the recursive function, with more TQDM. Honest.
+        for i in tqdm(range(len(remaining)), leave=False):
+            curChop = current.copy()
+            remChop = remaining.copy()
+            curChop.append(remChop.pop(i))
+
+            # pump downwards
+            retWorst = buildAndTestTake2(startCorrect, table, remChop, curChop, retWorst)
     else:
         # recursive function
         
         # remaining into current
-        for i in range(len(remaining)):
+        for i in tqdm(range(len(remaining)), leave=False):
             curChop = current.copy()
             remChop = remaining.copy()
             curChop.append(remChop.pop(i))
