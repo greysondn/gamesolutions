@@ -1,0 +1,32 @@
+-- HUMAN RESOURCE MACHINE PROGRAM --
+--
+-- Level:   16
+-- Name:    Absolute Positivity
+-- Variant: Both
+--
+-- Size:   8
+-- Target: 8
+--
+-- Speed:  34
+-- Target: 36
+--
+-- AVAILABLE COMMANDS:
+-- TODO
+--
+-- PREFILLED TILES:
+-- N/A
+--
+-- In-game Description:
+-- TODO
+--
+    JUMP     start
+negative:
+    COPYTO   0
+    SUB      0
+    SUB      0
+output:
+    OUTBOX
+start:
+    INBOX
+    JUMPN    negative
+    JUMP     output

@@ -1,0 +1,39 @@
+-- HUMAN RESOURCE MACHINE PROGRAM --
+--
+-- Level:   19
+-- Name:    Countdown
+-- Variant: Speed
+--
+-- Size:   14
+-- Target: 10
+--
+-- Speed:  79
+-- Target: 82
+--
+-- AVAILABLE COMMANDS:
+-- TODO
+--
+-- PREFILLED TILES:
+-- N/A
+--
+-- In-game Description:
+-- TODO
+--
+    JUMP   start
+loopEnd:
+    OUTBOX
+start:
+    INBOX
+    COPYTO 0
+    JUMPN  negativeLoop
+    JUMPZ  loopEnd
+positiveLoop:
+    OUTBOX
+    BUMPDN 0
+    JUMPZ  loopEnd
+    JUMP   positiveLoop
+negativeLoop:
+    OUTBOX
+    BUMPUP 0
+    JUMPZ  loopEnd
+    JUMP   negativeLoop

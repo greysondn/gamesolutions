@@ -1,0 +1,46 @@
+-- HUMAN RESOURCE MACHINE PROGRAM --
+--
+-- Level:   17
+-- Name:    Exclusive Loungue
+-- Variant: Both
+--
+-- Size:   11
+-- Target: 12
+--
+-- Speed:  26
+-- Target: 28
+--
+-- AVAILABLE COMMANDS:
+-- INBOX
+-- OUTBOX
+-- COPYFROM
+-- COPYTO
+-- JUMP
+-- JUMPZ
+-- JUMPN
+-- ?
+--
+-- PREFILLED TILES:
+-- N/A
+--
+-- In-game Description:
+-- TODO
+--
+
+-- appears we all converged on this solution, sadly.
+    JUMP     start
+firstNegative:
+    INBOX
+    JUMPN    match
+mismatch:
+    COPYFROM 5
+output:
+    OUTBOX
+start:
+    INBOX
+    JUMPN    firstNegative
+    INBOX
+    JUMPN    mismatch
+match:
+    COPYFROM 4
+    JUMP     output
