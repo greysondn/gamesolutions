@@ -4,8 +4,7 @@
 
 import argparse
 
-# I didn't write a main guard because you don't have functions yet in twilioquest.
-# if that makes no sense to you, you're fine, just carry on and ignore it.
+# I didn't write a main guard because you can't for this one.
 
 # Note that this uses code from a previous lesson as boilerplate.
 parser = argparse.ArgumentParser(
