@@ -97,6 +97,84 @@ DTile.reset = function
     DTile.hasWorker           = False
 end function
 
+DTile.setFromGameTile = function (aTile)
+        // examples...
+        //
+        // fully grown maple tree
+        // name: Tree
+        // type: Tree
+        // treeType: 2
+        // growthStage: 7
+        // health: 10
+        // stump: 0
+        // tapped: 0
+        // hasSeed: 0
+        //
+        // twig on ground
+        // name: Twig
+        // type: Crafting
+        // displayName: Twig
+        // health: 10
+        // quality: 0
+        // harvestable: 0
+        // minutesTillReady: 0
+        // value: 1
+        // description: ...
+        //
+        // fully grown pine tree
+        // name: Tree
+        // type: Tree
+        // treeType: 3
+        // growthStage: 5
+        // health: 2
+        // stump: 0
+        // tapped: 0
+        // hasSeed: 0
+        //
+        // grass
+        // name: Grass
+        // type: Grass
+        //
+        // weeds
+        // name: Weeds
+        // type: Basic
+        // displayName: Weeds
+        // health: 10
+        // quality: 0
+        // harvestable: 0
+        // minutesTillReady: 0
+        // value: 0
+        // description: Ugly weeds.
+        //
+        // stone
+        // name: Stone
+        // type: Stone
+        // displayName: Stone
+        // health: 10
+        // quality: 0
+        // harvestable: 0
+        // minutesTillReady: 1
+        // value: 0
+        // description: Stone
+        //
+        // hard stump
+        // name: Stump
+        // type: Clump
+        // health: 10
+        //
+        // hard rock
+        // name: Boulder
+        // type: Clump
+        // health: 10
+    if (aTile.type == "Tree")
+        DTile.passable = False
+    endif
+
+end function
+
+DTile.updateForBot = function (aBot)
+
+end function
 /**
  * Map for our implementation.
  *

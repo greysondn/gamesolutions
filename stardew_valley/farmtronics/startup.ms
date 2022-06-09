@@ -73,13 +73,14 @@ bot.clearArea = function(width, height)
     print "You better have set this facing right just before the top left"
     print "corner or it's gonna go wrong!"
     
-    // something I've changed went wrong. The bot just got hung up on a corner
-    // today and wasted all its energy.
+    // By Nature, I'm dumb.
+    // Left the move for x cycles at width yesterday.
+    // Fixed.
     
     for y in range(0, height)
         for x in range(0, width)
             if (bot.energy > 0) then
-                bot.clearAndMove(width)
+                bot.clearAndMove(1)
             end if
         end for
         if (bot.energy > 0) then
@@ -94,4 +95,9 @@ bot.clearArea = function(width, height)
             end if
         end if
     end for
+end function
+
+// helper function so I don't have to remember this nonsense
+bot.examine = function()
+    pprint(farm.tile(bot.position.x+1, bot.position.y))
 end function
