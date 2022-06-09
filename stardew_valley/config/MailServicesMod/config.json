@@ -1,0 +1,37 @@
+{
+  "DisableToolDeliveryService": false,
+  "DisableToolShipmentService": false,
+  "ToolShipmentServiceFee": 0,
+  "DisableQuestService": false,
+  "QuestServiceFee": 0,
+  "DisableGiftService": false,
+  "GiftServiceFee": 0,
+  "GiftChoicePageSize": 5,
+  "EnableJealousyFromMailedGifts": false,
+  "EnableGiftToNpcWithMaxFriendship": false,
+  "ShowDialogOnItemDelivery": true,
+  "DisablePerPlayerConfig": true,
+  "PlayerRecoveryConfig": {
+    "-6748830536520241879": {
+      "PlayerName": "Joja Test",
+      "DisableRecoveryConfigInGameChanges": false,
+      "EnableRecoveryService": false,
+      "RecoverAllItems": false,
+      "RecoverForFree": false,
+      "DisableClearLostItemsOnRandomRecovery": false
+    },
+    "-5145472731973642061": {
+      "PlayerName": "Widdle Wuff",
+      "DisableRecoveryConfigInGameChanges": false,
+      "EnableRecoveryService": true,
+      "RecoverAllItems": true,
+      "RecoverForFree": false,
+      "DisableClearLostItemsOnRandomRecovery": false
+    }
+  },
+  "DisableRecoveryConfigInGameChanges": true,
+  "EnableRecoveryService": true,
+  "RecoverAllItems": true,
+  "RecoverForFree": false,
+  "DisableClearLostItemsOnRandomRecovery": false
+}

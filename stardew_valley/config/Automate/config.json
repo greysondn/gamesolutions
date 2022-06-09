@@ -1,0 +1,26 @@
+{
+  "Enabled": true,
+  "PullGemstonesFromJunimoHuts": false,
+  "AutomationInterval": 60,
+  "Controls": {
+    "ToggleOverlay": "U"
+  },
+  "ConnectorNames": [
+    "Workbench",
+    "Gravel Path"
+  ],
+  "ModCompatibility": {
+    "BetterJunimos": true,
+    "WarnForMissingBridgeMod": true
+  },
+  "MachineOverrides": {
+    "ShippingBin": {
+      "Priority": 0,
+      "Enabled": true
+    },
+    "MiniShippingBin": {
+      "Priority": 0,
+      "Enabled": true
+    }
+  }
+}

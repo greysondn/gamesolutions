@@ -1,0 +1,12 @@
+{
+  "DrawFishShadows": true,
+  "MaximumFish": 90,
+  "FishDensity": 0.2,
+  "TrashOutside": true,
+  "TrashFarm": true,
+  "DisableTrashLvl10": true,
+  "DrawItemShadows": true,
+  "ShowTreasure": true,
+  "RotateAlgae": false,
+  "FilterEels": false
+}

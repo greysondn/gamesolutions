@@ -1,0 +1,66 @@
+{
+  "Theme": "automatic",
+  "ReplaceCooking": true,
+  "ReplaceCrafting": true,
+  "UseCategories": true,
+  "ShowSettingsButton": true,
+  "MaxQuality": "Iridium",
+  "LowQualityFirst": true,
+  "ShowKeybindTooltip": "ForController",
+  "SuppressBC": "LeftShift",
+  "ModiferKey": "LeftShift, RightTrigger",
+  "FavoriteKey": "F, ControllerBack",
+  "BulkCraftKey": "None",
+  "SearchKey": "F3",
+  "LeftClick": "Craft",
+  "RightClick": "BulkCraft",
+  "UseUniformGrid": true,
+  "SortBigLast": false,
+  "CraftingAlphabetic": true,
+  "UseSeasoning": "Enabled",
+  "HideUnknown": false,
+  "CookingAlphabetic": true,
+  "UseDiscovery": true,
+  "MaxInventories": 32,
+  "MaxDistance": 20,
+  "MaxCheckedTiles": 500,
+  "UseDiagonalConnections": true,
+  "ValidConnectors": [],
+  "UseTransfer": true,
+  "AddToBehaviors": {
+    "UseTool": {
+      "Mode": "All",
+      "Quantity": 1
+    },
+    "UseToolModified": {
+      "Mode": "AllButQuantity",
+      "Quantity": 1
+    },
+    "Action": {
+      "Mode": "Quantity",
+      "Quantity": 1
+    },
+    "ActionModified": {
+      "Mode": "Half",
+      "Quantity": 1
+    }
+  },
+  "FillFromBehaviors": {
+    "UseTool": {
+      "Mode": "All",
+      "Quantity": 1
+    },
+    "UseToolModified": {
+      "Mode": "AllButQuantity",
+      "Quantity": 1
+    },
+    "Action": {
+      "Mode": "Quantity",
+      "Quantity": 1
+    },
+    "ActionModified": {
+      "Mode": "Half",
+      "Quantity": 1
+    }
+  }
+}
