@@ -2,6 +2,11 @@
 // JoeStrout's functions
 // https://github.com/JoeStrout/Farmtronics/wiki/Bot-Code-Examples
 // -----------------------------------------------------------------------------
+NORTH = 0
+SOUTH = 2
+EAST  = 1
+WEST  = 2
+
 
 // **
 // * tills the tile in front of the bot
@@ -70,8 +75,9 @@ end function
 
 // probably similar to or same as his clearrect but I wrote it myself so whatever.
 bot.clearArea = function(width, height)
-    print "You better have set this facing right just before the top left"
-    print "corner or it's gonna go wrong!"
+    while (bot.facing != EAST)
+        bot.right()
+    end while
     
     for y in range(0, height)
         for x in range(0, width)
