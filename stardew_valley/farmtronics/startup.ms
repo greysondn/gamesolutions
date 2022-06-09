@@ -3,10 +3,9 @@
 // https://github.com/JoeStrout/Farmtronics/wiki/Bot-Code-Examples
 // -----------------------------------------------------------------------------
 NORTH = 0
-SOUTH = 2
 EAST  = 1
-WEST  = 2
-
+SOUTH = 2
+WEST  = 3
 
 // **
 // * tills the tile in front of the bot
@@ -38,6 +37,19 @@ end function
 
 // bots need a move queue, right?
 bot.moveQueue = []
+
+// turn to face a certain direction
+bot.turnToFace = function(direction)
+    while (bot.facing != direction)
+        // so the facings are actually integers
+        // which means we can do...
+        if (((bot.facing + 1) % 4) == direction) then
+            bot.right()
+        else
+            bot.left()
+        end if
+    end while
+end function
 
 // find nearest work to do
 bot.findWork = function
@@ -75,9 +87,7 @@ end function
 
 // probably similar to or same as his clearrect but I wrote it myself so whatever.
 bot.clearArea = function(width, height)
-    while (bot.facing != EAST)
-        bot.right()
-    end while
+    bot.turnToFace(EAST)
     
     for y in range(0, height)
         for x in range(0, width)
@@ -87,13 +97,13 @@ bot.clearArea = function(width, height)
         end for
         if (bot.energy > 0) then
             if ((y % 2) == 0) then
-                bot.right()
+                bot.turnToFace(SOUTH)
                 bot.clearAndMove(1)
-                bot.right()
+                bot.turnToFace(WEST)
             else
-                bot.left()
+                bot.turnToFace(SOUTH)
                 bot.clearAndMove(1)
-                bot.left()
+                bot.turnToFace(EAST)
             end if
         end if
     end for
