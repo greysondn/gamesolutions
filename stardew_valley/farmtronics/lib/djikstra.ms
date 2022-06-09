@@ -67,6 +67,8 @@ DTile.waterSource         = False
 DTile.isWork              = False
 DTile.hasWorker           = False
 
+DTile.isTarget            = False
+
 DTile.setDirectionFromParent = function(parent)
     if (parent.x < DTile.x) then
         DTile.directionFromParent = "E"
@@ -81,9 +83,24 @@ DTile.setDirectionFromParent = function(parent)
     end if
 end function
 
+DTile.setTarget = function(cond)
+    if (cond == "unconditional") then
+        DTile.isTarget = True
+    else if (cond == "water") then
+        if (DTile.isWaterSource)
+            DTile.isTarget = True
+        endif
+    else if (cond == "work") then
+        if (DTile.isWork) then
+            DTile.isTarget = True
+        endif
+    endif
+end function
+
 DTile.reset = function
     DTile.visited = False
-    DTile.parent  = DTile 
+    DTile.parent  = DTile
+    DTile.isTarget = False
 
     DTile.directionFromParent = ""
     DTile.type                = ""
@@ -242,6 +259,41 @@ DMap.reset = function
     for x in range(0, DMap.width)
         for y in range(0, DMap.height)
             DMap.tiles[x][y].reset()
+        end for
+    end for
+end function
+
+DMap.setSize = function(newWidth, newHeight)
+    DMap.height = newHeight
+    DMap.width  = newWidth
+    
+    DMap.tiles = []
+    
+    for x in range(0, newWidth)
+        swpRow = []
+        for y in range(0, newHeight)
+            swpRow.push(new DTile)
+        end for
+        DMap.Tiles.push(swpRow)
+    end for
+end function
+
+DMap.setSpecificTarget = function(x, y)
+    DMap.tiles[x][y].setTarget(cond)
+end function
+
+DMap.setTargets = function (cond)
+    for x in range(0, DMap.width)
+        for y in range(0, DMap.height)
+            DMap.tiles[x][y].setTarget(cond)
+        end for
+    end for
+end function
+
+DMap.setTilesFromMap = function (map)
+    for x in range(0, DMap.width)
+        for y in range(0, DMap.height)
+            DMap.tiles[x][y].setFromGameTile(map.tile(x, y))
         end for
     end for
 end function
