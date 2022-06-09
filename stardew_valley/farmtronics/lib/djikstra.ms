@@ -91,6 +91,7 @@ DTile.reset = function
     DTile.mineable            = False
     DTile.axeable             = False
     DTile.waterable           = False
+    DTile.scytheable          = False
     DTile.isWaterSource       = False
 
     DTile.isWork              = False
@@ -110,17 +111,6 @@ DTile.setFromGameTile = function (aTile)
         // tapped: 0
         // hasSeed: 0
         //
-        // twig on ground
-        // name: Twig
-        // type: Crafting
-        // displayName: Twig
-        // health: 10
-        // quality: 0
-        // harvestable: 0
-        // minutesTillReady: 0
-        // value: 1
-        // description: ...
-        //
         // fully grown pine tree
         // name: Tree
         // type: Tree
@@ -131,50 +121,105 @@ DTile.setFromGameTile = function (aTile)
         // tapped: 0
         // hasSeed: 0
         //
-        // grass
-        // name: Grass
-        // type: Grass
-        //
-        // weeds
-        // name: Weeds
-        // type: Basic
-        // displayName: Weeds
-        // health: 10
-        // quality: 0
-        // harvestable: 0
-        // minutesTillReady: 0
-        // value: 0
-        // description: Ugly weeds.
-        //
-        // stone
-        // name: Stone
-        // type: Stone
-        // displayName: Stone
-        // health: 10
-        // quality: 0
-        // harvestable: 0
-        // minutesTillReady: 1
-        // value: 0
-        // description: Stone
-        //
-        // hard stump
-        // name: Stump
-        // type: Clump
-        // health: 10
-        //
-        // hard rock
-        // name: Boulder
-        // type: Clump
-        // health: 10
-    if (aTile.type == "Tree")
+        // tile with crop
+        // name: HoeDirt
+        // type: HoeDirt
+        // dry: 0
+        // crop:
+        //      phase:          3
+        //      maxPhase:       4
+        //      mature:         0
+        //      dead:           0
+        //      harvestMethod:  0
+        //      harvestable:    0
+        //      name:           Parsnip
+    if (aTile == null) then
+        // usually passable/blank ground
+        // can be the shipping crate, though
+        DTile.passable = True
+    else if (aTile.type == "Basic") then
+        if (aTile.name == "Weeds") then
+            // single tile trash plant on map
+            DTile.passable   = False
+            DTile.isWork     = True
+            DTile.mineable   = True
+            DTile.scytheable = True
+            DTile.axeable    = True
+        end if
+    else if (aTile.type == "Building") then
+        if (aTile.name == "Building") then
+            // cliff face
+            // farmhouse
+            // minecart
+            DTile.passable = False
+            DTile.isWork   = False
+        end if
+    else if (aTile.type == "Bush") then
+        if (aTile.name == "Bush") then
+            // permanent plant on map
+            DTile.passable = False
+            DTile.isWork   = False
+        end if
+    else if (aTile.type == "Clump") then
+        if (aTile.name == "Boulder") then
+            // hard stone
+            DTile.passable = False
+            DTile.isWork   = False
+        else if (aTile.name == "Stump") then
+            // hard wood stump
+            DTile.passable = False
+            DTile.isWork   = False
+        end if
+        
+    else if (aTile.type == "Crafting") then
+        if (aTile.name == "Twig") then
+            // garbage/litter twig
+            DTile.passable = False
+            DTile.axeable  = True
+            DTile.isWork   = True
+        end if
+    else if (aTile.type == "Flooring") then
+        if (aTile.name == "Flooring") then
+            // Stone walkway at least
+            DTile.passable = True
+            DTile.isWork   = False
+        end if
+    else if (aTile.type == "Grass") then
+        if (aTile.name == "Grass") then
+            // hay grass
+            DTile.passable   = True
+            DTile.scytheable = True
+            DTile.isWork     = True
+        end if
+    else if (aTile.type == "Property") then
+        if (aTile.name == "Water") then
+            // pond
+            DTile.passable      = False
+            DTile.isWork        = False
+            DTile.isWaterSource = True
+        end if
+    else if (aTile.type == "Stone") then
+        if (aTile.name == "Stone") then
+            // single tile rock on map
+            DTile.passable      = False
+            DTile.isWork        = True
+            DTile.mineable      = True
+        end if
+    else if (aTile.type == "Tree") then
+        // TODO: Sort out trees
         DTile.passable = False
-    endif
-
+    else
+        // just for safe measure for now
+        // nature only knows what could be destroyed accidentally
+        DTile.passable = False
+        DTile.isWork   = False
+    end if
 end function
 
-DTile.updateForBot = function (aBot)
-
+DTile.updateForBot = function(aBot)
+    // pass
 end function
+
 /**
  * Map for our implementation.
  *

@@ -73,10 +73,6 @@ bot.clearArea = function(width, height)
     print "You better have set this facing right just before the top left"
     print "corner or it's gonna go wrong!"
     
-    // By Nature, I'm dumb.
-    // Left the move for x cycles at width yesterday.
-    // Fixed.
-    
     for y in range(0, height)
         for x in range(0, width)
             if (bot.energy > 0) then
