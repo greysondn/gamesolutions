@@ -72,16 +72,26 @@ end function
 bot.clearArea = function(width, height)
     print "You better have set this facing right just before the top left"
     print "corner or it's gonna go wrong!"
+    
+    // something I've changed went wrong. The bot just got hung up on a corner
+    // today and wasted all its energy.
+    
     for y in range(0, height)
-        bot.clearAndMove(width)
-        if ((y % 2) == 0) then
-            bot.right()
-            bot.clearAndMove(1)
-            bot.right()
-        else
-            bot.left()
-            bot.clearAndMove(1)
-            bot.left()
+        for x in range(0, width)
+            if (bot.energy > 0) then
+                bot.clearAndMove(width)
+            end if
+        end for
+        if (bot.energy > 0) then
+            if ((y % 2) == 0) then
+                bot.right()
+                bot.clearAndMove(1)
+                bot.right()
+            else
+                bot.left()
+                bot.clearAndMove(1)
+                bot.left()
+            end if
         end if
     end for
 end function
