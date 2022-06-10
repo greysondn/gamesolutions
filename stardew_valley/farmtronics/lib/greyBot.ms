@@ -1,4 +1,8 @@
+// imports
 import "constants"
+
+// aliases
+DIR = constants.DIRECTION
 
 // -----------------------------------------------------------------------------
 // greysondn's bot extensions and overrides
@@ -67,13 +71,13 @@ bot.clearArea = function(width, height)
         end for
         if (bot.energy > 0) then
             if ((y % 2) == 0) then
-                bot.turnToFace(constants.SOUTH)
+                bot.turnToFace(DIR.SOUTH)
                 bot.clearAndMove(1)
-                bot.turnToFace(constants.WEST)
+                bot.turnToFace(DIR.WEST)
             else
-                bot.turnToFace(constants.SOUTH)
+                bot.turnToFace(DIR.SOUTH)
                 bot.clearAndMove(1)
-                bot.turnToFace(constants.EAST)
+                bot.turnToFace(DIR.EAST)
             end if
         end if
     end for

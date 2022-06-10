@@ -6,41 +6,11 @@
 // * by greysondn @ github
 // *****************************************************************************
 
-// Magic Keys
+// imports
+import "constants"
 
-// ".L"       - means to turn 90 degrees counter-clockwise
-// ".R"       - means to turn 90 degrees clockwise
-// ".F"       - means to move forwards
-// ".B"       - means to move back
-// ".U"       - means to use item in hand
-// "E+ term"  - means to equip something matching term
-// "E0"       - means to equip slot 0
-// "E1"       - means to equip slot 1
-// "E2"       - means to equip slot 2
-// "E3"       - means to equip slot 3
-// "E4"       - means to equip slot 4
-// "E5"       - means to equip slot 5
-// "E6"       - means to equip slot 6
-// "E7"       - means to equip slot 7
-// "E8"       - means to equip slot 8
-// "E9"       - means to equip slot 9
-// "EA"       - means to equip slot 10
-// "EB"       - means to equip slot 11
-// "EH"       - means to equip a hoe
-// "EX"       - means to equip an axe
-// "EP"       - means to equip a pickaxe
-// "ES"       - means to equip a scythe
-// "EW"       - means to equip a watering can
-// "TN"       - means that the next move should be to turn north
-// "TE"       - means that the next move should be to turn east
-// "TW"       - means that the next move should be to turn west
-// "TS"       - means that the next move should be to turn south
-// "MN"       - means that the next move should be north
-// "MS"       - means that the next move should be south
-// "ME"       - means that the next move should be east
-// "MW"       - means that the next move should be w
-// "XW"       - means that no work was found
-
+// aliases
+DIR = constants.DIRECTION
 
 // **
 // * Tiles for our implementation.
@@ -71,13 +41,13 @@ DTile.isTarget            = False
 
 DTile.setDirectionFromParent = function(parent)
     if (parent.x < DTile.x) then
-        DTile.directionFromParent = "E"
+        DTile.directionFromParent = DIR.EAST
     else if parent.x > DTile.x then
-        DTile.directionFromParent = "W"
+        DTile.directionFromParent = DIR.WEST
     else if parent.y < DTile.y then
-        DTile.directionFromParent = "S"
+        DTile.directionFromParent = DIR.SOUTH
     else if parent.y > DTile.y then
-        DTile.directionFromParent = "N"
+        DTile.directionFromParent = DIR.NORTH
     else
         print "WHAT?!?"
     end if
@@ -369,7 +339,7 @@ DMap.getNearestWorkTo = function(x, y)
             end if
         else
             foundWork = True
-            ret.push("NO_WORK")
+            ret.push(constants.STATUS.NO_WORK)
         end if
         
     end while
