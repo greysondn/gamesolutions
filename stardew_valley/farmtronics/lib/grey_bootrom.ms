@@ -45,7 +45,7 @@ end function
 // *******************
 
 // permit us to reboot the system... but not really.
-// just reloads the bootrom.global
+// just reloads the bootrom.
 globals.reboot = function
     import "grey_bootrom"
 end function
