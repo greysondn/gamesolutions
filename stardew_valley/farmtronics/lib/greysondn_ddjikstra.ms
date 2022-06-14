@@ -7,9 +7,10 @@
 // *****************************************************************************
 
 // imports
-import "constants"
+import "greysondn_constants"
 
 // aliases
+constants = greysondn_constants
 DIR = constants.DIRECTION
 
 // **

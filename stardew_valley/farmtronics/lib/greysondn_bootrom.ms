@@ -1,5 +1,5 @@
 if (bot) then
-    import "greyBot"
+    import "greysondn_bot"
     import "joestrout_bot"
 end if
 
@@ -47,7 +47,7 @@ end function
 // permit us to reboot the system... but not really.
 // just reloads the bootrom.
 globals.reboot = function
-    import "grey_bootrom"
+    import "greysondn_bootrom"
 end function
 
 // ls as alternative to dir

@@ -1,6 +1,7 @@
-import "constants"
+import "greysondn_constants"
 
 // aliases
+constants  = greysondn_constants
 DIR        = constants.DIRECTION
 NAME       = constants.TILE.NAME
 SHORT_TYPE = constants.TILE.SHORT_TYPE

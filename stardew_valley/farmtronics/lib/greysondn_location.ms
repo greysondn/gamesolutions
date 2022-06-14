@@ -1,6 +1,9 @@
-import "constants"
+// imports
+import "greysondn_constants"
 import "greysondn_tile"
 
+// aliases
+constants = greysondn_constants
 STATUS = constants.STATUS
 
 // -----------------------------------------------------------------------------
