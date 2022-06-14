@@ -1,2 +1,1 @@
-import "greyBot"
-import "joestrout_bot"
+import "grey_bootrom"
