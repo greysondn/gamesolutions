@@ -1,0 +1,42 @@
+# absolute paths to things
+# feeling cute, might rewrite to have different versions for both WSL and
+# Windows later on.
+paths:
+    # git - this repo
+    git: "/mnt/c/Users/Dorian Greyson/git/gamesolutions/stardew_valley/farmtronics/"
+    # stardew valley save - the usrdisk folder
+    svs: "/mnt/c/Users/Dorian Greyson/AppData/Roaming/StardewValley/Saves/Asimov_5318008/usrdisk/"
+
+# files to sync and/or manage under paths
+files:
+    # conf is a special case, and will handle itself
+    # the rest is just full paths suffixes after the root give under paths
+    -
+        "startup.ms"
+    -
+        "lib/greysondn_bootrom.ms"
+    -
+        "lib/greysondn_bot.ms"
+    -
+        "lib/greysondn_constants.ms"
+    -
+        "lib/greysondn_ddjikstra.ms"
+    -
+        "lib/greysondn_location.ms"
+    -
+        "lib/greysondn_tile.ms"
+    -
+        "lib/joestrout_bot.ms"
+    -
+        "todo/fizzbuzz.ms"
+    -
+        "todo/for.ms"
+
+# configuration for stardew valley os stuff.
+config:
+    bootsplash:
+        # meant to be the speed of the bootsplash
+        # full - entire animation, pause, etc
+        # slow - draw as fast as possible, only delay 3 seconds on bots
+        # fast - don't play the bootsplash at all
+        speed: "none"
