@@ -7,65 +7,11 @@ import "greysondn_location"
 
 import "textUtil"
 
+if not (globals.hasIndex("original"))
+
 // -----------------------------------------------------------------------------
 // A very simple custom bootrom for the sake of my own sanity
 // Mostly sets up everything I care about and prints conf data
-// -----------------------------------------------------------------------------
-
-
-// ****************************
-// replacement: cd
-// ****************************
-
-_cd = @cd
-
-cd = function(dirPath="")
-    _cd(dirPath)
-    prefix = "com"
-    
-    if (bot) then
-        prefix = "bot"
-    end if
-    
-    endPath = pwd
-    
-    if (endPath.len > 0) then
-        if (endPath[endPath.len - 1] != "/") then
-            endPath = endPath + "/"
-        end if 
-    else
-        endPath = endPath + "/"
-    end if
-    
-    env.prompt = prefix + ":" + endPath + "> "
-end function
-
-// *******************
-// extra globals
-// *******************
-
-// permit us to reboot the system... but not really.
-// just reloads the bootrom.
-globals.reboot = function
-    import "greysondn_bootrom"
-end function
-
-// ls as alternative to dir
-globals.ls = function(dirPath=null)
-    if (not dirPath) then
-        dirPath = pwd
-    end if
-    
-    strt = pwd
-    _cd(dirPath)
-    dir
-    _cd(strt)
-end function
-
-// cls as alternative to clear
-globals.cls = function()
-    clear
-end function
 
 // ***************
 // actual bootrom
