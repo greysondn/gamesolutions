@@ -14,19 +14,21 @@ files:
     -
         "startup.ms"
     -
-        "lib/greysondn_bootrom.ms"
+        "lib/greysondn/aliases.ms"
     -
-        "lib/greysondn_bot.ms"
+        "lib/greysondn/bootrom.ms"
     -
-        "lib/greysondn_constants.ms"
+        "lib/greysondn/constants.ms"
     -
-        "lib/greysondn_ddjikstra.ms"
+        "lib/greysondn/djikstra.ms"
     -
-        "lib/greysondn_location.ms"
+        "lib/greysondn/tile.ms"
     -
-        "lib/greysondn_tile.ms"
+        "lib/greysondn/extensions/bot.ms"
     -
-        "lib/joestrout_bot.ms"
+        "lib/greysondn/extensions/location.ms"
+    -
+        "lib/joestrout/extensions/bot.ms"
     -
         "todo/fizzbuzz.ms"
     -
