@@ -156,8 +156,8 @@ if (not globals.hasIndex("wuffma")) then
             end for
             
             // add paths to env.importPaths
-            for i in range(0, origEnvImportPaths.len() - 1)
-                env.importPaths.push(origEnvImportPaths[i] + pathTail)
+            for origPath in origEnvImportPaths
+                env.importPaths.push(origPath + pathTail)
             end for
         end if
         
@@ -247,9 +247,8 @@ if (not globals.hasIndex("wuffma")) then
     globals.applyRegistry()
     
     // load libs listed to load at boot
-    for i in range(0, globals.registry.boot.libs.len() - 1)
-        print ("Loading: " + globals.registry.boot.libs[i])
-        import globals.registry.boot.libs[i]
+    for bootlib in globals.registry.boot.libs
+        import bootlib
     end for
 end if
 

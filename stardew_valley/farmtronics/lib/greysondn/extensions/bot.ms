@@ -89,6 +89,11 @@ if (SYSTEM.CURRENT == SYSTEM.FARMTRONICS_BOT) then
     bot.examine = function()
         pprint(farm.tile(bot.position.x+1, bot.position.y))
     end function
+    
+    // and more!
+    bot.checkForUnknownTiles = function()
+        bot.position.checkForUnknownTiles()
+    end function
 end if
 
 // return a map just to make this happy
