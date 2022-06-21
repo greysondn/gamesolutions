@@ -27,7 +27,6 @@ if (not globals.hasIndex("json")) then
     globals.json = json
 end if
 
-
 if (not globals.hasIndex("listUtil")) then
     import "listUtil"
     globals.listUtil = listUtil
@@ -86,12 +85,6 @@ if (not globals.hasIndex("wuffma")) then
         globals.original = {}
         globals.original.globals = swp
     end if
-
-
-
-
-
-
 
     // read user config into globals
     globals.registry = json.parse(file.open("conf.json").read())
@@ -258,16 +251,6 @@ if (not globals.hasIndex("wuffma")) then
         print ("Loading: " + globals.registry.boot.libs[i])
         import globals.registry.boot.libs[i]
     end for
-
-
-
-
-
-
-
-
-
-
 end if
 
 return {"imported": true}
