@@ -44,19 +44,20 @@ def syncFiles(conf, mode):
     if (mode == "send"):
         outConf = conf["config"]
         
-        confPath = svsPth + "conf.json"
+        confPaths = [svsPth + "conf.json", gitPth + "conf.json"]
         
-        if os.path.exists(confPath):
-            os.remove(confPath)
-        
-        with open(confPath, "w", encoding="utf-8") as jf:
-            json.dump(
-                outConf,
-                jf,
-                ensure_ascii = False,
-                indent = 4
-            )
-    
+        for confPath in confPaths:
+            if os.path.exists(confPath):
+                os.remove(confPath)
+            
+            with open(confPath, "w", encoding="utf-8") as jf:
+                json.dump(
+                    outConf,
+                    jf,
+                    ensure_ascii = False,
+                    indent = 4
+                )
+                
 # main function
 def main():
     # args
