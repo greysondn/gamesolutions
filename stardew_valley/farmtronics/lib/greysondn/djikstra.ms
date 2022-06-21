@@ -7,12 +7,12 @@
 // *****************************************************************************
 
 // imports
-import "greysondn_constants"
+globalimport "greysondn.constants"
 
 // aliases
-constants = greysondn_constants
+constants  = globals.dot_get("greysondn.constants")
 DIR = constants.DIRECTION
-
+f)
 // **
 // * Tiles for our implementation.
 // *

@@ -1,8 +1,8 @@
 // imports
-import "greysondn_constants"
+globalimport "greysondn.constants"
 
 // aliases
-constants = greysondn_constants
+constants  = globals.dot_get("greysondn.constants")
 DIR = constants.DIRECTION
 
 // -----------------------------------------------------------------------------
@@ -88,3 +88,6 @@ end function
 bot.examine = function()
     pprint(farm.tile(bot.position.x+1, bot.position.y))
 end function
+
+// return a map just to make this happy
+return {"imported": true}

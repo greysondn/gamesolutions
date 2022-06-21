@@ -1,7 +1,7 @@
-import "greysondn_constants"
+globalimport "greysondn.constants"
 
 // aliases
-constants  = greysondn_constants
+constants  = globals.dot_get("greysondn.constants")
 DIR        = constants.DIRECTION
 NAME       = constants.TILE.NAME
 SHORT_TYPE = constants.TILE.SHORT_TYPE

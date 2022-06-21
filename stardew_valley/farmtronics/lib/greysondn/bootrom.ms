@@ -1,13 +1,11 @@
 if (bot) then
-    import "greysondn_bot"
-    import "joestrout_bot"
+    globalimport "greysondn.extensions.bot"
+    globalimport "joestrout.extensions.bot"
 end if
 
-import "greysondn_location"
+globalimport "greysondn.extensions.location"
 
-import "textUtil"
-
-if not (globals.hasIndex("original"))
+globalimport "textUtil"
 
 // -----------------------------------------------------------------------------
 // A very simple custom bootrom for the sake of my own sanity

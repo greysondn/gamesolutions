@@ -20,6 +20,8 @@ files:
     -
         "lib/greysondn/constants.ms"
     -
+        "lib/greysondn/cursed.ms"
+    -
         "lib/greysondn/djikstra.ms"
     -
         "lib/greysondn/tile.ms"
@@ -27,6 +29,8 @@ files:
         "lib/greysondn/extensions/bot.ms"
     -
         "lib/greysondn/extensions/location.ms"
+    -
+        "lib/greysondn/extensions/map_dot.ms"
     -
         "lib/joestrout/extensions/bot.ms"
     -
@@ -36,9 +40,27 @@ files:
 
 # configuration for stardew valley os stuff.
 config:
-    bootsplash:
-        # meant to be the speed of the bootsplash
-        # full - entire animation, pause, etc
-        # slow - draw as fast as possible, only delay 3 seconds on bots
-        # fast - don't play the bootsplash at all
-        speed: "none"
+    # configuration of boot related things
+    boot:
+        # a list of libs to be handed directly to boot, at the end of
+        # booting
+        libs:
+            -
+                "greysondn.aliases"
+            -
+                "greysondn.extensions.bot"
+            -
+                "greysondn.extensions.location"
+            -
+                "joestrout.extensions.bot"
+        splash:
+            # meant to be the speed of the bootsplash
+            # full - entire animation, pause, etc
+            # slow - draw as fast as possible, only delay 3 seconds on bots
+            # fast - don't play the bootsplash at all
+            speed: "none"
+    # things related to the system's theme
+    theme:
+        textColor:  "#C0C0C0" # color.silver
+        backColor:  "#000000" # color.black
+        morePrompt: " .... >"

@@ -32,6 +32,10 @@ end if
 
 // and now the actual module, here
 // -------------------------------
+
+// read user config
+
+
 if (not globals.hasIndex("wuffma")) then
     // we've not imported this module yet
     
@@ -43,21 +47,46 @@ if (not globals.hasIndex("wuffma")) then
         globals.original.globals = swp.deepCopy()
     end if
     
-    // stashes a copy of an original function in globals.original
-    stash = function(mapPath, funcName, func)
-        curMap = globals.original
-        for i in range(0, mapPath.len - 1)
-            if (not curMap.hasIndex(mapPath[i])) then
-                curMap[mapPath[i]] = {}
-            end if
-            
-            curMap = curMap[mapPath[i]]
-        end for
+    // read user config into globals
+    globals.registry = json.parse(file.open("conf.json").read())
+
+    // support for re-reading registry
+    globals.reloadRegistry = function()
+        globals.registry = json.parse(file.open("conf.json").read())
+    end function
+    
+    // support for applying registry
+    // just the theme right now
+    globals.applyRegistry = function()
+        text.color = globals.registry.theme.textColor
+        text.backColor = globals.registry.theme.backColor
+        env.morePrompt = globals.registry.theme.morePrompt
+    end function
+
+    // import dot notation helpers
+    if (not globals.hasIndex("map_dot")) then
+        // doesn't have it yet
+        // backup original paths
+        origEnvImportPaths = env.importPaths.deepCopy()
         
-        if (not curMap.hasIndex(funcName))
+        // add myself to paths for a moment
+        env.importPaths.push("/usr/lib/greysondn/extensions")
+        
+        // import dot notation
+        globals.map_dot = import "map_dot"
+        
+        // restore original import paths
+        env.importPaths = origEnvImportPaths.deepCopy()
+    end if
+
+
+
+    // stashes a copy of an original function in globals.original
+    stash = function(fqn, func)
+        if (not globals.original.dot_hasIndex(fqn))
             // in theory, if it has the index, the most likely explanation is
             // that the stashed version IS the original version
-            curMap[funcName] = @func
+            globals.original.dot_set(fqn, @func)
         endif
     end function
     
@@ -67,9 +96,9 @@ if (not globals.hasIndex("wuffma")) then
     // sort code.
     //
     // let's change that in an incomplete, ugly way.
-    stash(["builtin"], "import", @import)
+    stash(["builtin.import", @import)
     
-    import = function(module, force=false)
+    import = function(module, force=false, globalize=false)
         // just in case
         ret = false
     
@@ -77,7 +106,7 @@ if (not globals.hasIndex("wuffma")) then
         origEnvImportPaths = env.importPaths.deepCopy()
     
         // our real module to import
-        realModule = module
+        tailModule = module
     
         // check for dot notation
         if (module.contains(".")) then
@@ -85,7 +114,7 @@ if (not globals.hasIndex("wuffma")) then
             packs = module.split(".")
             
             // set real module
-            realModule = packs[-1]
+            tailModule = packs[-1]
             
             // slice module off packs
             packs = packs[:-1]
@@ -104,9 +133,13 @@ if (not globals.hasIndex("wuffma")) then
         endif
         
         // check for single import
-        if ((force) or (not globals.hasIndex(realModule)) then
+        if ((force) or (not globals.dot_hasIndex(module)) then
             // actually import it
-            ret = globals.original.builtin.import realModule
+            ret = globals.original.builtin.import tailModule
+            
+            if ((not globals.dot_hasIndex(module)) and (globalize)) then
+                globals.dot_set(module, ret)
+            end if
         end if
         
         // and restore the original environment import paths
@@ -125,8 +158,20 @@ if (not globals.hasIndex("wuffma")) then
     
     globals.forceimport = @forceimport
     
+    // and a pair of global compliments to that
+    globalimport = function(module)
+        return globals.import(module, false, true)
+    end function
+    
+    // and again
+    globals.globalimport = @globalimport
+        return globals.import(module, true, true)
+    globalforceimport = function(module)
+    
+    end function
+    
     // let's change cd, too.
-    stash(["builtin"], "cd", @cd)
+    stash("builtin.cd", @cd)
     
     cd = function(dirPath="")
         globals.original.builtin.cd(dirPath)
@@ -157,9 +202,13 @@ if (not globals.hasIndex("wuffma")) then
         import "wuffma"
     end function
     
-    // and that's it, basically
-    import "greysondn.aliases"
+    // fix things according to user conf
+    globals.applyRegistry()
     
+    // load libs listed to load at boot
+    for i in range(0, globals.registry.boot.libs.len() - 1)
+        import globals.registry.boot.libs[i]
+    end for
 end if
 
 return {"imported": true}

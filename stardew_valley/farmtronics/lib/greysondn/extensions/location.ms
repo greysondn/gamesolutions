@@ -1,9 +1,9 @@
 // imports
-import "greysondn_constants"
-import "greysondn_tile"
+globalimport "greysondn.constants"
+globalimport "greysondn.tile"
 
 // aliases
-constants = greysondn_constants
+constants  = globals.dot_get("greysondn.constants")
 STATUS = constants.STATUS
 
 // -----------------------------------------------------------------------------
