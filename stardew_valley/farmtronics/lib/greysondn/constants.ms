@@ -242,3 +242,15 @@ TILE.typeToConstant = function (typeString, nameString)
 
     return ret
 end function
+
+// create return for module specifically so that we can manipulate it
+moduleRet = {}
+
+moduleRet.ACTION    = ACTION
+moduleRet.DIRECTION = DIRECTION
+moduleRet.EQUIP     = EQUIP
+moduleRet.STATUS    = STATUS
+moduleRet.TILE      = TILE
+moduleRet.TURTLE    = TURTLE
+
+return moduleRet
