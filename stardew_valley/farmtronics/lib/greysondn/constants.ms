@@ -3,11 +3,6 @@
 // ... so we can stop slinging magic values around without a reference point
 // -----------------------------------------------------------------------------
 
-// helpers
-_helper = {}
-
-// -----------------------------------------------------------------------------
-
 // actions
 ACTION = {}
 ACTION.USE_HELD       = "AU"
@@ -53,6 +48,15 @@ STATUS = {}
 // errors/negatives
 STATUS.NO_WORK = "XW"
 STATUS.TYPE_UNKNOWN = "XT"
+
+// system we're running on
+SYSTEM = {}
+
+SYSTEM.FARMTRONICS_COMPUTER = "Farmtronics Home Computer"
+SYSTEM.FARMTRONICS_BOT      = "Farmtronics Bot"
+SYSTEM.MINI_MICRO           = "Mini Micro"
+
+SYSTEM.CURRENT = version.hostName
 
 // tile
 TILE = {}
@@ -256,6 +260,7 @@ moduleRet.ACTION    = ACTION
 moduleRet.DIRECTION = DIRECTION
 moduleRet.EQUIP     = EQUIP
 moduleRet.STATUS    = STATUS
+moduleRet.SYSTEM    = SYSTEM
 moduleRet.TILE      = TILE
 moduleRet.TURTLE    = TURTLE
 
