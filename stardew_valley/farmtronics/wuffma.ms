@@ -22,19 +22,59 @@
 
 // ordinary imports, guarded
 // -------------------------
+if (not globals.hasIndex("json")) then
+    import "json"
+    globals.json = json
+end if
+
+
 if (not globals.hasIndex("listUtil")) then
-    globals.listUtil = import "listUtil"
+    import "listUtil"
+    globals.listUtil = listUtil
+end if
+
+if (not globals.hasIndex("mapUtil")) then
+    import "mapUtil"
+    globals.mapUtil = mapUtil
 end if
 
 if (not globals.hasIndex("stringUtil")) then
-    globals.stringUtil = import "stringUtil"
+    import "stringUtil"
+    globals.stringUtil = stringUtil
 end if
+
+// I needed two robust utility functions
+list.deepCopy = null
+map.deepCopy = null
+
+list.deepCopy = function()
+    ret = self[:]
+    
+    for i in ret.indexes
+        if ((ret[i] isa list) or (ret[i] isa map)) then
+            ret[i] = ret[i].deepCopy()
+        end if
+    end for
+    
+    return ret
+end function
+
+map.deepCopy = function()
+    ret = {}
+    
+    for pair in self.pairs
+        ret[pair.key] = self[pair.key]
+
+        if ((self[pair.key] isa list) or (self[pair.key] isa map)) then
+            ret[pair.key] = self[pair.key].deepCopy()
+        end if
+    end for
+    
+    return ret
+end function
 
 // and now the actual module, here
 // -------------------------------
-
-// read user config
-
 
 if (not globals.hasIndex("wuffma")) then
     // we've not imported this module yet
@@ -44,9 +84,15 @@ if (not globals.hasIndex("wuffma")) then
     if (not globals.hasIndex("original")) then
         swp = globals.deepCopy()
         globals.original = {}
-        globals.original.globals = swp.deepCopy()
+        globals.original.globals = swp
     end if
-    
+
+
+
+
+
+
+
     // read user config into globals
     globals.registry = json.parse(file.open("conf.json").read())
 
@@ -73,30 +119,20 @@ if (not globals.hasIndex("wuffma")) then
         env.importPaths.push("/usr/lib/greysondn/extensions")
         
         // import dot notation
-        globals.map_dot = import "map_dot"
+        import "map_dot"
+        globals.map_dot = map_dot
+        
         
         // restore original import paths
         env.importPaths = origEnvImportPaths.deepCopy()
     end if
-
-
-
-    // stashes a copy of an original function in globals.original
-    stash = function(fqn, func)
-        if (not globals.original.dot_hasIndex(fqn))
-            // in theory, if it has the index, the most likely explanation is
-            // that the stashed version IS the original version
-            globals.original.dot_set(fqn, @func)
-        endif
-    end function
-    
-    globals.stash = @stash
     
     // import doesn't support subdirectories by default, making it hard to
     // sort code.
     //
     // let's change that in an incomplete, ugly way.
-    stash(["builtin.import", @import)
+    globals.dot_createParents("original.builtin.import")
+    globals.original.builtin.import = @import
     
     import = function(module, force=false, globalize=false)
         // just in case
@@ -130,12 +166,14 @@ if (not globals.hasIndex("wuffma")) then
             for i in range(0, origEnvImportPaths.len() - 1)
                 env.importPaths.push(origEnvImportPaths[i] + pathTail)
             end for
-        endif
+        end if
         
         // check for single import
-        if ((force) or (not globals.dot_hasIndex(module)) then
+        if ((force) or (not globals.dot_hasIndex(module))) then
             // actually import it
-            ret = globals.original.builtin.import tailModule
+            globals.original.builtin.import tailModule
+            
+            ret = locals.dot_get(tailModule)
             
             if ((not globals.dot_hasIndex(module)) and (globalize)) then
                 globals.dot_set(module, ret)
@@ -165,22 +203,32 @@ if (not globals.hasIndex("wuffma")) then
     
     // and again
     globals.globalimport = @globalimport
-        return globals.import(module, true, true)
+
     globalforceimport = function(module)
-    
+        return globals.import(module, true, true)
     end function
-    
+
+    // oh hey, I can import my constants!
+    globalimport "greysondn.constants"
+    constants  = globals.dot_get("greysondn.constants")
+    SYSTEM = constants.SYSTEM
+
     // let's change cd, too.
-    stash("builtin.cd", @cd)
+    globals.dot_createParents("original.builtin.cd")
+    globals.original.builtin.cd = @cd
     
     cd = function(dirPath="")
         globals.original.builtin.cd(dirPath)
-        prefix = "com"
+        prefix = "err"
     
-        if (bot) then
-            prefix = "bot"
+       if (SYSTEM.CURRENT == SYSTEM.FARMTRONICS_COMPUTER) then
+            prefix = "ftc"
+        else if (SYSTEM.CURRENT == SYSTEM.FARMTRONICS_BOT) then
+            prefix = "ftb"
+        else if (SYSTEM.CURRENT == SYSTEM.MINI_MICRO) then
+            prefix = "mmc"
         end if
-    
+
         endPath = pwd
     
         if (endPath.len > 0) then
@@ -207,8 +255,19 @@ if (not globals.hasIndex("wuffma")) then
     
     // load libs listed to load at boot
     for i in range(0, globals.registry.boot.libs.len() - 1)
+        print ("Loading: " + globals.registry.boot.libs[i])
         import globals.registry.boot.libs[i]
     end for
+
+
+
+
+
+
+
+
+
+
 end if
 
 return {"imported": true}

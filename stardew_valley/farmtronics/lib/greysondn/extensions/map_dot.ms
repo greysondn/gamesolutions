@@ -6,7 +6,8 @@
 
 // guarded imports, because I'll need them
 if (not globals.hasIndex("stringUtil")) then
-    globals.stringUtil = import "stringUtil"
+    import "stringUtil"
+    globals.stringUtil = stringUtil
 end if
 
 // overclever bloody helper object
@@ -47,11 +48,11 @@ DotName.set = function(self, dot)
     self.current = 0
     
     self.head = []
-    if (dot.contains(".") then
+    if (dot.contains(".")) then
         self.head = dot.split(".")
     else
         self.head.push(dot)
-    endif
+    end if
     
     self.tail = self.head.pop()
     
@@ -72,13 +73,13 @@ map.dot_hasIndex = function(self, index)
         nxt = dot.getNext()
         
         if (swp.hasIndex(nxt)) then
-            swp = swp(index)
+            swp = swp[nxt]
         else
             failed = true
         end if
     end while
     
-    if (not failed)
+    if (not failed) then
         if (swp.hasIndex(dot.tail)) then
             ret = true
         end if
@@ -100,13 +101,13 @@ map.dot_get = function(self, index)
         nxt = dot.getNext()
         
         if (swp.hasIndex(nxt)) then
-            swp = swp(index)
+            swp = swp[nxt]
         else
             failed = true
         end if
     end while
     
-    if (not failed)
+    if (not failed) then
         if (swp.hasIndex(dot.tail)) then
             ret = swp[dot.tail]
         end if
@@ -125,13 +126,30 @@ map.dot_set = function(self, index, val)
         nxt = dot.getNext()
         
         if (not swp.hasIndex(nxt)) then
-            swp[index] = {}
-        endif
+            swp[nxt] = {}
+        end if
 
-        swp = swp[index]
+        swp = swp[nxt]
     end while
     
     swp[dot.tail] = val
+end function
+
+map.dot_createParents = function(self, index)
+    dot = new DotName
+    dot.set(index)
+    
+    swp = self
+    
+    while (dot.hasNext())
+        nxt = dot.getNext()
+        
+        if (not swp.hasIndex(nxt)) then
+            swp[nxt] = {}
+        end if
+
+        swp = swp[nxt]
+    end while
 end function
 
 // make it happy we imported this
