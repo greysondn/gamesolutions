@@ -3,13 +3,17 @@
 // ... so we can stop slinging magic values around without a reference point
 // -----------------------------------------------------------------------------
 
+// helpers
+_helper = {}
+
+// -----------------------------------------------------------------------------
+
 // actions
 ACTION = {}
 ACTION.USE_HELD       = "AU"
 ACTION.FACE           = "AF"
 ACTION.MOVE           = "AM"
 ACTION.MOVE_AND_CLEAR = "AC"
-
 
 // directions are defined as part of bot's values, so don't look at me over
 // inconsistency or anything.
@@ -18,13 +22,6 @@ DIRECTION.NORTH = 0
 DIRECTION.EAST  = 1
 DIRECTION.SOUTH = 2
 DIRECTION.WEST  = 3
-
-// keys for turtle movement
-TURTLE = {}
-TURTLE.LEFT      = "TL"
-TURTLE.RIGHT     = "TR"
-TURTLE.FORWARDS  = "TF"
-TURTLE.BACKWARDS = "TB"
 
 // keys for equipping stuff
 EQUIP = {}
@@ -242,6 +239,15 @@ TILE.typeToConstant = function (typeString, nameString)
 
     return ret
 end function
+
+// keys for turtle movement
+TURTLE = {}
+TURTLE.LEFT      = "TL"
+TURTLE.RIGHT     = "TR"
+TURTLE.FORWARDS  = "TF"
+TURTLE.BACKWARDS = "TB"
+
+// -----------------------------------------------------------------------------
 
 // create return for module specifically so that we can manipulate it
 moduleRet = {}
