@@ -252,4 +252,7 @@ if (not globals.hasIndex("wuffma")) then
     end for
 end if
 
+globalimport "greysondn.cursed"
+globals.greysondn.cursed.cls()
+
 return {"imported": true}
