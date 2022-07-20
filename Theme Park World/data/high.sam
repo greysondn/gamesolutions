@@ -34,22 +34,22 @@
 #
 
 GraphicalOptions.TEXTUREQUALITY					3
-GraphicalOptions.TEXTUREFILTERING				2
-GraphicalOptions.PROCEDURALTEXTURING			2
+GraphicalOptions.TEXTUREFILTERING				3
+GraphicalOptions.PROCEDURALTEXTURING			3
 GraphicalOptions.PROCEDURALTEXTURECACHE			1
 GraphicalOptions.ANIMATINGTEXTURES				1
 GraphicalOptions.SKYQUALITY						4
 GraphicalOptions.SKYDETAIL						1
-GraphicalOptions.SKYSHADOW						0
+GraphicalOptions.SKYSHADOW						1
 GraphicalOptions.MESHSHADOW						1
-GraphicalOptions.SPRITESHADOW					2
+GraphicalOptions.SPRITESHADOW					3
 GraphicalOptions.TRIPLEBUFFER					1
 GraphicalOptions.FOG							1
 GraphicalOptions.MIPMAP							1
 GraphicalOptions.RENDER32						1
 GraphicalOptions.TEXTURE32						1
-GraphicalOptions.BUMPMAPPING					0
-GraphicalOptions.FIRSTPERSONVIEWDISTANCE		2
+GraphicalOptions.BUMPMAPPING					1
+GraphicalOptions.FIRSTPERSONVIEWDISTANCE		3
 GraphicalOptions.LIGHTING						1
 GraphicalOptions.FORCELOWALPHAREF				0
 
@@ -66,10 +66,10 @@ GraphicalOptions.FORCELOWALPHAREF				0
 #	Game Options
 #
 
-GameOptions.COASTERSMOOTHNESS					6
+GameOptions.COASTERSMOOTHNESS					8
 GameOptions.COASTERTRACKDETAIL					1
 GameOptions.PARTICLEDENSITY						1500
 GameOptions.TOTALPARTICLES						2000
-GameOptions.NUMKIDS								2
+GameOptions.NUMKIDS								3
 GameOptions.WEATHER								1
 GameOptions.LOBBYOBJECTS						100
