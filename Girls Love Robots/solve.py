@@ -4,6 +4,7 @@ from tqdm import tqdm
 
 class TokenType(Enum):
     EMPTY      = "_"
+    EXPANDABLE = "?"
     ALIEN_GIRL = "Q"
     ALIEN_NERD = "Z"
     BEN        = "B"
@@ -38,6 +39,16 @@ class Token():
 
     def getMood(self, neighbors:list[TokenType]) -> int:
         ret = self.basicMood(neighbors)
+        return ret
+    
+    def isEmpty(self):
+        ret = False
+
+        if (self.ttype == TokenType.EMPTY):
+            ret = True
+        elif (self.ttype == TokenType.EXPANDABLE):
+            ret = True
+        
         return ret
 
 class Girl(Token):
@@ -74,7 +85,6 @@ class Nerd(Token):
 class AlienGirl(Token):
     def __init__(self):
         super().__init__(TokenType.ALIEN_GIRL)
-        
 
 class AlienNerd(Token):
     def __init__(self):
@@ -91,6 +101,10 @@ class Edge(Token):
 class Empty(Token):
     def __init__(self):
         super().__init__(TokenType.EMPTY)
+
+class Expandable(Token):
+    def __init__(self):
+        super().__init__(TokenType.EXPANDABLE)
 
 class Board():
     def __init__(self, state:list[list[Token]]):
@@ -158,7 +172,7 @@ class Board():
         
         for y in self.state:
             for x in y:
-                if (x.ttype == TokenType.EMPTY):
+                if (x.isEmpty()):
                     ret = ret + 1
         
         return ret
@@ -166,9 +180,7 @@ class Board():
     def place(self, tokens:list[Token]):
         if self.placementExpandsOutwards:
             if self.forcedBagOrder:
-                pass
-            else:
-                pass
+                self.placeHardMode(tokens)
         else:
             self.placeFast(tokens)
 
@@ -177,6 +189,40 @@ class Board():
             for x in range(len(self.state[0])):
                 if (self.state[y][x].ttype == TokenType.EMPTY):
                     self.state[y][x] = tokens.pop(0)
+    
+    def markViableSpots(self, board:list[list[Token]]):
+        bHeight = len(board)
+        bWidth  = len(board[0])
+        for y in range(bHeight):
+            for x in range(bWidth):
+                # check for empty or viable
+                if (not board[y][x].isEmpty()):
+                    # we can expand in every direction, actually
+                    #
+                    # north
+                    if (y - 1 >= 0):
+                        if (board[y-1][x].isEmpty()):
+                            board[y-1][x] = Expandable()
+                
+    def placeHardMode(self, tokens:list[Token]):
+        # hard mode is defined as:
+        # forced bag order
+        # placement expands outwards
+        
+        # need a clone of the board
+        secondBoard = self.state.copy()
+        self.initFromCore()
+        
+        # now, the question is if we can place the tokens in the given positions
+        # such that we end up with a valid board state.
+        
+        # I think the easiest way is to just place the tokens on the board
+        self.placeFast(tokens)
+        
+        # and then check it
+        chkBag = self.forcedBagOrderBag.copy()
+        
+        curToken = chkBag.pop(0)
     
     def addBag(self, bag:list[Token]):
         for token in bag:
