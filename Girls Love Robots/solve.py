@@ -94,9 +94,12 @@ class Empty(Token):
 
 class Board():
     def __init__(self, state:list[list[Token]]):
-        self.core:list[list[Token]]  = state
-        self.state:list[list[Token]] = []
-        self.tokensToPlace:list[Token] = []
+        self.core:list[list[Token]]        = state
+        self.state:list[list[Token]]       = []
+        self.tokensToPlace:list[Token]     = []
+        self.forcedBagOrder                = False
+        self.forcedBagOrderBag:list[Token] = []
+        self.placementExpandsOutwards      = False
         self.initFromCore()
         
         self.bestBoard:str               = ""
@@ -161,6 +164,15 @@ class Board():
         return ret
     
     def place(self, tokens:list[Token]):
+        if self.placementExpandsOutwards:
+            if self.forcedBagOrder:
+                pass
+            else:
+                pass
+        else:
+            self.placeFast(tokens)
+
+    def placeFast(self, tokens:list[Token]):
         for y in range(len(self.state)):
             for x in range(len(self.state[0])):
                 if (self.state[y][x].ttype == TokenType.EMPTY):
