@@ -203,6 +203,21 @@ class Board():
                     if (y - 1 >= 0):
                         if (board[y-1][x].isEmpty()):
                             board[y-1][x] = Expandable()
+                    
+                    # south
+                    if ((y + 1) < bHeight):
+                        if (board[y+1][x].isEmpty()):
+                            board[y+1][x] = Expandable()
+                    
+                    # West
+                    if ((x - 1) >= 0):
+                        if (board[y][x-1].isEmpty()):
+                            board[y][x-1] = Expandable()
+                            
+                    # East
+                    if ((x + 1) < bWidth):
+                        if (board[y][x+1].isEmpty()):
+                            board[y][x+1] = Expandable()
                 
     def placeHardMode(self, tokens:list[Token]):
         # hard mode is defined as:
@@ -220,9 +235,36 @@ class Board():
         self.placeFast(tokens)
         
         # and then check it
+        
         chkBag = self.forcedBagOrderBag.copy()
         
-        curToken = chkBag.pop(0)
+        placedToken = False
+        failure     = False
+        carryOn     = True
+        
+        while carryOn:
+            # current token
+            curToken = chkBag.pop(0)
+            self.markViableSpots(secondBoard)
+            
+            for y in range(len(secondBoard)):
+                for x in range(len(secondBoard[0])):
+                    if not placedToken:
+                        if (secondBoard[y][x].ttype == TokenType.EXPANDABLE):
+                            if (self.state[y][x].ttype == curToken.ttype):
+                                secondBoard[y][x] = curToken
+                                placedToken = True
+            
+            # gate conditions
+            if (not placedToken):
+                carryOn = False
+                failure = True
+            if (len(chkBag) == 0):
+                carryOn = False
+        
+        # that's it.
+        # if it's a failure we catch it and if not we don't
+        # TODO: YOU WERE HERE!
     
     def addBag(self, bag:list[Token]):
         for token in bag:
