@@ -1,4 +1,6 @@
 from enum import Enum
+from itertools import permutations
+from tqdm import tqdm
 
 class TokenType(Enum):
     EMPTY      = "_"
@@ -80,13 +82,18 @@ class Edge(Token):
     def __init__(self):
         super().__init__(TokenType.EDGE)
 
+class Empty(Token):
+    def __init__(self):
+        super().__init__(TokenType.EMPTY)
+
 class Board():
     def __init__(self, state:list[list[Token]]):
         self.core:list[list[Token]]  = state
         self.state:list[list[Token]] = []
+        self.tokensToPlace:list[Token] = []
         self.initFromCore()
         
-        self.bestBoard:list[list[Token]] = []
+        self.bestBoard:str               = ""
         self.bestScore:int               = 0
     
     def initFromCore(self):
@@ -152,6 +159,63 @@ class Board():
             for x in range(len(self.state[0])):
                 if (self.state[y][x].ttype == TokenType.EMPTY):
                     self.state[y][x] = tokens.pop(0)
+    def addBag(self, bag:list[Token]):
+        for token in bag:
+            self.tokensToPlace.append(token)
+    def toStr(self):
+        ret = ""
+        for row in self.state:
+            for cell in row:
+                ret = ret + str(cell.ttype) + " "
+            ret = ret + "\n\n"
+        return ret
+                    
+    def solve(self, target=None):
+        # build a token bag
+        blankCount:int = self.countEmptySpaces() - len(self.tokensToPlace)
+        toks:list[Token] = self.tokensToPlace.copy()
+        for i in range(blankCount):
+            toks.append(Empty())
+            
+        # we solve this by permutating the token bag,
+        # placing the tokens,
+        # scoring it,
+        # and then moving on.
+        # If there is a target score, we can stop when we hit it.
+        solved:bool = False
+        self.bestScore = 0
+        self.bestBoard = ""
+        self.initFromCore()
+        
+        for permutation in tqdm(permutations(toks)):
+            if (not solved):
+                # place tokens and score
+                self.place(list(permutation))
+                score = self.score()
+                
+                # check for better score
+                if (score > self.bestScore):
+                    self.bestBoard = self.toStr()
+                    self.bestScore = score
+                
+                # check for target score
+                if (target != None):
+                    if (self.bestScore > target):
+                        solved = True
+                
+                # reset
+                self.initFromCore()
+        
+        
+        # print best at end
+        print("-------------------------------------")
+        print(self.bestScore)
+        print(self.bestBoard)
+        print("-------------------------------------")
+                
+
+        
+        
     
 '''
     BUS_DRIVER = "D"
@@ -166,3 +230,35 @@ class Board():
     TRAIN_GIRL = "X"
     TRAIN_NERD = "Y"
 '''
+
+
+def solve_1_4_5():
+    # the ladies would like Dave to know he's cheesy
+    start:list[list[Token]] =[
+        [Empty(), Empty(), Empty(), Nerd() ],
+        [Empty(), Empty(), Empty(), Empty()],
+        [Robot(), Empty(), Empty(), Empty()]
+    ]
+    
+    board:Board = Board(start)
+    
+    bag:list[Token] = [
+        Girl(),
+        Girl(),
+        Girl(),
+        Girl(),
+        Girl(),
+        Robot(),
+        Robot(),
+        Robot(),
+        Nerd(),
+        Nerd()
+    ]
+    
+    board.addBag(bag)
+    
+    board.solve()
+    
+################################################################################
+if (__name__ == "__main__"):
+    solve_1_4_5()
