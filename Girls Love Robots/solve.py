@@ -174,8 +174,8 @@ class Board():
         ret = ""
         for row in self.state:
             for cell in row:
-                ret = ret + str(cell.ttype.value) + " "
-            ret = ret + "\n\n"
+                ret = ret + str(cell.ttype.value)
+            ret = ret + "\n"
         return ret
                     
     def solve(self, target=None):
@@ -266,7 +266,44 @@ def solve_1_4_5():
     board.addBag(bag)
     
     board.solve(25)
+
+def solve_1_4_6():
+    # Are you sure that's a regulation size chicken?
+    start:list[list[Token]] =[
+        [Empty(), Empty(), Empty(), Empty(), Empty()],
+        [Empty(), Empty(), Empty(), Robot(), Empty()],
+        [Empty(), Empty(), Empty(), Empty(), Empty()],
+        [Empty(), Empty(), Empty(), Empty(), Empty()],
+        [Empty(), Empty(), Empty(), Empty(), Empty()]
+    ]
     
+    board:Board = Board(start)
+    
+    bag:list[Token] = [
+        Girl(),
+        Girl(),
+        Girl(),
+        Girl(),
+        Girl(),
+        Girl(),
+        Girl(),
+        Robot(),
+        Robot(),
+        Robot(),
+        Robot(),
+        Robot(),
+        Robot(),
+        Nerd(),
+        Nerd(),
+        Nerd(),
+        Nerd(),
+        Nerd(),
+        Nerd()
+    ]
+    
+    board.addBag(bag)
+    
+    board.solve(40)
 ################################################################################
 if (__name__ == "__main__"):
-    solve_1_4_5()
+    solve_1_4_6()
