@@ -31,6 +31,9 @@ class Token():
         for neighbor in neighbors:
             ret = ret + self.feelings.get(neighbor, 0)
         
+        if (ret < 0):
+            ret = 0
+        
         return ret
 
     def getMood(self, neighbors:list[TokenType]) -> int:
@@ -41,7 +44,8 @@ class Girl(Token):
     def __init__(self):
         super().__init__(TokenType.GIRL)
         
-        self.feelings[TokenType.ROBOT] = 1
+        self.feelings[TokenType.NERD]  = -1
+        self.feelings[TokenType.ROBOT] =  1
 
 class Robot(Token):
     def __init__(self):
@@ -62,8 +66,10 @@ class Nerd(Token):
     def __init__(self):
         super().__init__(TokenType.NERD)
         
-        self.feelings[TokenType.EDGE] =  1
-        self.feelings[TokenType.NERD] = -1
+        self.feelings[TokenType.EDGE]  =  1
+        self.feelings[TokenType.GIRL]  =  1
+        self.feelings[TokenType.NERD]  = -1
+        self.feelings[TokenType.ROBOT] =  1
         
 class AlienGirl(Token):
     def __init__(self):
@@ -111,11 +117,11 @@ class Board():
         self.state.append(swp_a)
         
         # middle rows
-        for i in range(len(self.state)):
+        for i in range(len(self.core)):
             swp_r:list[Token] = []
             swp_r.append(Edge())
             
-            row = self.state[i]
+            row = self.core[i]
             
             for j in range(len(row)):
                 swp_r.append(row[j])
@@ -159,14 +165,16 @@ class Board():
             for x in range(len(self.state[0])):
                 if (self.state[y][x].ttype == TokenType.EMPTY):
                     self.state[y][x] = tokens.pop(0)
+    
     def addBag(self, bag:list[Token]):
         for token in bag:
             self.tokensToPlace.append(token)
+    
     def toStr(self):
         ret = ""
         for row in self.state:
             for cell in row:
-                ret = ret + str(cell.ttype) + " "
+                ret = ret + str(cell.ttype.value) + " "
             ret = ret + "\n\n"
         return ret
                     
@@ -197,7 +205,7 @@ class Board():
                 if (score > self.bestScore):
                     self.bestBoard = self.toStr()
                     self.bestScore = score
-                
+                    
                 # check for target score
                 if (target != None):
                     if (self.bestScore > target):
@@ -257,7 +265,7 @@ def solve_1_4_5():
     
     board.addBag(bag)
     
-    board.solve()
+    board.solve(25)
     
 ################################################################################
 if (__name__ == "__main__"):
