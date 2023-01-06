@@ -26,6 +26,9 @@ class Token():
         self.ttype:TokenType = ttype
         self.feelings:dict[TokenType,int] = {}
         
+    def __repr__(self):
+        return str(self.ttype.value)
+
     def basicMood(self, neighbors:list[TokenType]) -> int:
         ret = 0
         
@@ -106,6 +109,14 @@ class Expandable(Token):
     def __init__(self):
         super().__init__(TokenType.EXPANDABLE)
 
+class TokenPlacementError(Exception):
+    '''
+    Signifies that an error happened during token placement, generally meaning
+    that a token placement is invalid.
+    '''
+    def __init__(self, *args):
+        super().__init__(args)
+
 class Board():
     def __init__(self, state:list[list[Token]]):
         self.core:list[list[Token]]        = state
@@ -118,6 +129,8 @@ class Board():
         
         self.bestBoard:str               = ""
         self.bestScore:int               = 0
+        
+        self.seenBoards:list[str] = []
     
     def initFromCore(self):
         # creating our state is a pain
@@ -178,6 +191,13 @@ class Board():
         return ret
     
     def place(self, tokens:list[Token]):
+        strRep:str = str(tokens)
+        
+        if (strRep) in self.seenBoards:
+            raise TokenPlacementError()
+        else:
+            self.seenBoards.append(strRep)
+        
         if self.placementExpandsOutwards:
             if self.forcedBagOrder:
                 self.placeHardMode(tokens)
@@ -263,8 +283,8 @@ class Board():
                 carryOn = False
         
         # that's it.
-        # if it's a failure we catch it and if not we don't
-        # TODO: YOU WERE HERE!
+        if (failure):
+            raise TokenPlacementError()
     
     def addBag(self, bag:list[Token]):
         for token in bag:
@@ -308,18 +328,24 @@ class Board():
             
             if (not solved):
                 # place tokens and score
-                self.place(list(permutation))
-                score = self.score()
-                
-                # check for better score
-                if (score > self.bestScore):
-                    self.bestBoard = self.toStr()
-                    self.bestScore = score
+                validPlacement = True
+                try:
+                    self.place(list(permutation))
+                except TokenPlacementError:
+                    validPlacement = False
+
+                if validPlacement:
+                    score = self.score()
                     
-                # check for target score
-                if (target != None):
-                    if (self.bestScore > target):
-                        solved = True
+                    # check for better score
+                    if (score > self.bestScore):
+                        self.bestBoard = self.toStr()
+                        self.bestScore = score
+                        
+                    # check for target score
+                    if (target != None):
+                        if (self.bestScore > target):
+                            solved = True
                 
                 # reset
                 self.initFromCore()
