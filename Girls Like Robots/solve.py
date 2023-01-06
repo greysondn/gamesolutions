@@ -80,6 +80,8 @@ class Token():
         
         if (self.ttype in successes):
             ret = True
+        
+        return ret
 
 class Girl(Token):
     def __init__(self):
