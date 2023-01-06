@@ -478,6 +478,36 @@ def solve_1_3_4():
     
     board.solve(8)
 
+def solve_1_3_4_test():
+    # variant to help test hard mode placement.
+    start:list[list[Token]] = [
+        [Nerd(), Empty(), Empty()],
+        [Empty(), Empty(), Empty()],
+        [Empty(), Empty(), Empty()]
+    ]
+    
+    board:Board = Board(start)
+    
+    bag:list[Token] = [
+        Girl(),
+        Nerd(),
+        Girl(),
+        Nerd(),
+        Girl(),
+        Nerd(),
+        Girl(),
+        Girl()
+    ]
+    
+    board.addBag(bag)
+    
+    board.forcedBagOrder           = True
+    board.forcedBagOrderBag        = bag
+    
+    board.placementExpandsOutwards = True
+    
+    board.solve(8)
+
 def solve_1_3_6():
     # Sometimes you don't get to pick who to place next!
     start:list[list[Token]] = [
@@ -535,6 +565,35 @@ def solve_1_4_5():
     
     board.solve(25)
 
+def solve_1_3_7():
+    start:list[list[Token]] = [
+        [Nerd(),  Empty(), Empty()],
+        [Empty(), Empty(), Empty()],
+        [Empty(), Empty(), Empty()]
+    ]
+    
+    board:Board = Board(start)
+    
+    bag:list[Token] = [
+        Robot(),
+        Girl(),
+        Robot(),
+        Robot(),
+        Girl(),
+        Girl(),
+        Girl(),
+        Girl()
+    ]
+    
+    board.addBag(bag)
+    
+    board.forcedBagOrder    = True
+    board.forcedBagOrderBag = bag
+
+    board.placementExpandsOutwards = True
+    
+    board.solve(18)
+
 def solve_1_4_6():
     # Are you sure that's a regulation size chicken?
     start:list[list[Token]] =[
@@ -578,4 +637,6 @@ if (__name__ == "__main__"):
     # solve_1_2_5()  # solves
     # solve_1_3_3()  # solves
     # solve_1_3_4()  # solves
-    solve_1_3_6() # solves
+    # solve_1_3_6()  # solves
+    solve_1_3_4_test()
+    # solve_1_3_7()  # can't
