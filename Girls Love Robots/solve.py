@@ -295,7 +295,17 @@ class Board():
         self.bestBoard = ""
         self.initFromCore()
         
-        for permutation in tqdm(permutations(toks)):
+        # count the number of permutations
+        totIterations:int = 1
+
+        for x in range(len(toks)):
+            totIterations = totIterations * (x + 1)
+        
+        for permutation in tqdm(
+                                iterable = permutations(toks),
+                                total = totIterations
+            ):
+            
             if (not solved):
                 # place tokens and score
                 self.place(list(permutation))
