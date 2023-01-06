@@ -415,6 +415,7 @@ def solve_1_4_6():
     
     board:Board = Board(start)
     
+    
     bag:list[Token] = [
         Girl(),
         Girl(),
@@ -442,4 +443,4 @@ def solve_1_4_6():
     board.solve(40)
 ################################################################################
 if (__name__ == "__main__"):
-    solve_1_4_6()
+    solve_1_4_5()
