@@ -478,6 +478,32 @@ def solve_1_3_4():
     
     board.solve(8)
 
+def solve_1_3_6():
+    # Sometimes you don't get to pick who to place next!
+    start:list[list[Token]] = [
+        [Empty(), Empty()],
+        [Empty(), Empty()],
+        [Empty(), Empty()]
+    ]
+    
+    board:Board = Board(start)
+    
+    bag:list[Token] = [
+        Girl(),
+        Robot(),
+        Girl(),
+        Girl(),
+        Robot(),
+        Robot()
+    ]
+    
+    board.addBag(bag)
+    
+    board.forcedBagOrder    = True
+    board.forcedBagOrderBag = bag
+    
+    board.solve(14)
+
 def solve_1_4_5():
     # the ladies would like Dave to know he's cheesy
     start:list[list[Token]] =[
@@ -551,4 +577,5 @@ def solve_1_4_6():
 if (__name__ == "__main__"):
     # solve_1_2_5()  # solves
     # solve_1_3_3()  # solves
-    solve_1_3_4()    # solves
+    # solve_1_3_4()  # solves
+    solve_1_3_6() # solves
