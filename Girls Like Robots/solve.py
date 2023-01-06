@@ -610,35 +610,40 @@ def solve_1_4_6():
     
     
     bag:list[Token] = [
-        Girl(),
-        Girl(),
-        Girl(),
-        Girl(),
-        Girl(),
-        Girl(),
-        Girl(),
         Robot(),
-        Robot(),
-        Robot(),
-        Robot(),
+        Girl(),
         Robot(),
         Robot(),
         Nerd(),
+        Girl(),
+        Girl(),
         Nerd(),
         Nerd(),
+        Girl(),
         Nerd(),
         Nerd(),
-        Nerd()
+        Robot(),
+        Robot(),
+        Girl(),
+        Nerd(),
+        Girl(),
+        Robot(),
+        Girl()
     ]
     
     board.addBag(bag)
     
+    board.forcedBagOrder           = True
+    board.forcedBagOrderBag        = bag
+    board.placementExpandsOutwards = True
+    
     board.solve(40)
 ################################################################################
 if (__name__ == "__main__"):
-    # solve_1_2_5()  # solves
-    # solve_1_3_3()  # solves
-    # solve_1_3_4()  # solves
-    # solve_1_3_6()  # solves
-    solve_1_3_4_test()
-    # solve_1_3_7()  # can't
+    # solve_1_2_5()      # solves
+    # solve_1_3_3()      # solves
+    # solve_1_3_4()      # solves
+    # solve_1_3_6()      # solves
+    # solve_1_3_4_test() # solves
+    # solve_1_3_7()      # solves
+    solve_1_4_6()
