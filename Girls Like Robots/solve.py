@@ -46,13 +46,40 @@ class Token():
     
     def isEmpty(self):
         ret = False
+        
+        successes = [
+            TokenType.EMPTY,
+            TokenType.EXPANDABLE
+        ]
 
-        if (self.ttype == TokenType.EMPTY):
-            ret = True
-        elif (self.ttype == TokenType.EXPANDABLE):
+        if (self.ttype in successes):
             ret = True
         
         return ret
+
+    def hasToken(self):
+        ret = True
+        
+        failures = [
+            TokenType.EDGE,
+            TokenType.EMPTY,
+            TokenType.EXPANDABLE
+        ]
+        
+        if (self.ttype in failures):
+            ret = False
+        
+        return ret
+    
+    def isExpandable(self):
+        ret = False
+        
+        successes = [
+            TokenType.EMPTY
+        ]
+        
+        if (self.ttype in successes):
+            ret = True
 
 class Girl(Token):
     def __init__(self):
@@ -81,7 +108,6 @@ class Nerd(Token):
         super().__init__(TokenType.NERD)
         
         self.feelings[TokenType.EDGE]  =  1
-        self.feelings[TokenType.GIRL]  =  1
         self.feelings[TokenType.NERD]  = -1
         self.feelings[TokenType.ROBOT] =  1
         
@@ -216,27 +242,27 @@ class Board():
         for y in range(bHeight):
             for x in range(bWidth):
                 # check for empty or viable
-                if (not board[y][x].isEmpty()):
+                if (board[y][x].hasToken()):
                     # we can expand in every direction, actually
                     #
                     # north
                     if (y - 1 >= 0):
-                        if (board[y-1][x].isEmpty()):
+                        if (board[y-1][x].isExpandable()):
                             board[y-1][x] = Expandable()
                     
                     # south
                     if ((y + 1) < bHeight):
-                        if (board[y+1][x].isEmpty()):
+                        if (board[y+1][x].isExpandable()):
                             board[y+1][x] = Expandable()
                     
                     # West
                     if ((x - 1) >= 0):
-                        if (board[y][x-1].isEmpty()):
+                        if (board[y][x-1].isExpandable()):
                             board[y][x-1] = Expandable()
                             
                     # East
                     if ((x + 1) < bWidth):
-                        if (board[y][x+1].isEmpty()):
+                        if (board[y][x+1].isExpandable()):
                             board[y][x+1] = Expandable()
                 
     def placeHardMode(self, tokens:list[Token]):
@@ -344,7 +370,7 @@ class Board():
                         
                     # check for target score
                     if (target != None):
-                        if (self.bestScore > target):
+                        if (self.bestScore >= target):
                             solved = True
                 
                 # reset
@@ -375,13 +401,11 @@ class Board():
     TRAIN_NERD = "Y"
 '''
 
-
-def solve_1_4_5():
-    # the ladies would like Dave to know he's cheesy
-    start:list[list[Token]] =[
-        [Empty(), Empty(), Empty(), Nerd() ],
-        [Empty(), Empty(), Empty(), Empty()],
-        [Robot(), Empty(), Empty(), Empty()]
+def solve_1_2_5():
+    # first real puzzle of the game, yo
+    start:list[list[Token]] = [
+        [Empty(), Empty(), Empty(), Empty(), Empty()],
+        [Empty(), Empty(), Empty(), Empty(), Empty()]
     ]
     
     board:Board = Board(start)
@@ -395,11 +419,93 @@ def solve_1_4_5():
         Robot(),
         Robot(),
         Robot(),
+        Robot(),
+        Robot()
+    ]
+    
+    board.addBag(bag)
+    
+    board.solve(26)
+    
+def solve_1_3_3():
+    # Don't panic these Robots!
+    start:list[list[Token]] = [
+        [Empty(), Empty(), Empty()],
+        [Empty(), Empty(), Empty()],
+        [Empty(), Empty(), Empty()]
+    ]
+    
+    board:Board = Board(start)
+    
+    bag:list[Token] = [
+        Girl(),
+        Girl(),
+        Girl(),
+        Girl(),
+        Girl(),
+        Girl(),
+        Girl(),
+        Robot(),
+        Robot()
+    ]
+    
+    board.addBag(bag)
+    
+    board.solve(12)
+    
+def solve_1_3_4():
+    start:list[list[Token]] = [
+        [Empty(), Empty(), Empty()],
+        [Empty(), Empty(), Empty()],
+        [Empty(), Empty(), Empty()]
+    ]
+    
+    board:Board = Board(start)
+    
+    bag:list[Token] = [
+        Girl(),
+        Girl(),
+        Girl(),
+        Girl(),
+        Girl(),
+        Nerd(),
+        Nerd(),
         Nerd(),
         Nerd()
     ]
     
     board.addBag(bag)
+    
+    board.solve(8)
+
+def solve_1_4_5():
+    # the ladies would like Dave to know he's cheesy
+    start:list[list[Token]] =[
+        [Empty(), Empty(), Empty(), Nerd() ],
+        [Empty(), Empty(), Empty(), Empty()],
+        [Robot(), Empty(), Empty(), Empty()]
+    ]
+    
+    board:Board = Board(start)
+    
+    bag:list[Token] = [
+        Robot(),
+        Girl(),
+        Nerd(),
+        Girl(),
+        Girl(),
+        Robot(),
+        Robot(),
+        Nerd(),
+        Girl(),
+        Girl()
+    ]
+    
+    board.addBag(bag)
+    
+    board.placementExpandsOutwards = True
+    board.forcedBagOrder           = True
+    board.forcedBagOrderBag        = bag
     
     board.solve(25)
 
@@ -443,4 +549,6 @@ def solve_1_4_6():
     board.solve(40)
 ################################################################################
 if (__name__ == "__main__"):
-    solve_1_4_5()
+    # solve_1_2_5()  # solves
+    # solve_1_3_3()  # solves
+    solve_1_3_4()    # solves
