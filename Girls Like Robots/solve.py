@@ -599,6 +599,11 @@ def solve_1_3_7():
 
 def solve_1_4_6():
     # Are you sure that's a regulation size chicken?
+    
+    # I think, in theory, the code solves this, but in practice,
+    # I can't manage to solve it in practical time right now
+    #
+    # I could parallelize this code but that will just have to wait for now
     start:list[list[Token]] =[
         [Empty(), Empty(), Empty(), Empty(), Empty()],
         [Empty(), Empty(), Empty(), Robot(), Empty()],
