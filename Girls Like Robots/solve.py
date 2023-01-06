@@ -1,6 +1,7 @@
 from enum import Enum
 from itertools import permutations
 from tqdm import tqdm
+import asyncio as aio
 
 class TokenType(Enum):
     EMPTY      = "_"
@@ -639,7 +640,7 @@ def solve_1_4_6():
     
     board.solve(40)
 ################################################################################
-if (__name__ == "__main__"):
+async def main():
     # solve_1_2_5()      # solves
     # solve_1_3_3()      # solves
     # solve_1_3_4()      # solves
@@ -647,3 +648,6 @@ if (__name__ == "__main__"):
     # solve_1_3_4_test() # solves
     # solve_1_3_7()      # solves
     solve_1_4_6()
+
+if (__name__ == "__main__"):
+   aio.run(main())
