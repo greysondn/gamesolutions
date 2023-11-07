@@ -187,8 +187,26 @@ class ApConfig():
         self.item_links:str = "IGNORED."
         '''Don't really get this. Ignored in this config generator for now.'''
     
-    # Some stuff to override
-    def reconfigure(self, checks:int, deathLink:bool, duration:int, difficulty:int):
+    # Some stuff to override for difficulty
+    def reconfigure_checks(self, checks:int) -> None:
+        pass
+    
+    def reconfigure_deathLink(self, deathLink:bool) -> None:
+        pass
+    
+    def reconfigure_duration(self, duration:int) -> None:
+        pass
+
+    def reconfigure_difficulty(self, difficulty:int) -> None:
+        pass
+    
+    def reconfigure_end(self) -> None:
+        pass
+    
+    def reconfigure_start(self) -> None:
+        pass
+    
+    def reconfigure(self, checks:int, deathLink:bool, duration:int, difficulty:int) -> None:
         """Override this to reconfigure the game before prepping output.
 
         Args:
@@ -197,7 +215,12 @@ class ApConfig():
             duration (int): approximate max duration of play in seconds
             difficulty (int): how hard the game is meant to be
         """        
-        pass
+        self.reconfigure_start()
+        self.reconfigure_difficulty(difficulty)
+        self.reconfigure_checks(checks)
+        self.reconfigure_duration(duration)
+        self.reconfigure_deathLink(deathLink)
+        self.reconfigure_end()
     
     # output prep functions
     def prep_simple(self, name:str, value:str, indent:int = 0) -> str:
@@ -323,7 +346,15 @@ class ApConfig():
         return ret
         
 class Doom1993(ApConfig):
-    pass
+    def __init__(self):
+        # parent
+        super().__init__()
+        
+        # reconfigure non-difficulty parts of base class
+        self.game = Game.DOOM_1993
+        self.apgame = "DOOM 1993"
+        
+        raise NotImplementedError()
 
 class RiskOfRain2(ApConfig):
     pass
@@ -338,4 +369,14 @@ class StardewValley(ApConfig):
     pass
 
 class SuperMarioWorld(ApConfig):
-    pass
+    def __init__(self):
+        # parent
+        super().__init__()
+        
+        # reconfigure non-difficulty parts of base class
+        self.game = Game.SUPER_MARIO_WORLD
+        self.apgame = "Super Mario World"
+        self.requires_version = "0.4.3"
+    
+    def reconfigure_start(self) -> None:
+        pass
