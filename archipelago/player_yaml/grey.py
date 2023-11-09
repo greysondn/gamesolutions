@@ -385,6 +385,11 @@ class ApConfig():
         ret = ret + self.prep_gameSettings()
         
         return ret
+    
+    def print_goal(self) -> None:
+        """Override to output the objective note for whatever the game is.
+        """        
+        pass
         
 class Doom1993(ApConfig):
     def __init__(self):
@@ -671,6 +676,31 @@ class SuperMarioWorld(ApConfig):
         ret = ret + self.prep_int("starting_life_count", self.starting_life_count, 4)
         
         return ret
+
+    def print_goal(self, difficulty:int) -> None:
+        out:str = "\n\n"
+        nam:str = self.name.title()
+        
+        swp:float = float(self.number_of_yoshi_eggs) * (float(self.percentage_of_yoshi_eggs) / 100.0)
+        egg:int = round(swp)
+        
+        
+        if (difficulty == Difficulty.VERY_EASY):
+            out = out + f"{nam} should have a very easy time finding {egg} eggs."
+        elif (difficulty == Difficulty.EASY):
+            out = out + f"{nam} should find it easy to find {egg} eggs."
+        elif (difficulty == Difficulty.NORMAL):
+            out = out + f"{nam} has to try to act normal while searching for {egg} eggs."
+        elif (difficulty == Difficulty.HARD):
+            out = out + f"{nam} is going to have a hard life finding {egg} eggs."
+        elif (difficulty == Difficulty.VERY_HARD):
+            out = out + f"{nam} will find it very hard to find {egg} eggs."
+        elif (difficulty == Difficulty.IMPOSSIBLE):
+            out = out + f"{nam} must believe in the impossible dream: a world with {egg} eggs."
+        elif (difficulty == Difficulty.HATE_ME_TODAY):
+            out = out + f"{nam} is gonna feel the world's hatred for the quest to find {egg} eggs."
+
+        out = out + "\n\n"
 
 class CommandLine():
     def __init__(self):
