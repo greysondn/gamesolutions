@@ -250,12 +250,17 @@ class ApConfig():
         self.reconfigure_end()
     
     # output prep functions
-    def prep_simple(self, name:str, value:str, indent:int = 0) -> str:
+    def _makeIndent(self, width:int):
         ret = ""
         
-        for i in range(indent):
+        for i in range(width):
             ret = ret + " "
-
+        
+        return ret
+    
+    def prep_simple(self, name:str, value:str, indent:int = 0) -> str:
+        ret = ""
+        ret = ret + self._makeIndent(indent)
         ret = ret + f"{name}: {value}\n"
         
         return ret
@@ -264,23 +269,32 @@ class ApConfig():
         ret = ""
         
         if (len(value) > 0):
-        
-            for i in range(indent):
-                ret = ret + " "
-
-            ret = ret + f"{name}: {value}\n"
+            ret = self.prep_simple(name, value, indent)
         
         return ret
+    
+    def prep_bool(self, name:str, value:bool, indent:int = 0) -> str:
+        ret = ""
+        
+        swp = ""
+        
+        if (value == True):
+            swp = "'true'"
+        elif (value == False):
+            swp = "'false'"
+        
+        ret = self.prep_simple(name, swp, indent)
+        
+        return ret
+    
+    def prep_int(self, name:str, value:int, indent = 0) -> str:
+        return self.prep_simple(name, f"{value}", indent)
     
     def prep_list(self, name:str, value:list[str], indent:int = 0) -> str:
         ret = ""
         
         if (len(value) > 0):
-            prefix = ""
-            
-            for i in range(indent):
-                prefix = prefix + " "
-            
+            prefix = self._makeIndent(indent)
             ret = ret + prefix + f"{name}:\n"
             
             for i in value:
@@ -624,6 +638,39 @@ class SuperMarioWorld(ApConfig):
     # self.reconfigure_duration(duration)
     # self.reconfigure_extra(extra)
     # self.reconfigure_end()
+    
+    def prep_game_specific_settings(self) -> str:
+        ret:str = ""
+        
+        ret = ret + self.prep_bool("death_link", self.death_link, 4)
+        ret = ret + self.prep_simple("goal", self.goal, 4)
+        ret = ret + self.prep_int("bosses_required", self.bosses_required, 4)
+        ret = ret + self.prep_int("number_of_yoshi_eggs", self.number_of_yoshi_eggs, 4)
+        ret = ret + self.prep_int("percentage_of_yoshi_eggs", self.percentage_of_yoshi_eggs, 4)
+        ret = ret + self.prep_bool("dragon_coin_checks", self.dragon_coin_checks, 4)
+        ret = ret + self.prep_simple("bowser_castle_doors", self.bowser_castle_doors, 4)
+        ret = ret + self.prep_simple("bowser_castle_rooms", self.bowser_castle_rooms, 4)
+        ret = ret + self.prep_bool("level_shuffle", self.level_shuffle, 4)
+        ret = ret + self.prep_bool("exclude_special_zone", self.exclude_special_zone, 4)
+        ret = ret + self.prep_simple("boss_shuffle", self.boss_shuffle, 4)
+        ret = ret + self.prep_bool("swap_donut_gh_exits", self.swap_donut_gh_exits, 4)
+        ret = ret + self.prep_simple("display_received_item_popups", self.display_received_item_popups, 4)
+        ret = ret + self.prep_int("trap_fill_percentage", self.trap_fill_percentage, 4)
+        ret = ret + self.prep_simple("ice_trap_weight", self.ice_trap_weight, 4)
+        ret = ret + self.prep_simple("stun_trap_weight", self.stun_trap_weight, 4)
+        ret = ret + self.prep_simple("literature_trap_weight", self.literature_trap_weight, 4)
+        ret = ret + self.prep_simple("timer_trap_weight", self.timer_trap_weight, 4)
+        ret = ret + self.prep_bool("autosave", self.autosave, 4)
+        ret = ret + self.prep_bool("early_climb", self.early_climb, 4)
+        ret = ret + self.prep_simple("overworld_speed", self.overworld_speed, 4)
+        ret = ret + self.prep_simple("music_shuffle", self.music_shuffle, 4)
+        ret = ret + self.prep_simple("mario_palette", self.mario_palette, 4)
+        ret = ret + self.prep_bool("foreground_palette_shuffle", self.foreground_palette_shuffle, 4)
+        ret = ret + self.prep_bool("background_palette_shuffle", self.background_palette_shuffle, 4)
+        ret = ret + self.prep_bool("overworld_palette_shuffle", self.overworld_palette_shuffle, 4)
+        ret = ret + self.prep_int("starting_life_count", self.starting_life_count, 4)
+        
+        return ret
 
 class CommandLine():
     def __init__(self):
