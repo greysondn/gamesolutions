@@ -4,6 +4,7 @@ import argparse
 import random
 
 from enum import IntEnum
+from typing import cast
 
 # This is just a quick and dirty python script to manage my archipelago settings
 # because the conditionals got too weird over time.
@@ -654,30 +655,61 @@ class CommandLine():
         
         return options[choice]
     
-    
-    def machine_create(self) -> int:
+    def enum_create(self, group:str, enum_triple:list[tuple[str, int, int]]) -> int:
+        """ask about all of an enum using triples
+
+        Args:
+            group (str): name of group to help cue user
+            enum_triple (list[tuple[str, int, int]]): list of tuples display name, value, default from {0:"Yes", 1:"No}
+
+        Returns:
+            int: bit encoding for field
+        """        
         ret:int = 0
         
-        swp = self.ask("[MACHINE] : Storm Tower?", ["Yes","No"], 1)
-        if("Yes" == swp):
-            ret = ret + Machine.STORM_TOWER.value
+        for triple in enum_triple:
+            swp = self.ask(f"[{group}] : {triple[0]}?", ["Yes","No"], triple[2])
+            if("Yes" == swp):
+                ret = ret + triple[1]
+                
+        return ret
+            
+    def enum_parse(self, bitfield:int, enums:list[IntEnum]) -> list[IntEnum]:
+        """unpack enum from bitfield
+
+        Args:
+            bitfield (int): value of packed enums
+            enums (list[IntEnum]): list of enums that can be in field
+
+        Returns:
+            list[IntEnum]: unpacked enums
+        """        
+        ret:list[IntEnum] = []
         
-        swp = self.ask("[MACHINE] : Ursine Laptop?", ["Yes","No"], 1)
-        if("Yes" == swp):
-            ret = ret + Machine.URSINE_LAPTOP.value
+        for enum in enums:
+            if (bitfield & enum.value):
+                ret.append(enum)
         
         return ret
-    
+        
+        
+    def machine_create(self) -> int:
+        triples = [
+            ("Storm Tower",         Machine.STORM_TOWER.value,          1),
+            ("Ursine Laptop",       Machine.URSINE_LAPTOP.value,        1),
+        ]
+        
+        return self.enum_create("MACHINE", triples)
+
     def machine_parse(self, bitfield:int) -> list[Machine]:
-        ret:list[Machine] = []
+        enums:list[Machine] = [
+            Machine.STORM_TOWER,
+            Machine.URSINE_LAPTOP,
+        ]
         
-        if (Machine.STORM_TOWER & bitfield):
-            ret.append(Machine.STORM_TOWER)
-        
-        if (Machine.URSINE_LAPTOP & bitfield):
-            ret.append(Machine.URSINE_LAPTOP)
-        
-        return ret
+        # have to cast into and out of function
+        # make sure you know your type here
+        return cast(list[Machine], self.enum_parse(bitfield, cast(list[IntEnum], enums)))
     
     def mood_create(self):
         pass
