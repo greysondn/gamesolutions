@@ -2,6 +2,7 @@
 #expect python >= 3.10
 
 from enum import IntEnum
+import random
 
 # This is just a quick and dirty python script to manage my archipelago settings
 # because the conditionals got too weird over time.
@@ -80,6 +81,7 @@ class Genre(IntEnum):
     FARMING_SIMULATOR           = 2 **   8
     FIRST_PERSON_SHOOTER        = 2 **   0
     PLATFORMER                  = 2 **   1
+    PLEASE_NO                   = 2 **   9
     PUZZLE                      = 2 **   2
     ROGUELITE                   = 2 **   3
     SHOOTER                     = 2 **   4
@@ -134,6 +136,10 @@ class ApConfig():
         self.duration_min:int = 0
         '''shortest time this has taken to get goal in seconds'''
         
+        # details about checks etc
+        self.checks:int = 0
+        '''number of checks we expect the game to have for this configuration'''
+        
         # main settings
         self.game:Game = Game.NONE
         '''Which game this is for'''
@@ -186,13 +192,16 @@ class ApConfig():
         
         self.item_links:str = "IGNORED."
         '''Don't really get this. Ignored in this config generator for now.'''
+        
+        self.death_link:bool = False
+        '''Death link. Anyone with death link enabled dies together. This isn't output by default as it's not in every game.'''
     
     # Some stuff to override for difficulty
     def reconfigure_checks(self, checks:int) -> None:
         pass
     
     def reconfigure_deathLink(self, deathLink:bool) -> None:
-        pass
+        self.death_link = deathLink
     
     def reconfigure_duration(self, duration:int) -> None:
         pass
@@ -200,13 +209,19 @@ class ApConfig():
     def reconfigure_difficulty(self, difficulty:int) -> None:
         pass
     
+    def reconfigure_extra(self, extra:int) -> None:
+        pass
+    
     def reconfigure_end(self) -> None:
         pass
     
     def reconfigure_start(self) -> None:
+        """Override this to match all basic settings for the game, set for the 
+        shortest conceivable game on Difficulty.VERY_EASY
+        """        
         pass
     
-    def reconfigure(self, checks:int, deathLink:bool, duration:int, difficulty:int) -> None:
+    def reconfigure(self, checks:int, deathLink:bool, duration:int, difficulty:int, extra:int) -> None:
         """Override this to reconfigure the game before prepping output.
 
         Args:
@@ -214,12 +229,14 @@ class ApConfig():
             deathLink (bool): whether or not to enable death link
             duration (int): approximate max duration of play in seconds
             difficulty (int): how hard the game is meant to be
+            extra(int): any extra setting flags
         """        
         self.reconfigure_start()
         self.reconfigure_difficulty(difficulty)
         self.reconfigure_checks(checks)
         self.reconfigure_duration(duration)
         self.reconfigure_deathLink(deathLink)
+        self.reconfigure_extra(extra)
         self.reconfigure_end()
     
     # output prep functions
@@ -377,6 +394,232 @@ class SuperMarioWorld(ApConfig):
         self.game = Game.SUPER_MARIO_WORLD
         self.apgame = "Super Mario World"
         self.requires_version = "0.4.3"
+        
+        # standard defaults and docs for game-specific settings
+        #
+        # read the template for the game for insight into what the settings mean
+        # and their legal values
+        self.goal:str                           = "bowser"
+        self.bosses_required:int                = 7
+        self.number_of_yoshi_eggs:int           = 50
+        self.percentage_of_yoshi_eggs:int       = 100
+        self.dragon_coin_checks:bool            = False
+        self.bowser_castle_doors:str            = "vanilla"
+        self.bowser_castle_rooms:str            = "random_two_room"
+        self.level_shuffle:bool                 = False
+        self.exclude_special_zone:bool          = False
+        self.boss_shuffle:str                   = "none"
+        self.swap_donut_gh_exits:bool           = False
+        self.display_received_item_popups:str   = "progression"
+        self.trap_fill_percentage:int           = 0
+        self.ice_trap_weight:str                = "medium"
+        self.stun_trap_weight:str               = "medium"
+        self.literature_trap_weight:str         = "medium"
+        self.timer_trap_weight:str              = "medium"
+        self.autosave:bool                      = True
+        self.early_climb:bool                   = False
+        self.overworld_speed:str                = "vanilla"
+        self.music_shuffle:str                  = "none"
+        self.mario_palette:str                  = "mario"
+        self.foreground_palette_shuffle:bool    = False
+        self.background_palette_shuffle:bool    = False
+        self.overworld_palette_shuffle:bool     = False
+        self.starting_life_count:int            = 5
+    
+    def help_mario_palette_randomize(self) -> str:
+        _options:list[str] = [
+            "mario",
+            "luigi",
+            "wario",
+            "waluigi",
+            "geno",
+            "princess",
+            "dark",
+            "sponge"
+        ]
+        
+        return random.choice(_options)
     
     def reconfigure_start(self) -> None:
-        pass
+        # explicit is better than implicit
+        self.progression_balancing  = "50"
+        self.accessibility          = "items" # I never use locations, so...
+        self.start_inventory            = [
+            "Swim",
+            "Climb",
+        ]
+        self.death_link = False
+        
+        # I need to exclude Soda Lake and a couple others, but not today
+        
+        self.goal                           = "yoshi_egg_hunt"
+        self.bosses_required                = 0
+        self.number_of_yoshi_eggs           = 80
+        self.percentage_of_yoshi_eggs       = 1
+        self.dragon_coin_checks             = False
+        self.bowser_castle_doors            = "fast"
+        self.bowser_castle_rooms            = "vanilla"
+        self.level_shuffle                  = False
+        self.exclude_special_zone           = True
+        self.boss_shuffle                   = "none"
+        self.swap_donut_gh_exits            = False
+        self.display_received_item_popups   = "progression"
+        self.trap_fill_percentage           = 0
+        self.ice_trap_weight                = "none"
+        self.stun_trap_weight               = "none"
+        self.literature_trap_weight         = "none"
+        self.timer_trap_weight              = "none"
+        self.autosave                       = True
+        self.early_climb                    = True
+        self.overworld_speed                = "fast"
+        self.music_shuffle                  = "full"
+        self.mario_palette                  = self.help_mario_palette_randomize()
+        self.foreground_palette_shuffle     = True
+        self.background_palette_shuffle     = True
+        self.overworld_palette_shuffle      = True
+        self.starting_life_count            = 99
+
+
+    def reconfigure_difficulty(self, difficulty:int) -> None:
+        # so the starting default should be very easy
+        # so we just progressively increase the difficulty with the timer
+        if (difficulty >= Difficulty.VERY_EASY.value):
+            self.duration_min = 0
+            # none recorded
+            
+            self.duration_max = 31536000
+            # none recorded
+            
+            self.duration_avg = 31536000
+            # none recorded
+            
+            self.checks = 0
+            # unrecorded
+        
+        if (difficulty >= Difficulty.EASY.value):
+            self.duration_min = 0
+            # none recorded
+            
+            self.duration_max = 31536000
+            # none recorded
+            
+            self.duration_avg = 31536000
+            # none recorded
+            
+            self.checks = 0
+            # unrecorded
+        
+            # actual config
+            self.percentage_of_yoshi_eggs       = 25 # 20 eggs
+            self.dragon_coin_checks             = True
+            self.starting_life_count            = 50
+        
+        if (difficulty >= Difficulty.NORMAL.value):
+            self.duration_min = 0
+            # none recorded
+            
+            self.duration_max = 31536000
+            # none recorded
+            
+            self.duration_avg = 31536000
+            # none recorded
+        
+            self.checks = 0
+            # unrecorded
+        
+            # actual config
+            self.percentage_of_yoshi_eggs       = 63 # 50 eggs
+            self.level_shuffle                  = True
+            self.boss_shuffle                   = "full"
+            self.trap_fill_percentage           = 100
+            self.ice_trap_weight                = "medium"
+        
+        if (difficulty >= Difficulty.HARD.value):
+            self.duration_min = 0
+            # none recorded
+            
+            self.duration_max = 31536000
+            # none recorded
+            
+            self.duration_avg = 31536000
+            # none recorded
+        
+            self.checks = 0
+            # unrecorded
+            
+            # actual config
+            self.percentage_of_yoshi_eggs       = 80 # 60 eggs
+            self.stun_trap_weight               = "medium"
+            self.starting_life_count            = 20
+            
+        if (difficulty >= Difficulty.VERY_HARD.value):
+            self.duration_min = 0
+            # none recorded
+            
+            self.duration_max = 31536000
+            # none recorded
+            
+            self.duration_avg = 31536000
+            # none recorded
+        
+            self.checks = 0
+            # unrecorded            # actual config
+            self.percentage_of_yoshi_eggs       = 100 # 80 eggs
+            self.literature_trap_weight         = "medium"
+            self.early_climb                    = False
+            self.starting_life_count            = 10
+            
+        if (difficulty >= Difficulty.IMPOSSIBLE.value):
+            self.duration_min = 0
+            # none recorded
+            
+            self.duration_max = 31536000
+            # none recorded
+            
+            self.duration_avg = 31536000
+            # none recorded
+        
+            self.checks = 0
+            # unrecorded
+            
+            # actual config
+            self.start_inventory = []
+            self.timer_trap_weight              = "medium"
+            self.autosave                       = False
+            self.starting_life_count            = 1
+            self.exclude_special_zone           = False
+
+
+        if (difficulty >= Difficulty.HATE_ME_TODAY.value):
+            self.duration_min = 0
+            # none recorded
+            
+            self.duration_max = 31536000
+            # none recorded
+            
+            self.duration_avg = 31536000
+            # none recorded
+        
+            self.checks = 0
+            # unrecorded
+            
+            # actual config
+            self.swap_donut_gh_exits            = True
+            self.display_received_item_popups   = "all"
+            self.ice_trap_weight                = "none"
+            self.stun_trap_weight               = "none"
+            self.overworld_speed                = "slow"
+            
+    # self.reconfigure_checks(checks)
+    # self.reconfigure_duration(duration)
+    # self.reconfigure_extra(extra)
+    # self.reconfigure_end()
+
+    
+
+
+# and then we need a main
+# should be able to configure the mood value, maybe by an alternate run mode
+# and of course output the values blah blah
+# ugh
+# clobbering is okay
