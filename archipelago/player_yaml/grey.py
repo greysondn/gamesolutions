@@ -80,10 +80,12 @@ class Game(IntEnum):
     ZILLION                                 = 2 **  47
 
 class Genre(IntEnum):
+    IMPLEMENTED                 = 2 **  10
+    PLEASE_NO                   = 2 **   9
+    
     FARMING_SIMULATOR           = 2 **   8
     FIRST_PERSON_SHOOTER        = 2 **   0
     PLATFORMER                  = 2 **   1
-    PLEASE_NO                   = 2 **   9
     PUZZLE                      = 2 **   2
     ROGUELITE                   = 2 **   3
     SHOOTER                     = 2 **   4
@@ -125,7 +127,8 @@ GAMES_TO_GENRES:dict[Game, int] = {
                             Genre.ROGUELITE.value +
                             Genre.RPG.value,
     
-    Game.SUPER_MARIO_WORLD :    Genre.PLATFORMER.value,
+    Game.SUPER_MARIO_WORLD :    Genre.IMPLEMENTED.value +
+                                Genre.PLATFORMER.value,
 }
 
 class ApConfig():
@@ -708,14 +711,40 @@ class CommandLine():
         ]
         
         # have to cast into and out of function
-        # make sure you know your type here
+        # make sure you know your type 
         return cast(list[Machine], self.enum_parse(bitfield, cast(list[IntEnum], enums)))
     
-    def genre_create(self):
-        pass
+    def genre_create(self) -> int:
+        triples = [
+            ("Farming Simulator", Genre.FARMING_SIMULATOR.value, 0),
+            ("First Person Shooter", Genre.FIRST_PERSON_SHOOTER.value, 0),
+            ("Platformer", Genre.PLATFORMER.value, 0),
+            ("Puzzle", Genre.PUZZLE.value, 0),
+            ("Roguelite", Genre.ROGUELITE.value, 0),
+            ("Shooter", Genre.SHOOTER.value, 0),
+            ("RPG", Genre.RPG.value, 0),
+            ("Third Person Shooter", Genre.THIRD_PERSON_SHOOTER, 0),
+            ("Walking Simulator", Genre.WALKING_SIMULATOR, 0),
+        ]
+        
+        return self.enum_create("GENRE", triples)
     
-    def genre_parse(self):
-        pass
+    def genre_parse(self, bitfield:int) -> list[Genre]:
+        enums:list[Genre] = [
+            Genre.FARMING_SIMULATOR,
+            Genre.FIRST_PERSON_SHOOTER,
+            Genre.PLATFORMER,
+            Genre.PUZZLE,
+            Genre.ROGUELITE,
+            Genre.SHOOTER,
+            Genre.RPG,
+            Genre.THIRD_PERSON_SHOOTER,
+            Genre.WALKING_SIMULATOR,
+        ]
+
+        # have to cast into and out of function
+        # make sure you know your type 
+        return cast(list[Genre], self.enum_parse(bitfield, cast(list[IntEnum], enums)))
     
     def mood(self, args:argparse.Namespace) -> None:
         pass
