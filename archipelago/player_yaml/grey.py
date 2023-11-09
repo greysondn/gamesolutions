@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 #expect python >= 3.10
+import argparse
+import random
 
 from enum import IntEnum
-import random
 
 # This is just a quick and dirty python script to manage my archipelago settings
 # because the conditionals got too weird over time.
@@ -221,10 +222,14 @@ class ApConfig():
         """        
         pass
     
-    def reconfigure(self, checks:int, deathLink:bool, duration:int, difficulty:int, extra:int) -> None:
+    def reconfigure_slot(self, name:str) -> None:
+        self.name = name
+    
+    def reconfigure(self, name:str, checks:int, deathLink:bool, duration:int, difficulty:int, extra:int) -> None:
         """Override this to reconfigure the game before prepping output.
 
         Args:
+            slotname (str): name to give the slot in Archipelago
             checks (int): Approximate target number of checks for game to have.
             deathLink (bool): whether or not to enable death link
             duration (int): approximate max duration of play in seconds
@@ -232,6 +237,7 @@ class ApConfig():
             extra(int): any extra setting flags
         """        
         self.reconfigure_start()
+        self.reconfigure_slot(name)
         self.reconfigure_difficulty(difficulty)
         self.reconfigure_checks(checks)
         self.reconfigure_duration(duration)
@@ -615,7 +621,73 @@ class SuperMarioWorld(ApConfig):
     # self.reconfigure_extra(extra)
     # self.reconfigure_end()
 
+class CommandLine():
+    def __init__(self):
+        pass
     
+    def mood(self, args:argparse.Namespace) -> None:
+        pass
+    
+    def conf(self, args:argparse.Namespace) -> None:
+        pass
+    
+    def main(self):
+        # parse command line arguments
+        parser = argparse.ArgumentParser(description='Generate configuration for archipelago.')
+        
+        parser.add_argument("name",
+                            help = "name of the Archipelago player slot",
+                            type = str,
+        )
+        
+        parser.add_argument("machines",
+                            help = "Machines user has access to presently",
+                            type = int,
+        )
+        
+        parser.add_argument("mood",
+                            help = "mood player is in, regarding genres",
+                            type = int,
+        )
+        
+        parser.add_argument("checks",
+                            help = "a target number of checks to go for, if possible",
+                            type = int,
+        )
+        
+        parser.add_argument("duration",
+                            help = "target duration of game in seconds, if possible",
+                            type = int,
+        )
+        
+        parser.add_argument("difficulty",
+                            help = "difficulty of generated game desired, from 0 to 6. (0 = Very Easy, 1 = Easy, 2 = Normal, 3 = Hard, 4 = Very Hard, 5 = Impossible, 6 = Hate Me Today)",
+                            type = int,
+        )
+        
+        parser.add_argument("extra",
+                            help = "value for extra configuration, if desired",
+                            type = int,
+        )
+        
+        parser.add_argument("deathlink",
+                            help = "whether or not to enable deathlink",
+                            type = bool,
+        )
+        
+        parser.add_argument('--mode', 
+                            help ='what mode to run this script in',
+                            type = str,
+                            choices = ['conf', 'mood'],
+                            default = "conf",
+        )
+
+        args:argparse.Namespace = parser.parse_args()
+        
+        if (args.mode == "conf"):
+            self.conf(args)
+        elif (args.mode == "mood"):
+            self.mood(args)
 
 
 # and then we need a main
@@ -623,3 +695,8 @@ class SuperMarioWorld(ApConfig):
 # and of course output the values blah blah
 # ugh
 # clobbering is okay
+
+# ye olde main guard
+if (__name__ == "__main__"):
+    cmd = CommandLine()
+    cmd.main()
