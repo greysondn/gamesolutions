@@ -711,10 +711,10 @@ class CommandLine():
         # make sure you know your type here
         return cast(list[Machine], self.enum_parse(bitfield, cast(list[IntEnum], enums)))
     
-    def mood_create(self):
+    def genre_create(self):
         pass
     
-    def mood_parse(self):
+    def genre_parse(self):
         pass
     
     def mood(self, args:argparse.Namespace) -> None:
