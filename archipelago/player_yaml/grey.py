@@ -344,8 +344,17 @@ class ApConfig():
         return self.prep_list("non_local_items", self.non_local_items, 4)
 
     def prep_start_inventory(self) -> str:
-        return self.prep_list("start_inventory", self.start_inventory, 4)
-
+        ret = ""
+        
+        if (len(self.start_inventory) > 0):
+            prefix = self._makeIndent(4)
+            ret = ret + prefix + f"start_inventory:\n"
+            
+            for i in self.start_inventory:
+                ret = ret + prefix + f"    {i}: 1\n"
+        
+        return ret
+    
     def prep_start_hints(self) -> str:
         return self.prep_list("start_hints", self.start_hints, 4)
         
