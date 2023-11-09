@@ -298,7 +298,7 @@ class ApConfig():
             ret = ret + prefix + f"{name}:\n"
             
             for i in value:
-                ret = ret + prefix + "    - {i}\n"
+                ret = ret + prefix + f"    - {i}\n"
         
         return ret
     
