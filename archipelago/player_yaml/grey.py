@@ -386,7 +386,7 @@ class ApConfig():
         
         return ret
     
-    def print_goal(self) -> None:
+    def print_goal(self, difficulty:int) -> None:
         """Override to output the objective note for whatever the game is.
         """        
         pass
@@ -679,7 +679,7 @@ class SuperMarioWorld(ApConfig):
 
     def print_goal(self, difficulty:int) -> None:
         out:str = "\n\n"
-        nam:str = self.name.title()
+        nam:str = self.mario_palette.title()
         
         swp:float = float(self.number_of_yoshi_eggs) * (float(self.percentage_of_yoshi_eggs) / 100.0)
         egg:int = round(swp)
@@ -701,6 +701,8 @@ class SuperMarioWorld(ApConfig):
             out = out + f"{nam} is gonna feel the world's hatred for the quest to find {egg} eggs."
 
         out = out + "\n\n"
+        
+        print(out)
 
 class CommandLine():
     def __init__(self):
@@ -882,7 +884,59 @@ class CommandLine():
         print(f"{name} {machines} {genres} {checks} {duration} {difficulty} {extras} {deathlink}")
     
     def conf(self, args:argparse.Namespace) -> None:
-        pass
+        # need a list of games
+        # should be all implemented ones for config
+        games_swp:list[ApConfig] = [
+            SuperMarioWorld()
+        ]
+        
+        # and eventually the list we actually choose from
+        games:list[ApConfig] = []
+        
+        # need to interpret the genre and machine fields
+        genres:list[Genre] = self.genre_parse(args.genres)
+        machines:list[Machine] = self.machine_parse(args.machines)
+        
+        # now we pare down the games list - twice
+        for machine in machines:
+            for game in games_swp:
+                game_removed:bool = False
+                if (MACHINES_TO_GAMES[machine] & game.game.value):
+                    if (not game_removed):
+                        games.append(game)
+                        games_swp.remove(game)
+                        game_removed = True
+        
+        games_swp = []
+        
+        for game in games:
+            game_removed:bool = False
+            for genre in genres:
+                if (GAMES_TO_GENRES[game.game] & genre.value):
+                    if (not game_removed):
+                        games_swp.append(game)
+                        games.remove(game)
+                        game_removed = True
+
+        games = games_swp.copy()
+        
+        # we're good, games are games
+        # pick one
+        gam:ApConfig = random.choice(games)
+        
+        # reconfigure
+        gam.reconfigure(args.name, args.checks, args.deathlink, args.duration, args.difficulty, args.extra)
+        
+        # prep output
+        fOut:str = gam.prep_output()
+    
+        # output it - clobber
+        with open("greysondn.yaml", "w") as f:
+            f.write(fOut)
+        
+        # output objective
+        gam.print_goal(args.difficulty)
+        
     
     def main(self):
         # parse command line arguments
