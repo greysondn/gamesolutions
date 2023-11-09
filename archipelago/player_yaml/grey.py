@@ -645,7 +645,7 @@ class CommandLine():
         """        
         choice:int = default
         
-        print(f"\n\n---\n\n{question} (Default: {default}\n\n")
+        print(f"\n\n---\n\n{question} (Default: {default})\n\n")
         for i in range(len(options)):
             print(f"{i} : {options[i]}")
         
@@ -657,6 +657,28 @@ class CommandLine():
         print (f"\nChose {choice} : {options[choice]}\n")
         
         return options[choice]
+    
+    def ask_str(self, question:str) -> str:
+        """ask user for input on a config question
+        
+        WARNING: This assumes a well-behaved user. It needs rewritten for input
+        sanitization and safety.
+
+        Args:
+            question (str): question to ask
+
+        Returns:
+            str: text of option the user selected
+        """        
+        choice:str = "ERR"
+        
+        print(f"\n\n---\n\n{question}\n\n")
+        
+        choice = input("> ")
+            
+        print (f"\nChose : {choice}\n")
+        
+        return choice
     
     def enum_create(self, group:str, enum_triple:list[tuple[str, int, int]]) -> int:
         """ask about all of an enum using triples
@@ -747,7 +769,40 @@ class CommandLine():
         return cast(list[Genre], self.enum_parse(bitfield, cast(list[IntEnum], enums)))
     
     def mood(self, args:argparse.Namespace) -> None:
-        pass
+        # name
+        name:str = self.ask_str("Slot name?")
+        
+        # machines
+        machines:int = self.machine_create()
+        
+        # mood/genre
+        genres:int = self.genre_create()
+
+        # extra - skipped for now
+        extras:int = 0
+        
+        # checks
+        checks:int = int(self.ask_str("How many checks to aim for?"))
+        
+        # duration
+        duration:int = int(self.ask_str("How long (in seconds) to aim for?"))
+        
+        # difficulty
+        difficulty:int = int(self.ask_str("Difficulty? 1-6...\n0 - Very Easy\n1 - Easy\n2 - Normal\n3 - Hard\n4 - Very Hard\n5 - Impossible\n6 - Hate Me Today"))
+
+        # deathlink
+        deathlink_input:str = self.ask_str("Deathlink? [Yes or No]")
+        
+        deathlink = False
+        
+        if (deathlink_input.lower().strip() == "yes"):
+            deathlink = True
+        elif (deathlink_input.lower().strip() == "no"):
+            deathlink = False
+            
+        print(f"\n\n")
+        print(f"The arguments you want are:\n")
+        print(f"{name} {machines} {genres} {checks} {duration} {difficulty} {extras} {deathlink}")
     
     def conf(self, args:argparse.Namespace) -> None:
         pass
@@ -766,7 +821,7 @@ class CommandLine():
                             type = int,
         )
         
-        parser.add_argument("mood",
+        parser.add_argument("genres",
                             help = "mood player is in, regarding genres",
                             type = int,
         )
