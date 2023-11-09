@@ -625,6 +625,66 @@ class CommandLine():
     def __init__(self):
         pass
     
+    def ask(self, question:str, options:list[str], default:int) -> str:
+        """ask user for input on a config question
+        
+        WARNING: This assumes a well-behaved user. It needs rewritten for input
+        sanitization and safety.
+
+        Args:
+            question (str): question to ask
+            options (list[str]): list of options the user may select, from 0 to n
+            default (int): default selected option, should generally be the first
+
+        Returns:
+            str: text of option the user selected
+        """        
+        choice:int = default
+        
+        print(f"\n\n---\n\n{question} (Default: {default}\n\n")
+        for i in range(len(options)):
+            print(f"{i} : {options[i]}")
+        
+        usrIn = input("> ")
+        
+        if (len(usrIn.strip()) > 0):
+            choice = int(usrIn)
+            
+        print (f"\nChose {choice} : {options[choice]}\n")
+        
+        return options[choice]
+    
+    
+    def machine_create(self) -> int:
+        ret:int = 0
+        
+        swp = self.ask("[MACHINE] : Storm Tower?", ["Yes","No"], 1)
+        if("Yes" == swp):
+            ret = ret + Machine.STORM_TOWER.value
+        
+        swp = self.ask("[MACHINE] : Ursine Laptop?", ["Yes","No"], 1)
+        if("Yes" == swp):
+            ret = ret + Machine.URSINE_LAPTOP.value
+        
+        return ret
+    
+    def machine_parse(self, bitfield:int) -> list[Machine]:
+        ret:list[Machine] = []
+        
+        if (Machine.STORM_TOWER & bitfield):
+            ret.append(Machine.STORM_TOWER)
+        
+        if (Machine.URSINE_LAPTOP & bitfield):
+            ret.append(Machine.URSINE_LAPTOP)
+        
+        return ret
+    
+    def mood_create(self):
+        pass
+    
+    def mood_parse(self):
+        pass
+    
     def mood(self, args:argparse.Namespace) -> None:
         pass
     
