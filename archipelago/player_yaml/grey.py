@@ -364,7 +364,7 @@ class ApConfig():
     
     def prep_gameSettings(self) -> str:
         ret = ""
-        ret = ret + f"{self.game}:\n"
+        ret = ret + f"{self.apgame}:\n"
         ret = ret + self.prep_accessibility()
         ret = ret + self.prep_progression_balancing()
         ret = ret + self.prep_local_items()
