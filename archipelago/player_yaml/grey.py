@@ -553,14 +553,11 @@ class SuperMarioWorld(ApConfig):
             self.starting_life_count            = 50
         
         if (difficulty >= Difficulty.NORMAL.value):
-            self.duration_min = 0
-            # none recorded
-            
-            self.duration_max = 31536000
-            # none recorded
-            
-            self.duration_avg = 31536000
-            # none recorded
+            self.duration_min = 9618
+            self.duration_max = 9618
+            self.duration_avg = 9618
+            # records
+            # 9618
         
             self.checks = 157
         
