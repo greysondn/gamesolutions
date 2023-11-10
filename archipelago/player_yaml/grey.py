@@ -562,8 +562,7 @@ class SuperMarioWorld(ApConfig):
             self.duration_avg = 31536000
             # none recorded
         
-            self.checks = 0
-            # unrecorded
+            self.checks = 157
         
             # actual config
             self.percentage_of_yoshi_eggs       = 63 # 50 eggs
