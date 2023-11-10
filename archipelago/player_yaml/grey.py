@@ -208,6 +208,20 @@ class ApConfig():
     def reconfigure_deathLink(self, deathLink:bool) -> None:
         self.death_link = deathLink
     
+    def helper_duration(self, durations:list[int]) -> tuple[int, int, int]:
+        """Finds the mn, max, and average of a list of durations
+
+        Args:
+            durations (list[int]): list of durations, in seconds
+
+        Returns:
+            tuple[int, int, int]: (min, max, avg) of durations
+        """        
+        _min:int = min(durations)
+        _max:int = max(durations)
+        _avg:int = int(round(sum(durations) / len(durations)))
+        return (_min, _max, _avg)
+        
     def reconfigure_duration(self, duration:int) -> None:
         pass
 
@@ -553,11 +567,11 @@ class SuperMarioWorld(ApConfig):
             self.starting_life_count            = 50
         
         if (difficulty >= Difficulty.NORMAL.value):
-            self.duration_min = 9618
-            self.duration_max = 9618
-            self.duration_avg = 9618
-            # records
-            # 9618
+            smw_normal_records:list[int] = [
+                9618,
+            ]
+            
+            self.duration_min, self.duration_max, self.duration_avg = self.helper_duration(smw_normal_records)
         
             self.checks = 157
         
