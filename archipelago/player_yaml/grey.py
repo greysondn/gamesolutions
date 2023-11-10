@@ -1005,13 +1005,6 @@ class CommandLine():
         elif (args.mode == "mood"):
             self.mood(args)
 
-
-# and then we need a main
-# should be able to configure the mood value, maybe by an alternate run mode
-# and of course output the values blah blah
-# ugh
-# clobbering is okay
-
 # ye olde main guard
 if (__name__ == "__main__"):
     cmd = CommandLine()
