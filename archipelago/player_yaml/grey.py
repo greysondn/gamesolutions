@@ -207,7 +207,6 @@ class ApConfig():
         pass
     
     def reconfigure_deathLink(self, deathLink:str) -> None:
-        print(deathLink)
         if (deathLink.lower() == "true"):
             self.death_link = True
         elif (deathLink.lower() == "false"):
