@@ -206,8 +206,14 @@ class ApConfig():
     def reconfigure_checks(self, checks:int) -> None:
         pass
     
-    def reconfigure_deathLink(self, deathLink:bool) -> None:
-        self.death_link = deathLink
+    def reconfigure_deathLink(self, deathLink:str) -> None:
+        print(deathLink)
+        if (deathLink.lower() == "true"):
+            self.death_link = True
+        elif (deathLink.lower() == "false"):
+            self.death_link = False
+        else:
+            raise ValueError("Invalid deathlink value!")
     
     def helper_duration(self, durations:list[int]) -> tuple[int, int, int]:
         """Finds the mn, max, and average of a list of durations
@@ -244,7 +250,7 @@ class ApConfig():
     def reconfigure_slot(self, name:str) -> None:
         self.name = name
     
-    def reconfigure(self, name:str, checks:int, deathLink:bool, duration:int, difficulty:int, extra:int) -> None:
+    def reconfigure(self, name:str, checks:int, deathLink:str, duration:int, difficulty:int, extra:int) -> None:
         """Override this to reconfigure the game before prepping output.
 
         Args:
@@ -1188,7 +1194,7 @@ class CommandLine():
         
         parser.add_argument("deathlink",
                             help = "whether or not to enable deathlink",
-                            type = bool,
+                            type = str,
         )
         
         parser.add_argument('--mode', 
