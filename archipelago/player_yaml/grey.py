@@ -491,7 +491,7 @@ class Doom1993(ApConfig):
         
             # actual config
             self.difficulty = "easy"
-            self.episode2 = True
+            self.episode2 = False
             
         
         if (difficulty >= Difficulty.NORMAL.value):
@@ -526,7 +526,7 @@ class Doom1993(ApConfig):
             
             # actual config
             self.difficulty = "hard"
-            self.episode3 = True
+            self.episode2 = True
             
         if (difficulty >= Difficulty.VERY_HARD.value):
             self.duration_min = 0
@@ -544,7 +544,7 @@ class Doom1993(ApConfig):
             # actual config
             self.random_monsters = "shuffle"
             self.random_pickups  = "shuffle"
-            self.episode4 = True
+            self.episode3 = True
             
         if (difficulty >= Difficulty.IMPOSSIBLE.value):
             self.duration_min = 0
