@@ -6,19 +6,10 @@ import random
 from enum import IntEnum
 from typing import cast
 
-from games.smw import sanitycheck
+from enums.difficulty import Difficulty
 
 # This is just a quick and dirty python script to manage my archipelago settings
 # because the conditionals got too weird over time.
-
-class Difficulty(IntEnum):
-    VERY_EASY       = 0
-    EASY            = 1
-    NORMAL          = 2
-    HARD            = 3
-    VERY_HARD       = 4
-    IMPOSSIBLE      = 5
-    HATE_ME_TODAY   = 6
 
 class Game(IntEnum):
     ALL                                     = 281474976710655
