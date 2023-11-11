@@ -1214,6 +1214,5 @@ class CommandLine():
 
 # ye olde main guard
 if (__name__ == "__main__"):
-    # cmd = CommandLine()
-    # cmd.main()
-    sanitycheck()
+    cmd = CommandLine()
+    cmd.main()
