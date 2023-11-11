@@ -3,3 +3,5 @@ stardew_valley/farmtronics/conf.json
 fallout_ttw
 weekendroutine
 archipelago/player_yaml/*.yaml
+*__pycache__
+*.pyc
