@@ -186,9 +186,9 @@ class Doom1993(ApConfig):
         if (difficulty == Difficulty.VERY_EASY): # baby 1
             out = out + f"Doomguy is too young to die Knee-deep in the Dead"
         elif (difficulty == Difficulty.EASY): # easy 12
-            out = out + f"Doomguy hopes it's not too rough on The Shores of Hell"
+            out = out + f"Doomguy hopes it's not too rough being Knee-deep in the Dead "
         elif (difficulty == Difficulty.NORMAL): # medium 12
-            out = out + f"Doomguy is going to hurt plenty on The Shores of Hell"
+            out = out + f"Doomguy is going to hurt plenty Knee-deep in the Dead"
         elif (difficulty == Difficulty.HARD): # hard 123
             out = out + f"Doomguy is ultra-violent in the Inferno"
         elif (difficulty == Difficulty.VERY_HARD): # hard 1234
