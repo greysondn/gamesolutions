@@ -6,6 +6,8 @@ import random
 from enum import IntEnum
 from typing import cast
 
+from games.smw import sanitycheck
+
 # This is just a quick and dirty python script to manage my archipelago settings
 # because the conditionals got too weird over time.
 
@@ -1212,5 +1214,6 @@ class CommandLine():
 
 # ye olde main guard
 if (__name__ == "__main__"):
-    cmd = CommandLine()
-    cmd.main()
+    # cmd = CommandLine()
+    # cmd.main()
+    sanitycheck()
