@@ -11,15 +11,6 @@ from games.smw import sanitycheck
 # This is just a quick and dirty python script to manage my archipelago settings
 # because the conditionals got too weird over time.
 
-# settings
-
-# which machine?
-# In the mood for a certain game?
-# how many checks?
-# death link?
-# how long?
-# how hard?
-
 class Difficulty(IntEnum):
     VERY_EASY       = 0
     EASY            = 1
