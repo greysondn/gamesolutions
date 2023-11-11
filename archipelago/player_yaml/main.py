@@ -9,14 +9,10 @@ from typing import cast
 from enums.difficulty import Difficulty
 from enums.game import Game
 from enums.genre import Genre
+from enums.machine import Machine
 
 # This is just a quick and dirty python script to manage my archipelago settings
 # because the conditionals got too weird over time.
-
-class Machine(IntEnum):
-    ALL           = 3
-    STORM_TOWER   = 2 ** 0
-    URSINE_LAPTOP = 2 ** 1
     
 MACHINES_TO_GAMES:dict[Machine, int] = {
     Machine.STORM_TOWER     :   Game.DOOM_1993.value + 
