@@ -18,18 +18,6 @@ from enums import MACHINES_TO_GAMES
 
 # This is just a quick and dirty python script to manage my archipelago settings
 # because the conditionals got too weird over time.
-    
-class RiskOfRain2(ApConfig):
-    pass
-
-class RogueLegacy(ApConfig):
-    pass
-
-class SonicAdventure2Battle(ApConfig):
-    pass
-
-class StardewValley(ApConfig):
-    pass
 
 class CommandLine():
     def __init__(self):
