@@ -57,8 +57,7 @@ class Doom1993(ApConfig):
             self.duration_avg = 31536000
             # none recorded
             
-            self.checks = 0
-            # unrecorded
+            self.checks = 113
         
         if (difficulty >= Difficulty.EASY.value):
             self.duration_min = 0
@@ -69,9 +68,6 @@ class Doom1993(ApConfig):
             
             self.duration_avg = 31536000
             # none recorded
-            
-            self.checks = 0
-            # unrecorded
         
             # actual config
             self.difficulty = "easy"
@@ -79,17 +75,11 @@ class Doom1993(ApConfig):
             
         
         if (difficulty >= Difficulty.NORMAL.value):
-            self.duration_min = 0
-            # none recorded
+            doom1993_normal_records = [
+                9296,
+            ]
             
-            self.duration_max = 31536000
-            # none recorded
-            
-            self.duration_avg = 31536000
-            # none recorded
-            
-            self.checks = 0
-            # unrecorded
+            self.duration_min, self.duration_max, self.duration_avg = self.helper_duration(doom1993_normal_records)
         
             # actual config
             self.difficulty = "medium"
