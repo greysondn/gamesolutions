@@ -70,6 +70,9 @@ class ApConfig():
         self.death_link:bool = False
         '''Death link. Anyone with death link enabled dies together. This isn't output by default as it's not in every game.'''
     
+    def __repr__(self):
+        return f"ApConfig({self.apgame})"
+    
     # Some stuff to override for difficulty
     def reconfigure_checks(self, checks:int) -> None:
         pass
