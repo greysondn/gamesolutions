@@ -108,7 +108,7 @@ class SuperMarioWorld(ApConfig):
         self.level_shuffle                  = False
         self.exclude_special_zone           = True
         self.boss_shuffle                   = "none"
-        self.swap_donut_gh_exits            = False
+        self.swap_donut_gh_exits            = True
         self.display_received_item_popups   = "progression"
         self.trap_fill_percentage           = 0
         self.ice_trap_weight                = "none"
