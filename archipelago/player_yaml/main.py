@@ -228,23 +228,17 @@ class CommandLine():
         # now we pare down the games list - twice
         for machine in machines:
             for game in games_swp:
-                game_removed:bool = False
                 if (MACHINES_TO_GAMES[machine] & game.game.value):
-                    if (not game_removed):
+                    if (not (game in games)):
                         games.append(game)
-                        games_swp.remove(game)
-                        game_removed = True
         
         games_swp = []
         
         for game in games:
-            game_removed:bool = False
             for genre in genres:
                 if (GAMES_TO_GENRES[game.game] & genre.value):
-                    if (not game_removed):
+                    if (not (game in games_swp)):
                         games_swp.append(game)
-                        games.remove(game)
-                        game_removed = True
 
         games = games_swp.copy()
         
