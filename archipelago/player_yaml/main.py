@@ -6,15 +6,8 @@ import random
 from enum import IntEnum
 from typing import cast
 
-from config import ApConfig
-from config import Doom1993
-from config import SuperMarioWorld
-from enums import Difficulty
-from enums import Game
-from enums import Genre
-from enums import Machine
-from enums import GAMES_TO_GENRES
-from enums import MACHINES_TO_GAMES
+from config import *
+from enums import *
 
 # This is just a quick and dirty python script to manage my archipelago settings
 # because the conditionals got too weird over time.
