@@ -39,7 +39,7 @@ class Doom1993(ApConfig):
         self.random_pickups = "vanilla"
         self.allow_death_logic = False
         self.start_with_computer_area_maps = False
-        self.episode1 = True
+        self.episode1 = True # 113 checks
         self.episode2 = False
         self.episode3 = False
         self.episode4 = False
