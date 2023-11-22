@@ -202,10 +202,10 @@ class ApConfig():
     def prep_description(self) -> str:
         return self.prep_simple("description", self.description)
     
-    def prep_requires_version(self):
+    def prep_requires_version(self) -> str:
         return self.prep_simple("version", self.requires_version, 4)
     
-    def prep_requires_plando(self):
+    def prep_requires_plando(self) -> str:
         return self.prep_optional("plando", self.requires_plando, 4)
     
     def prep_requires(self) -> str:
