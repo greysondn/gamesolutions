@@ -274,11 +274,11 @@ class SuperMarioWorld(ApConfig):
         
         if (len(self.plando_early_items) > 0):
             ret = ret + "    plando_items:\n"
-            ret = ret + "        - items:"
+            ret = ret + "        - items:\n"
             for item in self.plando_early_items:
                 ret = ret + f'              {item}\n'
-            ret = ret + "          locations:"
-            ret = ret + "              - early_locations"
+            ret = ret + "          locations:\n"
+            ret = ret + "              - early_locations\n"
         
         return ret
 
