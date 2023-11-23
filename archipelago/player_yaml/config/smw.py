@@ -107,14 +107,11 @@ class SuperMarioWorld(ApConfig):
         # so the starting default should be very easy
         # so we just progressively increase the difficulty with the timer
         if (difficulty >= Difficulty.VERY_EASY.value):
-            self.duration_min = 0
-            # none recorded
+            smw_very_easy_records:list[int] = [
+                1250,
+            ]
             
-            self.duration_max = 31536000
-            # none recorded
-            
-            self.duration_avg = 31536000
-            # none recorded
+            self.duration_min, self.duration_max, self.duration_avg = self.helper_duration(smw_very_easy_records)
             
             self.checks = 0
             # unrecorded
