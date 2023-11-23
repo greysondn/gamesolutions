@@ -68,9 +68,6 @@ class SuperMarioWorld(ApConfig):
         self.requires_plando        = "items"
         self.death_link = False
         
-        # TODO: Exclude Soda Lake and other "impossible" stages.
-        # TODO: Experiment with early climb and plando to lock a single stage and swim, climb into place. Maybe Yoshi's Island 2?
-        
         self.goal                           = "yoshi_egg_hunt"
         self.bosses_required                = 0
         self.number_of_yoshi_eggs           = 80
