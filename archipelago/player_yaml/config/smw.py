@@ -136,6 +136,13 @@ class SuperMarioWorld(ApConfig):
             self.percentage_of_yoshi_eggs       = 25 # 20 eggs
             self.dragon_coin_checks             = True
             self.starting_life_count            = 50
+            self.plando_early_items:list[str]   = [
+                "Swim: 1",
+                "Climb: 1",
+                "Carry: 1",
+                "Progressive Powerup: 1",
+                "Run: 1"
+            ]
         
         if (difficulty >= Difficulty.NORMAL.value):
             smw_normal_records:list[int] = [
@@ -152,6 +159,11 @@ class SuperMarioWorld(ApConfig):
             self.boss_shuffle                   = "full"
             self.trap_fill_percentage           = 100
             self.ice_trap_weight                = "medium"
+            self.plando_early_items:list[str]   = [
+                "Swim: 1",
+                "Climb: 1",
+                "Carry: 1",
+            ]
         
         if (difficulty >= Difficulty.HARD.value):
             self.duration_min = 0
