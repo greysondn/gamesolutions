@@ -44,6 +44,7 @@ class SuperMarioWorld(ApConfig):
         self.background_palette_shuffle:bool    = False
         self.overworld_palette_shuffle:bool     = False
         self.starting_life_count:int            = 5
+        self.plando_items:list[str]             = []
     
     def help_mario_palette_randomize(self) -> str:
         _options:list[str] = [
@@ -58,11 +59,13 @@ class SuperMarioWorld(ApConfig):
         ]
         
         return random.choice(_options)
+
     
     def reconfigure_start(self) -> None:
         # explicit is better than implicit
         self.progression_balancing  = "50"
         self.accessibility          = "items" # I never use locations, so...
+        self.requires_plando        = "items"
         self.start_inventory            = [
             "Swim",
             "Climb",
@@ -98,6 +101,13 @@ class SuperMarioWorld(ApConfig):
         self.background_palette_shuffle     = True
         self.overworld_palette_shuffle      = True
         self.starting_life_count            = 99
+        self.plando_early_items:list[str]   = [
+            "Swim: 1",
+            "Climb: 1",
+            "Carry: 1",
+            "Progressive Powerup: 3",
+            "Run: 1"
+        ]
 
 
     def reconfigure_difficulty(self, difficulty:int) -> None:
@@ -261,6 +271,14 @@ class SuperMarioWorld(ApConfig):
         ret = ret + self.prep_bool("background_palette_shuffle", self.background_palette_shuffle, 4)
         ret = ret + self.prep_bool("overworld_palette_shuffle", self.overworld_palette_shuffle, 4)
         ret = ret + self.prep_int("starting_life_count", self.starting_life_count, 4)
+        
+        if (len(self.plando_early_items) > 0):
+            ret = ret + "    plando_items:\n"
+            ret = ret + "        - items:"
+            for item in self.plando_early_items:
+                ret = ret + f'              {item}\n'
+            ret = ret + "          locations:"
+            ret = ret + "              - early_locations"
         
         return ret
 
