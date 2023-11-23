@@ -66,10 +66,6 @@ class SuperMarioWorld(ApConfig):
         self.progression_balancing  = "50"
         self.accessibility          = "items" # I never use locations, so...
         self.requires_plando        = "items"
-        self.start_inventory            = [
-            "Swim",
-            "Climb",
-        ]
         self.death_link = False
         
         # TODO: Exclude Soda Lake and other "impossible" stages.
