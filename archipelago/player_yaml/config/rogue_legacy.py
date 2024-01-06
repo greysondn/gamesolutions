@@ -541,8 +541,8 @@ class RogueLegacy(ApConfig):
         runningTotal:int = IMMUTABLE_CHECKS
         targetChecks:int = checks - IMMUTABLE_CHECKS
         
-        # now, we divide that by 21 and round up to know how many fairy chests we need
-        fairyChestsPerZone:int = int(math.ceil(targetChecks / 21))
+        # now, we divide that by 21 * 4 = 84 and round up to know how many fairy chests we need
+        fairyChestsPerZone:int = int(math.ceil(targetChecks / 84))
         runningTotal = runningTotal + (fairyChestsPerZone * 4)
         
         # and now we just divide by 4... right?
