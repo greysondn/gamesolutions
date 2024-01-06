@@ -108,6 +108,9 @@ class ApConfig():
     def reconfigure_extra(self, extra:int) -> None:
         pass
     
+    def reconfigure_player(self, player:int) -> None:
+        pass
+    
     def reconfigure_end(self) -> None:
         pass
     
@@ -138,6 +141,7 @@ class ApConfig():
         self.reconfigure_duration(duration)
         self.reconfigure_deathLink(deathLink)
         self.reconfigure_extra(extra)
+        self.reconfigure_player(abs(hash(name)) % (10 ** 8))
         self.reconfigure_end()
     
     # output prep functions
