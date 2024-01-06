@@ -12,17 +12,22 @@ class Doom1993(ApConfig):
         # reconfigure non-difficulty parts of base class
         self.game = Game.DOOM_1993
         self.apgame = "DOOM 1993"
-        self.requires_version = "0.4.3"
+        self.requires_version = "0.4.4"
         
         # standard defaults and docs for game-specific settings
         #
         # read the template for the game for insight into what the settings mean
         # and their legal values
+        self.goal:str                           = "complete_all_levels"
         self.difficulty:str                     = "medium"
         self.random_monsters:str                = "shuffle"
         self.random_pickups:str                 = "shuffle"
+        self.random_music:str                   = "vanilla"
+        self.flip_levels:str                    = "vanilla"
         self.allow_death_logic:bool             = False
+        self.pro:bool                           = False
         self.start_with_computer_area_maps:bool = False
+        self.reset_level_on_death:bool          = True
         self.episode1:bool                      = True
         self.episode2:bool                      = True
         self.episode3:bool                      = True
@@ -34,11 +39,16 @@ class Doom1993(ApConfig):
         self.accessibility          = "items"
         self.death_link = False
         
+        self.goal = "complete_all_levels"
         self.difficulty = "baby"
         self.random_monsters = "vanilla"
         self.random_pickups = "vanilla"
+        self.random_music = "shuffle_game"
+        self.flip_levels  = "vanilla"
         self.allow_death_logic = False
+        self.pro               = False
         self.start_with_computer_area_maps = False
+        self.reset_level_on_death = False
         self.episode1 = True # 113 checks
         self.episode2 = False
         self.episode3 = False
@@ -158,11 +168,16 @@ class Doom1993(ApConfig):
         ret:str = ""
         
         ret = ret + self.prep_bool("death_link", self.death_link, 4)
+        ret = ret + self.prep_simple("goal", self.goal, 4)
         ret = ret + self.prep_simple("difficulty", self.difficulty, 4)
         ret = ret + self.prep_simple("random_monsters", self.random_monsters, 4)
         ret = ret + self.prep_simple("random_pickups", self.random_pickups, 4)
+        ret = ret + self.prep_simple("random_music", self.random_music, 4)
+        ret = ret + self.prep_simple("flip_levels", self.flip_levels, 4)
         ret = ret + self.prep_bool("allow_death_logic", self.allow_death_logic, 4)
+        ret = ret + self.prep_bool("pro", self.pro, 4)
         ret = ret + self.prep_bool("start_with_computer_area_maps", self.start_with_computer_area_maps, 4)
+        ret = ret + self.prep_bool("reset_level_on_death", self.reset_level_on_death, 4)
         ret = ret + self.prep_bool("episode1", self.episode1, 4)
         ret = ret + self.prep_bool("episode2", self.episode2, 4)
         ret = ret + self.prep_bool("episode3", self.episode3, 4)

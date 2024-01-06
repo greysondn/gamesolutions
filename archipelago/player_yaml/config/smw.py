@@ -12,7 +12,7 @@ class SuperMarioWorld(ApConfig):
         # reconfigure non-difficulty parts of base class
         self.game = Game.SUPER_MARIO_WORLD
         self.apgame = "Super Mario World"
-        self.requires_version = "0.4.3"
+        self.requires_version = "0.4.4"
         
         # standard defaults and docs for game-specific settings
         #
