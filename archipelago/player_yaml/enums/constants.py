@@ -11,6 +11,7 @@ MACHINES_TO_GAMES:dict[Machine, int] = {
                                 Game.SUPER_MARIO_WORLD.value,
                                 
     Machine.URSINE_LAPTOP   :   Game.DOOM_1993.value +
+                                Game.ROGUE_LEGACY.value +
                                 Game.SUPER_MARIO_WORLD.value,
 }
 
@@ -23,7 +24,8 @@ GAMES_TO_GENRES:dict[Game, int] = {
                             Genre.SHOOTER.value +
                             Genre.THIRD_PERSON_SHOOTER.value,
     
-    Game.ROGUE_LEGACY : Genre.PLATFORMER.value +
+    Game.ROGUE_LEGACY : Genre.IMPLEMENTED.value +
+                        Genre.PLATFORMER.value +
                         Genre.ROGUELITE.value,
     
     Game.SONIC_ADVENTURE_2_BATTLE : Genre.PLATFORMER.value,

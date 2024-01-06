@@ -196,6 +196,7 @@ class CommandLine():
         # should be all implemented ones for config
         games_swp:list[ApConfig] = [
             Doom1993(),
+            RogueLegacy(),
             SuperMarioWorld()
         ]
         
