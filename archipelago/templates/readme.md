@@ -1,0 +1,1 @@
+The template files are here just to make it easier to diff them between Archipelago versions. No changes are in the templates between their versions on the Archipelago.gg website and here, and consequently, they are licensed the same as Archipelago's license.
