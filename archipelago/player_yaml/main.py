@@ -235,7 +235,7 @@ class CommandLine():
         fOut:str = gam.prep_output()
     
         # output it - clobber
-        with open("greysondn.yaml", "w") as f:
+        with open(f"{args.name}.yaml", "w") as f:
             f.write(fOut)
         
         # output objective
