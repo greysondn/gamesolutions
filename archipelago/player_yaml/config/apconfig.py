@@ -141,7 +141,7 @@ class ApConfig():
         self.reconfigure_duration(duration)
         self.reconfigure_deathLink(deathLink)
         self.reconfigure_extra(extra)
-        self.reconfigure_player(abs(hash(name)) % (10 ** 8))
+        self.reconfigure_player(abs(hash(name.lower())) % (10 ** 4))
         self.reconfigure_end()
     
     # output prep functions
