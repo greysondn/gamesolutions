@@ -107,7 +107,7 @@ class Doom1993(Doom1993Base):
             self.episode3.set(False)
             self.episode4.set(False)
             
-        if (difficulty >= Difficulty.EASY.value):
+        if (difficulty == Difficulty.EASY.value):
             self.duration_min = 0
             # none recorded
             
@@ -135,7 +135,7 @@ class Doom1993(Doom1993Base):
             self.episode4.set(False)
             
         
-        if (difficulty >= Difficulty.NORMAL.value):
+        if (difficulty == Difficulty.NORMAL.value):
             doom1993_normal_records = [
                 9296,
             ]
@@ -160,7 +160,7 @@ class Doom1993(Doom1993Base):
             self.episode4.set(False)
             
         
-        if (difficulty >= Difficulty.HARD.value):
+        if (difficulty == Difficulty.HARD.value):
             self.duration_min = 0
             # none recorded
             
@@ -190,7 +190,7 @@ class Doom1993(Doom1993Base):
             self.episode3.set(False)
             self.episode4.set(False)
             
-        if (difficulty >= Difficulty.VERY_HARD.value):
+        if (difficulty == Difficulty.VERY_HARD.value):
             self.duration_min = 0
             # none recorded
             
@@ -220,7 +220,7 @@ class Doom1993(Doom1993Base):
             self.episode3.set(True)
             self.episode4.set(False)
             
-        if (difficulty >= Difficulty.IMPOSSIBLE.value):
+        if (difficulty == Difficulty.IMPOSSIBLE.value):
             self.duration_min = 0
             # none recorded
             
@@ -251,7 +251,7 @@ class Doom1993(Doom1993Base):
             self.episode4.set(False)
 
 
-        if (difficulty >= Difficulty.HATE_ME_TODAY.value):
+        if (difficulty == Difficulty.HATE_ME_TODAY.value):
             self.duration_min = 0
             # none recorded
             
