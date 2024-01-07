@@ -1,10 +1,16 @@
 from enums import Difficulty
 from enums import Game
 
+from .apcomp import ApComp
+from .apcomp import BoolComp
+from .apcomp import IntComp
+from .apcomp import StrComp
+from .apcomp import StrListComp
+from .apcomp import PlandoItemListComp
+
 from .apconfig import ApConfig
 
-
-class Doom1993(ApConfig):
+class Doom1993Base(ApConfig):
     def __init__(self):
         # parent
         super().__init__()
@@ -14,50 +20,65 @@ class Doom1993(ApConfig):
         self.apgame = "DOOM 1993"
         self.requires_version = "0.4.4"
         
+        self.components.append(self.death_link)
+
+        self.progression_balancing.set(75)
+
         # standard defaults and docs for game-specific settings
         #
         # read the template for the game for insight into what the settings mean
         # and their legal values
-        self.goal:str                           = "complete_all_levels"
-        self.difficulty:str                     = "medium"
-        self.random_monsters:str                = "shuffle"
-        self.random_pickups:str                 = "shuffle"
-        self.random_music:str                   = "vanilla"
-        self.flip_levels:str                    = "vanilla"
-        self.allow_death_logic:bool             = False
-        self.pro:bool                           = False
-        self.start_with_computer_area_maps:bool = False
-        self.reset_level_on_death:bool          = True
-        self.episode1:bool                      = True
-        self.episode2:bool                      = True
-        self.episode3:bool                      = True
-        self.episode4:bool                      = False
+        self.goal:StrComp = StrComp("goal", "complete_all_levels", 4)
+        self.components.append(self.goal)
+
+        self.difficulty:StrComp = StrComp("difficulty", "medium", 4)
+        self.components.append(self.difficulty)
         
-    def reconfigure_start(self) -> None:
-        # explicit is better than implicit
-        self.progression_balancing  = "50"
-        self.accessibility          = "items"
-        self.death_link = False
+        self.random_monsters:StrComp = StrComp("random_monsters", "shuffle", 4)
+        self.components.append(self.random_monsters)
+
+        self.random_pickups:StrComp = StrComp("random_pickups", "shuffle", 4)
+        self.components.append(self.random_pickups)
+
+        self.random_music:StrComp = StrComp("random_music", "vanilla", 4)
+        self.components.append(self.random_music)
+
+        self.flip_levels:StrComp = StrComp("flip_levels", "vanilla", 4)
+        self.components.append(self.flip_levels)
+
+        self.allow_death_logic:BoolComp = BoolComp("allow_death_logic", False, 4)
+        self.components.append(self.allow_death_logic)
+
+        self.pro:BoolComp = BoolComp("pro", False, 4)
+        self.components.append(self.pro)
+
+        self.start_with_computer_area_maps:BoolComp = BoolComp("start_with_computer_area_maps", False, 4)
+        self.components.append(self.start_with_computer_area_maps)
+
+        self.reset_level_on_death:BoolComp = BoolComp("reset_level_on_death", True, 4)
+        self.components.append(self.reset_level_on_death)
+
+        self.episode1:BoolComp = BoolComp("episode1", True, 4)
+        self.components.append(self.episode1)
+
+        self.episode2:BoolComp = BoolComp("episode2", True, 4)
+        self.components.append(self.episode2)
         
-        self.goal = "complete_all_levels"
-        self.difficulty = "baby"
-        self.random_monsters = "vanilla"
-        self.random_pickups = "vanilla"
-        self.random_music = "shuffle_game"
-        self.flip_levels  = "vanilla"
-        self.allow_death_logic = False
-        self.pro               = False
-        self.start_with_computer_area_maps = False
-        self.reset_level_on_death = False
-        self.episode1 = True # 113 checks
-        self.episode2 = False
-        self.episode3 = False
-        self.episode4 = False
+        self.episode3:BoolComp = BoolComp("episode3", True, 4)
+        self.components.append(self.episode3)
+        
+        self.episode4:BoolComp = BoolComp("episode4", False, 4)
+        self.components.append(self.episode4)
+
+class Doom1993(Doom1993Base):
+    def __init__(self):
+        # parent
+        super().__init__()
         
     def reconfigure_difficulty(self, difficulty:int) -> None:
         # so the starting default should be very easy
         # so we just progressively increase the difficulty with the timer
-        if (difficulty >= Difficulty.VERY_EASY.value):
+        if (difficulty == Difficulty.VERY_EASY.value):
             self.duration_min = 0
             # none recorded
             
@@ -68,7 +89,24 @@ class Doom1993(ApConfig):
             # none recorded
             
             self.checks = 113
-        
+            
+            # actual config
+            # explicitly set all options
+            self.goal.set("complete_all_levels")
+            self.difficulty.set("baby")
+            self.random_monsters.set("vanilla")
+            self.random_pickups.set("vanilla")
+            self.random_music.set("shuffle_game")
+            self.flip_levels.set("vanilla")
+            self.allow_death_logic.set(False)
+            self.pro.set(False)
+            self.start_with_computer_area_maps.set(True)
+            self.reset_level_on_death.set(False)
+            self.episode1.set(True)     # 113 checks
+            self.episode2.set(False)
+            self.episode3.set(False)
+            self.episode4.set(False)
+            
         if (difficulty >= Difficulty.EASY.value):
             self.duration_min = 0
             # none recorded
@@ -78,10 +116,23 @@ class Doom1993(ApConfig):
             
             self.duration_avg = 31536000
             # none recorded
-        
+
             # actual config
-            self.difficulty = "easy"
-            self.episode2 = False
+            # explicitly set all options
+            self.goal.set("complete_all_levels")
+            self.difficulty.set("easy")
+            self.random_monsters.set("vanilla")
+            self.random_pickups.set("vanilla")
+            self.random_music.set("shuffle_game")
+            self.flip_levels.set("vanilla")
+            self.allow_death_logic.set(False)
+            self.pro.set(False)
+            self.start_with_computer_area_maps.set(True)
+            self.reset_level_on_death.set(False)
+            self.episode1.set(True)     # 113 checks
+            self.episode2.set(False)
+            self.episode3.set(False)
+            self.episode4.set(False)
             
         
         if (difficulty >= Difficulty.NORMAL.value):
@@ -92,7 +143,21 @@ class Doom1993(ApConfig):
             self.duration_min, self.duration_max, self.duration_avg = self.helper_duration(doom1993_normal_records)
         
             # actual config
-            self.difficulty = "medium"
+            # explicitly set all options
+            self.goal.set("complete_all_levels")
+            self.difficulty.set("medium")
+            self.random_monsters.set("vanilla")
+            self.random_pickups.set("vanilla")
+            self.random_music.set("shuffle_game")
+            self.flip_levels.set("vanilla")
+            self.allow_death_logic.set(False)
+            self.pro.set(False)
+            self.start_with_computer_area_maps.set(True)
+            self.reset_level_on_death.set(False)
+            self.episode1.set(True)     # 113 checks
+            self.episode2.set(False)
+            self.episode3.set(False)
+            self.episode4.set(False)
             
         
         if (difficulty >= Difficulty.HARD.value):
@@ -109,8 +174,21 @@ class Doom1993(ApConfig):
             # unrecorded
             
             # actual config
-            self.difficulty = "hard"
-            self.episode2 = True
+            # explicitly set all options
+            self.goal.set("complete_all_levels")
+            self.difficulty.set("hard")
+            self.random_monsters.set("vanilla")
+            self.random_pickups.set("vanilla")
+            self.random_music.set("shuffle_game")
+            self.flip_levels.set("vanilla")
+            self.allow_death_logic.set(False)
+            self.pro.set(False)
+            self.start_with_computer_area_maps.set(True)
+            self.reset_level_on_death.set(False)
+            self.episode1.set(True)     # 113 checks
+            self.episode2.set(True)
+            self.episode3.set(False)
+            self.episode4.set(False)
             
         if (difficulty >= Difficulty.VERY_HARD.value):
             self.duration_min = 0
@@ -126,9 +204,21 @@ class Doom1993(ApConfig):
             # unrecorded            
              
             # actual config
-            self.random_monsters = "shuffle"
-            self.random_pickups  = "shuffle"
-            self.episode3 = True
+            # explicitly set all options
+            self.goal.set("complete_all_levels")
+            self.difficulty.set("hard")
+            self.random_monsters.set("shuffle")
+            self.random_pickups.set("shuffle")
+            self.random_music.set("shuffle_game")
+            self.flip_levels.set("vanilla")
+            self.allow_death_logic.set(False)
+            self.pro.set(False)
+            self.start_with_computer_area_maps.set(True)
+            self.reset_level_on_death.set(False)
+            self.episode1.set(True)     # 113 checks
+            self.episode2.set(True)
+            self.episode3.set(True)
+            self.episode4.set(False)
             
         if (difficulty >= Difficulty.IMPOSSIBLE.value):
             self.duration_min = 0
@@ -144,7 +234,21 @@ class Doom1993(ApConfig):
             # unrecorded
             
             # actual config
-            self.difficulty = "nightmare"
+            # explicitly set all options
+            self.goal.set("complete_all_levels")
+            self.difficulty.set("nightmare")
+            self.random_monsters.set("shuffle")
+            self.random_pickups.set("shuffle")
+            self.random_music.set("shuffle_game")
+            self.flip_levels.set("vanilla")
+            self.allow_death_logic.set(False)
+            self.pro.set(False)
+            self.start_with_computer_area_maps.set(True)
+            self.reset_level_on_death.set(False)
+            self.episode1.set(True)     # 113 checks
+            self.episode2.set(True)
+            self.episode3.set(True)
+            self.episode4.set(False)
 
 
         if (difficulty >= Difficulty.HATE_ME_TODAY.value):
@@ -161,29 +265,21 @@ class Doom1993(ApConfig):
             # unrecorded
             
             # actual config
-            self.random_monsters = "random_balanced"
-            self.random_pickups  = "random_balanced"
-
-    def prep_game_specific_settings(self) -> str:
-        ret:str = ""
-        
-        ret = ret + self.prep_bool("death_link", self.death_link, 4)
-        ret = ret + self.prep_simple("goal", self.goal, 4)
-        ret = ret + self.prep_simple("difficulty", self.difficulty, 4)
-        ret = ret + self.prep_simple("random_monsters", self.random_monsters, 4)
-        ret = ret + self.prep_simple("random_pickups", self.random_pickups, 4)
-        ret = ret + self.prep_simple("random_music", self.random_music, 4)
-        ret = ret + self.prep_simple("flip_levels", self.flip_levels, 4)
-        ret = ret + self.prep_bool("allow_death_logic", self.allow_death_logic, 4)
-        ret = ret + self.prep_bool("pro", self.pro, 4)
-        ret = ret + self.prep_bool("start_with_computer_area_maps", self.start_with_computer_area_maps, 4)
-        ret = ret + self.prep_bool("reset_level_on_death", self.reset_level_on_death, 4)
-        ret = ret + self.prep_bool("episode1", self.episode1, 4)
-        ret = ret + self.prep_bool("episode2", self.episode2, 4)
-        ret = ret + self.prep_bool("episode3", self.episode3, 4)
-        ret = ret + self.prep_bool("episode4", self.episode4, 4)
-        
-        return ret
+            # explicitly set all options
+            self.goal.set("complete_all_levels")
+            self.difficulty.set("nightmare")
+            self.random_monsters.set("random_balanced")
+            self.random_pickups.set("random_balanced")
+            self.random_music.set("shuffle_game")
+            self.flip_levels.set("vanilla")
+            self.allow_death_logic.set(False)
+            self.pro.set(False)
+            self.start_with_computer_area_maps.set(True)
+            self.reset_level_on_death.set(False)
+            self.episode1.set(True)     # 113 checks
+            self.episode2.set(True)
+            self.episode3.set(True)
+            self.episode4.set(False)
     
     def print_goal(self, difficulty:int) -> None:
         out:str = "\n\n"

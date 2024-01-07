@@ -1,5 +1,14 @@
 from enums import Game
 
+from .apcomp import ApComp
+from .apcomp import BoolComp
+from .apcomp import IntComp
+from .apcomp import StrComp
+from .apcomp import StrListComp
+from .apcomp import PlandoItemListComp
+
+from typing import Any
+
 class ApConfig():
     def __init__(self):
         # details about duration
@@ -34,41 +43,56 @@ class ApConfig():
         '''Plando settings this config requires'''
 
         # game settings
-        self.accessibility:str = "items"
-        '''Archipelago accessibility setting. Probably want to leave this alone.'''
+        self.components:list[ApComp] = []
+        """Internal list of components. Should probably not touch this so directly."""
         
-        self.progression_balancing:str = "50"
+        self.accessibility:StrComp = StrComp("accessibility", "items", 4)
+        '''Archipelago accessibility setting. Probably want to leave this alone.'''
+        self.components.append(self.accessibility)
+        
+        self.progression_balancing:IntComp = IntComp("progression_balancing", 50, 4)
         '''Archipelago progression balancing - probably want to leave this alone'''
+        self.components.append(self.progression_balancing)
         
         self.triggers:str = "IGNORED."
         '''Archipelago triggers. This var and feature is currently unused in this config generator.'''
+        # not appended
         
-        self.local_items:list[str] = []
+        self.local_items:StrListComp = StrListComp("local_items", [], 4)
         '''Items from the item pool to guarantee are available locally'''
+        self.components.append(self.local_items)
         
-        self.non_local_items:list[str] = []
+        self.non_local_items:StrListComp = StrListComp("non_local_items", [], 4)
         '''Items from the item pool to guarantee are not available locally'''
+        self.components.append(self.non_local_items)
         
-        self.start_inventory:list[str] = []
+        self.start_inventory:StrListComp = StrListComp("start_inventory", [], 4)
         '''Items to give to player at start.'''
+        self.components.append(self.start_inventory)
         
-        self.start_hints:list[str] = []
+        self.start_hints:StrListComp = StrListComp("start_hints", [], 4)
         '''hints to guarantee are available for free out of the gate'''
+        self.components.append(self.start_hints)
         
-        self.start_location_hints:list[str] = []
+        self.start_location_hints:StrListComp = StrListComp("start_location_hints", [], 4)
         '''location hints to guarantee are available for free out of the gate'''
+        self.components.append(self.start_location_hints)
         
-        self.exclude_locations:list[str] = []
+        self.exclude_locations:StrListComp = StrListComp("exclude_locations", [], 4)
         '''checks to guarantee DO NOT have a progression item in them, making them generally skippable'''
+        self.components.append(self.exclude_locations)
         
-        self.priority_locations:list[str] = []
+        self.priority_locations:StrListComp = StrListComp("priority_locations", [], 4)
         '''checks to guarantee DO have a progression item in them, making them generally mandatory to complete'''
+        self.components.append(self.priority_locations)
         
         self.item_links:str = "IGNORED."
         '''Don't really get this. Ignored in this config generator for now.'''
+        # not appended
         
-        self.death_link:bool = False
-        '''Death link. Anyone with death link enabled dies together. This isn't output by default as it's not in every game.'''
+        self.death_link:BoolComp = BoolComp("death_link", False, 4)
+        '''Death link. Anyone with death link enabled dies together. This isn't added to the internal components list for output by default as it's not in every game.'''
+        # not appended. Append manually
     
     def __repr__(self):
         return f"ApConfig({self.apgame})"
@@ -79,9 +103,9 @@ class ApConfig():
     
     def reconfigure_deathLink(self, deathLink:str) -> None:
         if (deathLink.lower() == "true"):
-            self.death_link = True
+            self.death_link.set(True)
         elif (deathLink.lower() == "false"):
-            self.death_link = False
+            self.death_link.set(False)
         else:
             raise ValueError("Invalid deathlink value!")
     
@@ -114,12 +138,6 @@ class ApConfig():
     def reconfigure_end(self) -> None:
         pass
     
-    def reconfigure_start(self) -> None:
-        """Override this to match all basic settings for the game, set for the 
-        shortest conceivable game on Difficulty.VERY_EASY
-        """        
-        pass
-    
     def reconfigure_slot(self, name:str) -> None:
         self.name = name
     
@@ -133,8 +151,7 @@ class ApConfig():
             duration (int): approximate max duration of play in seconds
             difficulty (int): how hard the game is meant to be
             extra(int): any extra setting flags
-        """        
-        self.reconfigure_start()
+        """
         self.reconfigure_slot(name)
         self.reconfigure_difficulty(difficulty)
         self.reconfigure_checks(checks)
@@ -146,12 +163,7 @@ class ApConfig():
     
     # output prep functions
     def _makeIndent(self, width:int):
-        ret = ""
-        
-        for i in range(width):
-            ret = ret + " "
-        
-        return ret
+        return " " * width
     
     def prep_simple(self, name:str, value:str, indent:int = 0) -> str:
         ret = ""
@@ -165,35 +177,6 @@ class ApConfig():
         
         if (len(value) > 0):
             ret = self.prep_simple(name, value, indent)
-        
-        return ret
-    
-    def prep_bool(self, name:str, value:bool, indent:int = 0) -> str:
-        ret = ""
-        
-        swp = ""
-        
-        if (value == True):
-            swp = "'true'"
-        elif (value == False):
-            swp = "'false'"
-        
-        ret = self.prep_simple(name, swp, indent)
-        
-        return ret
-    
-    def prep_int(self, name:str, value:int, indent = 0) -> str:
-        return self.prep_simple(name, f"{value}", indent)
-    
-    def prep_list(self, name:str, value:list[str], indent:int = 0) -> str:
-        ret = ""
-        
-        if (len(value) > 0):
-            prefix = self._makeIndent(indent)
-            ret = ret + prefix + f"{name}:\n"
-            
-            for i in value:
-                ret = ret + prefix + f"    - {i}\n"
         
         return ret
     
@@ -226,59 +209,13 @@ class ApConfig():
         ret = ret + self.prep_requires()
         return ret
     
-    def prep_accessibility(self) -> str:
-        return self.prep_simple("accessibility", self.accessibility, 4)
-    
-    def prep_progression_balancing(self) -> str:
-        return self.prep_simple("progression_balancing", self.progression_balancing, 4)
-    
-    def prep_local_items(self) -> str:
-        return self.prep_list("local_items", self.local_items, 4)
-        
-    def prep_nonlocal_items(self) -> str:
-        return self.prep_list("non_local_items", self.non_local_items, 4)
-
-    def prep_start_inventory(self) -> str:
-        ret = ""
-        
-        if (len(self.start_inventory) > 0):
-            prefix = self._makeIndent(4)
-            ret = ret + prefix + f"start_inventory:\n"
-            
-            for i in self.start_inventory:
-                ret = ret + prefix + f"    {i}: 1\n"
-        
-        return ret
-    
-    def prep_start_hints(self) -> str:
-        return self.prep_list("start_hints", self.start_hints, 4)
-        
-    def prep_start_location_hints(self) -> str:
-        return self.prep_list("start_location_hints", self.start_location_hints, 4)
-    
-    def prep_exclude_locations(self) -> str:
-        return self.prep_list("exclude_locations", self.exclude_locations, 4)
-        
-    def prep_priority_locations(self) -> str:
-        return self.prep_list("priority_locations", self.priority_locations, 4)
-    
-    def prep_game_specific_settings(self) -> str:
-        '''override this function to provide game specific settings.'''
-        return ""
     
     def prep_gameSettings(self) -> str:
         ret = ""
-        ret = ret + f"{self.apgame}:\n"
-        ret = ret + self.prep_accessibility()
-        ret = ret + self.prep_progression_balancing()
-        ret = ret + self.prep_local_items()
-        ret = ret + self.prep_nonlocal_items()
-        ret = ret + self.prep_start_inventory()
-        ret = ret + self.prep_start_hints()
-        ret = ret + self.prep_start_location_hints()
-        ret = ret + self.prep_exclude_locations()
-        ret = ret + self.prep_priority_locations()
-        ret = ret + self.prep_game_specific_settings()
+        ret = ret + f"{self.apgame}:"
+        
+        for i in self.components:
+            ret = ret + "\n" + f"{i}"
         
         return ret
     
