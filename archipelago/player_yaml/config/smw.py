@@ -4,6 +4,60 @@ from enums import Game
 
 import random
 
+from .apcomp import ApComp
+from .apcomp import BoolComp
+from .apcomp import IntComp
+from .apcomp import StrComp
+from .apcomp import StrListComp
+from .apcomp import PlandoItemListComp
+
+class SuperMarioWorldBase(ApConfig):
+    def __init__(self):
+        # parent
+        super().__init__()
+        
+        # reconfigure non-difficulty parts of base class
+        self.game = Game.SUPER_MARIO_WORLD
+        self.apgame = "Super Mario World"
+        self.requires_version = "0.4.4"
+
+        self.components.append(self.death_link)
+
+        # standard defaults and docs for game-specific settings
+        #
+        # read the template for the game for insight into what the settings mean
+        # and their legal values
+        self.goal:StrComp = StrComp("goal", "bowser", 4)
+        self.bosses_required:IntComp = IntComp("bosses_required", 7, 4)
+        self.number_of_yoshi_eggs:IntComp = IntComp("number_of_yoshi_eggs", 50, 4)
+        self.percentage_of_yoshi_eggs:IntComp = IntComp("percentage_of_yoshi_eggs", 100, 4)
+        self.dragon_coins_checks:BoolComp = BoolComp("dragon_coin_checks", False, 4)
+        self.bowser_castle_doors:StrComp = StrComp("bowser_castle_doors", "vanilla", 4)
+        self.bowser_castle_rooms:StrComp = StrComp("bowser_castle_rooms", "random_two_room", 4)
+        self.level_shuffle:BoolComp = BoolComp("level_shuffle", False, 4)
+        self.exclude_special_zone:BoolComp = BoolComp("exclude_special_zone", False, 4)
+        self.boss_shuff:StrComp = StrComp("boss_shuffle", "none", 4)
+        self.swap_donut_gh_exits:BoolComp = BoolComp("swap_donut_gh_exits", False, 4)
+        self.display_received_item_popups:StrComp = StrComp("display_received_item_popups", "progression", 4)
+        self.trap_fill_percentage:IntComp = IntComp("trap_fill_percentage", 0, 4)
+        self.ice_trap_weight:StrComp = StrComp("ice_trap_weight", "medium", 4)
+        self.stun_trap_weight:StrComp = StrComp("stun_trap_weight", "medium", 4)
+        self.literature_trap_weight:StrComp = StrComp("literature_trap_weight", "medium", 4)
+        self.timer_trap_weight:StrComp = StrComp("timer_trap_weight", "medium", 4)
+        self.autosave:BoolComp = BoolComp("autosave", True, 4)
+        self.early_climb:BoolComp = BoolComp("early_climb", False, 4)
+        self.overworld_speed:StrComp = StrComp("overworld_speed", "vanilla", 4)
+        self.music_shuffle:StrComp = StrComp("music_shuffle", "none", 4)
+        self.mario_palette:StrComp = StrComp("mario_palette", "mario", 4)
+        self.foreground_palette_shuffle:BoolComp = BoolComp("foreground_palette_shuffle", False, 4)
+        self.background_palette_shuffle:BoolComp = BoolComp("background_palette_shuffle", False, 4)
+
+        '''
+        self.overworld_palette_shuffle:bool     = False
+        self.starting_life_count:int            = 5
+        self.plando_items:list[str]             = []
+        '''
+
 class SuperMarioWorld(ApConfig):
     def __init__(self):
         # parent
