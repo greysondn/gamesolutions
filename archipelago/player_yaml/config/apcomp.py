@@ -194,7 +194,7 @@ class StrListComp(ApComp):
         except ValueError:
             pass
 
-class PlandoItemComp():
+class PlandoItemComp(ApComp):
     def __init__(self, items:list[str], locations:list[str], indent:int=0):
        self.indent = indent
        
@@ -211,7 +211,7 @@ class PlandoItemComp():
         
         return ret
     
-class PlandoItemListComp():
+class PlandoItemListComp(ApComp):
     def __init__(self, indent:int = 0, omitIfEmpty:bool = True):
         self.value:list[PlandoItemComp] = []
         self.omitIfEmpty:bool = omitIfEmpty
