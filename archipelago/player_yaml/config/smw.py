@@ -8,6 +8,8 @@ from .apcomp import ApComp
 from .apcomp import BoolComp
 from .apcomp import IntComp
 from .apcomp import StrComp
+from .apcomp import StrEnumComp
+from .apcomp import StrEnumRandomizableComp
 from .apcomp import StrListComp
 from .apcomp import PlandoItemListComp
 
@@ -28,35 +30,111 @@ class SuperMarioWorldBase(ApConfig):
         # read the template for the game for insight into what the settings mean
         # and their legal values
         self.goal:StrComp = StrComp("goal", "bowser", 4)
+        self.components.append(self.goal)
+        
         self.bosses_required:IntComp = IntComp("bosses_required", 7, 4)
+        self.components.append(self.bosses_required)
+        
         self.number_of_yoshi_eggs:IntComp = IntComp("number_of_yoshi_eggs", 50, 4)
+        self.components.append(self.number_of_yoshi_eggs)
+        
         self.percentage_of_yoshi_eggs:IntComp = IntComp("percentage_of_yoshi_eggs", 100, 4)
+        self.components.append(self.percentage_of_yoshi_eggs)
+        
         self.dragon_coins_checks:BoolComp = BoolComp("dragon_coin_checks", False, 4)
+        self.components.append(self.dragon_coins_checks)
+        
         self.bowser_castle_doors:StrComp = StrComp("bowser_castle_doors", "vanilla", 4)
+        self.components.append(self.bowser_castle_doors)
+        
         self.bowser_castle_rooms:StrComp = StrComp("bowser_castle_rooms", "random_two_room", 4)
+        self.components.append(self.bowser_castle_rooms)
+        
         self.level_shuffle:BoolComp = BoolComp("level_shuffle", False, 4)
+        self.components.append(self.level_shuffle)
+        
         self.exclude_special_zone:BoolComp = BoolComp("exclude_special_zone", False, 4)
-        self.boss_shuff:StrComp = StrComp("boss_shuffle", "none", 4)
+        self.components.append(self.exclude_special_zone)
+        
+        self.boss_shuffle:StrComp = StrComp("boss_shuffle", "none", 4)
+        self.components.append(self.boss_shuffle)
+        
         self.swap_donut_gh_exits:BoolComp = BoolComp("swap_donut_gh_exits", False, 4)
+        self.components.append(self.swap_donut_gh_exits)
+        
         self.display_received_item_popups:StrComp = StrComp("display_received_item_popups", "progression", 4)
+        self.components.append(self.display_received_item_popups)
+        
         self.trap_fill_percentage:IntComp = IntComp("trap_fill_percentage", 0, 4)
-        self.ice_trap_weight:StrComp = StrComp("ice_trap_weight", "medium", 4)
-        self.stun_trap_weight:StrComp = StrComp("stun_trap_weight", "medium", 4)
-        self.literature_trap_weight:StrComp = StrComp("literature_trap_weight", "medium", 4)
-        self.timer_trap_weight:StrComp = StrComp("timer_trap_weight", "medium", 4)
+        self.components.append(self.trap_fill_percentage)
+        
+        # I'll just reuse the same list for all the traps
+        _trapWeights:list[str] = [
+            "none",
+            "low",
+            "medium",
+            "high",
+        ]
+        
+        self.ice_trap_weight:StrEnumComp = StrEnumComp("ice_trap_weight", "medium", _trapWeights, 4)
+        self.components.append(self.ice_trap_weight)
+        
+        self.stun_trap_weight:StrEnumComp = StrEnumComp("stun_trap_weight", "medium", _trapWeights, 4)
+        self.components.append(self.stun_trap_weight)
+        
+        self.literature_trap_weight:StrEnumComp = StrEnumComp("literature_trap_weight", "medium", _trapWeights, 4)
+        self.components.append(self.literature_trap_weight)
+        
+        self.timer_trap_weight:StrEnumComp = StrEnumComp("timer_trap_weight", "medium", _trapWeights, 4)
+        self.components.append(self.timer_trap_weight)
+        
         self.autosave:BoolComp = BoolComp("autosave", True, 4)
+        self.components.append(self.autosave)
+        
         self.early_climb:BoolComp = BoolComp("early_climb", False, 4)
-        self.overworld_speed:StrComp = StrComp("overworld_speed", "vanilla", 4)
-        self.music_shuffle:StrComp = StrComp("music_shuffle", "none", 4)
-        self.mario_palette:StrComp = StrComp("mario_palette", "mario", 4)
+        self.components.append(self.early_climb)
+        
+        _overworldSpeeds:list[str] = [
+            "slow",
+            "vanilla",
+            "fast",
+        ]
+        self.overworld_speed:StrEnumComp = StrEnumComp("overworld_speed", "vanilla", _overworldSpeeds, 4)
+        self.components.append(self.overworld_speed)
+        
+        _musicShuffleTypes:list[str] = [
+            "none",
+            "consistent",
+            "full",
+            "singularity",
+        ]
+        self.music_shuffle:StrEnumComp = StrEnumComp("music_shuffle", "none", _musicShuffleTypes, 4)
+        self.components.append(self.music_shuffle)
+        
+        _marioPalettes:list[str] = [
+            "mario",
+            "luigi",
+            "wario",
+            "waluigi",
+            "geno",
+            "princess",
+            "dark",
+            "sponge",
+        ]
+        self.mario_palette:StrEnumRandomizableComp = StrEnumRandomizableComp("mario_palette", "mario", _marioPalettes, 4)
+        self.components.append(self.mario_palette)
+        
         self.foreground_palette_shuffle:BoolComp = BoolComp("foreground_palette_shuffle", False, 4)
+        self.components.append(self.foreground_palette_shuffle)
+        
         self.background_palette_shuffle:BoolComp = BoolComp("background_palette_shuffle", False, 4)
-
-        '''
-        self.overworld_palette_shuffle:bool     = False
-        self.starting_life_count:int            = 5
-        self.plando_items:list[str]             = []
-        '''
+        self.components.append(self.background_palette_shuffle)
+        
+        self.overworld_palette_shuffle:BoolComp = BoolComp("overworld_palette_shuffle", False, 4)
+        self.components.append(self.overworld_palette_shuffle)
+        
+        self.starting_life_count:IntComp = IntComp("starting_life_count", 5, 4)
+        self.components.append(self.starting_life_count)
 
 class SuperMarioWorld(ApConfig):
     def __init__(self):
