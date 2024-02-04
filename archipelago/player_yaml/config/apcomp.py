@@ -212,7 +212,7 @@ class PlandoItemComp():
         return ret
     
 class PlandoItemListComp():
-    def __self__(self, indent:int = 0, omitIfEmpty:bool = True):
+    def __init__(self, indent:int = 0, omitIfEmpty:bool = True):
         self.value:list[PlandoItemComp] = []
         self.omitIfEmpty:bool = omitIfEmpty
         self.indent:int = indent
