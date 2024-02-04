@@ -1,3 +1,4 @@
+from random import choice
 from typing import Any
 
 """A series of basic components to make apconfigs out of.
@@ -120,6 +121,35 @@ class StrComp(ApComp):
         
     def get(self) -> str:
         return self.value
+
+class StrEnumComp(StrComp):
+    def __init__(self, name:str, default:str, validValues:list[str], indent:int=0):
+        # parent
+        super().__init__(name, default, indent)
+        
+        # tweaks
+        self.validValues:list[str] = validValues
+        """valid values for this to be set to"""
+        
+        # go ahead and set that value again just so it gets validated
+        self.set(default)
+        
+    def set(self, value:str) -> None:
+        if (value in self.validValues):
+            self.value = value
+        else:
+            raise ValueError()
+
+class StrEnumRandomizableComp(StrEnumComp):
+    # so this is identical to parent, except it also allows the usage of
+    # "random" as a value and provides handling for that value
+    def set(self, value:str) -> None:
+        if (value in self.validValues):
+            self.value = value
+        elif (value.lower() == "random"):
+            self.set(choice(self.validValues))
+        else:
+            raise ValueError()
 
 class StrListComp(ApComp):
     def __init__(self, name:str, default:list[str], indent:int=0, omitIfEmpty:bool=True):
