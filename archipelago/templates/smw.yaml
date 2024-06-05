@@ -17,10 +17,10 @@
 # A. This is a .yaml file. You are allowed to use most characters.
 #    To test if your yaml is valid or not, you can use this website:
 #        http://www.yamllint.com/
-#    You can also verify your Archipelago settings are valid at this site:
+#    You can also verify that your Archipelago options are valid at this site:
 #        https://archipelago.gg/check
 
-# Your name in-game. Spaces will be replaced with underscores and there is a 16-character limit.
+# Your name in-game, limited to 16 characters.
 #     {player} will be replaced with the player's slot number.
 #     {PLAYER} will be replaced with the player's slot number, if that slot number is greater than 1.
 #     {number} will be replaced with the counter value of the name.
@@ -32,7 +32,7 @@ description: Default Super Mario World Template
 
 game: Super Mario World
 requires:
-  version: 0.4.4 # Version of Archipelago required for this yaml to work as expected.
+  version: 0.4.6 # Version of Archipelago required for this yaml to work as expected.
 
 Super Mario World:
   progression_balancing:
@@ -113,12 +113,14 @@ Super Mario World:
     random-low: 0
     random-high: 0
 
-  number_of_yoshi_eggs:
-    # How many Yoshi Eggs are in the pool for Yoshi Egg Hunt
+  max_yoshi_egg_cap:
+    # Maximum possible number of Yoshi Eggs that will be in the item pool
+    # If fewer available locations exist in the pool than this number, the number of available locations will be used instead.
+    # Required Percentage of Yoshi Eggs will be calculated based off of that number.
     #
     # You can define additional values between the minimum and maximum values.
     # Minimum value is 1
-    # Maximum value is 80
+    # Maximum value is 255
     50: 50
     random: 0
     random-low: 0
@@ -137,6 +139,32 @@ Super Mario World:
 
   dragon_coin_checks:
     # Whether collecting 5 Dragon Coins in each level will grant a check
+    false: 50
+    true: 0
+
+  moon_checks:
+    # Whether collecting a 3-Up Moon in a level will grant a check
+    false: 50
+    true: 0
+
+  hidden_1up_checks:
+    # Whether collecting a hidden 1-Up mushroom in a level will grant a check
+    # These checks are considered cryptic as there's no actual indicator that they're in their respective places
+    # Enable this option at your own risk
+    false: 50
+    true: 0
+
+  bonus_block_checks:
+    # Whether collecting a 1-Up mushroom from a Bonus Block in a level will grant a check
+    false: 50
+    true: 0
+
+  blocksanity:
+    # Whether hitting a block with an item or coin inside will grant a check
+    # Note that some blocks are excluded due to how the option and the game works!
+    # Exclusion list:
+    #   * Blocks in Top Secret Area & Front Door/Bowser Castle
+    #   * Blocks that are unreachable unless you glitch your way in
     false: 50
     true: 0
 
@@ -198,7 +226,19 @@ Super Mario World:
     # What messages to display in-game for items received
     none: 0
     all: 0
-    progression: 50
+    progression: 0
+    progression_minus_yoshi_eggs: 50
+
+  junk_fill_percentage:
+    # Replace a percentage of non-required Yoshi Eggs in the item pool with random junk items (only applicable on Yoshi Egg Hunt goal)
+    #
+    # You can define additional values between the minimum and maximum values.
+    # Minimum value is 0
+    # Maximum value is 100
+    0: 50
+    random: 0
+    random-low: 0
+    random-high: 0
 
   trap_fill_percentage:
     # Replace a percentage of junk items in the item pool with random traps
@@ -239,6 +279,20 @@ Super Mario World:
     medium: 50
     high: 0
 
+  reverse_trap_weight:
+    # Likelihood of a receiving a trap which causes the controls to be reversed in the current level
+    none: 0
+    low: 0
+    medium: 50
+    high: 0
+
+  thwimp_trap_weight:
+    # Likelihood of a receiving a trap which causes a Thwimp to spawn above the player
+    none: 0
+    low: 0
+    medium: 50
+    high: 0
+
   autosave:
     # Whether a save prompt will appear after every level
     false: 0
@@ -267,6 +321,16 @@ Super Mario World:
     full: 0
     singularity: 0
 
+  sfx_shuffle:
+    # Shuffles almost every instance of sound effect playback
+    # Archipelago elements that play sound effects aren't randomized
+    # None: No SFX are shuffled
+    # Full: Each individual SFX call has a random SFX
+    # Singularity: The entire game uses one SFX for every SFX call
+    none: 50
+    full: 0
+    singularity: 0
+
   mario_palette:
     # Mario palette color
     mario: 50
@@ -278,20 +342,23 @@ Super Mario World:
     dark: 0
     sponge: 0
 
-  foreground_palette_shuffle:
-    # Whether to shuffle level foreground palettes
-    false: 50
-    true: 0
-
-  background_palette_shuffle:
-    # Whether to shuffle level background palettes
-    false: 50
-    true: 0
+  level_palette_shuffle:
+    # Whether to shuffle level palettes
+    # Off: Do not shuffle palettes
+    # On Legacy: Uses only the palette sets from the original game
+    # On Curated: Uses custom, hand-crafted palette sets
+    off: 50
+    on_legacy: 0
+    on_curated: 0
 
   overworld_palette_shuffle:
     # Whether to shuffle overworld palettes
-    false: 50
-    true: 0
+    # Off: Do not shuffle palettes
+    # On Legacy: Uses only the palette sets from the original game
+    # On Curated: Uses custom, hand-crafted palette sets
+    off: 50
+    on_legacy: 0
+    on_curated: 0
 
   starting_life_count:
     # How many extra lives to start the game with
