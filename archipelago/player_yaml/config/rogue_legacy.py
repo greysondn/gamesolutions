@@ -1,3 +1,10 @@
+from .apcomp import ApComp
+from .apcomp import BoolComp
+from .apcomp import IntComp
+from .apcomp import StrComp
+from .apcomp import StrEnumRandomizableComp
+from .apcomp import StrListComp
+from .apcomp import PlandoItemListComp
 from .apconfig import ApConfig
 from enums import Difficulty
 from enums import Game
@@ -5,114 +12,136 @@ from enums import Game
 import math
 import random
 
-class RogueLegacy(ApConfig):
+
+
+class RogueLegacyBase(ApConfig):
     def __init__(self):
-        # parent
-        super().__init__()
-        
         # reconfigure non-difficulty parts of base class
         self.game = Game.ROGUE_LEGACY
         self.apgame = "Rogue Legacy"
         self.requires_version = "0.4.4"
         
+        self.progression_balancing.set(50)
+        
+        self.components.append(self.death_link)
+        
         # standard defaults and docs for game-specific settings
         #
         # read the template for the game for insight into what the settings mean
         # and their legal values
-        self.starting_gender:str = "random"
-        self.starting_class:str  = "knight"
-        self.available_classes:list[str] = [
-            "Lich",
-            "Dragon",
-            "Traitor",
-            "Miner",
-            "Knight",
-            "Barbarian",
-            "Mage",
-            "Shinobi",
-            "Spellthief",
-            "Knave",
-        ]
-        self.new_game_plus:str = "normal"
-        self.fairy_chests_per_zone:int = 1
-        self.chests_per_zone:int = 20
-        self.universal_fairy_chests:bool = False
-        self.universal_chests:bool = False
-        self.vendors:str = "early"
-        self.architect:str = "anywhere"
-        self.architect_fee:int = 40
-        self.disable_charon:bool = False
-        self.require_purchasing:bool = True
-        self.progressive_blueprints:bool = False
-        self.gold_gain_multiplier:str = "normal"
-        self.number_of_children:int = 3
-        self.free_diary_on_generation:bool = True
-        self.khidr:str = "vanilla"
-        self.alexander:str = "vanilla"
-        self.leon:str = "vanilla"
-        self.herodotus:str = "vanilla"
-        self.heath_pool:int = 15
-        self.mana_pool:int = 15
-        self.attack_pool:int = 15
-        self.magic_damage_pool:int = 15
-        self.armor_pool:int = 10
-        self.equip_pool:int = 10
-        self.crit_chance_pool:int = 5
-        self.crit_damage_pool:int = 5
-        self.allow_default_names:bool = True
-        self.additional_lady_names:list[str] = []
-        self.additional_sir_names:list[str] = []
-    
-    def reconfigure_start(self) -> None:
-        # explicit is better than implicit
-        self.progression_balancing  = "50"
-        self.accessibility          = "items" # I never use locations, so...
-        self.death_link = False
+        self.starting_gender:StrComp = StrComp("starting_gender", "random", 4)
+        self.components.append(self.starting_gender)
         
-        # actual config
-        self.starting_gender = "lady"
-        self.starting_class  = "lich"
-        self.available_classes:list[str] = [
-            "Lich",
-            "Dragon",
-            "Traitor",
-            "Miner",
-            "Knight",
+        _classes:list[str] = [
             "Barbarian",
+            "Dragon",
+            "Knave",
+            "Knight",
+            "Lich",
             "Mage",
+            "Miner",
             "Shinobi",
             "Spellthief",
-            "Knave",
+            "Traitor",
         ]
-        self.new_game_plus = "normal"
-        self.fairy_chests_per_zone = 1
-        self.chests_per_zone = 25
-        self.universal_fairy_chests = True
-        self.universal_chests = True
-        self.vendors = "start_unlocked"
-        self.architect = "start_unlocked"
-        self.architect_fee = 0
-        self.disable_charon = True
-        self.require_purchasing = False
-        self.progressive_blueprints = False
-        self.gold_gain_multiplier = "quadruple"
-        self.number_of_children = 5
-        self.free_diary_on_generation = True
-        self.khidr = "vanilla"
-        self.alexander = "vanilla"
-        self.leon = "vanilla"
-        self.herodotus = "vanilla"
-        self.heath_pool = 15
-        self.mana_pool = 15
-        self.attack_pool = 15
-        self.magic_damage_pool = 15
-        self.armor_pool = 10
-        self.equip_pool = 10
-        self.crit_chance_pool = 5
-        self.crit_damage_pool = 5
-        self.allow_default_names = True
-        self.additional_lady_names = []
-        self.additional_sir_names = []
+        
+        self.starting_class:StrEnumRandomizableComp  = StrEnumRandomizableComp("starting_class", "knight", _classes, 4)
+        self.components.append(self.starting_class)
+        
+        self.available_classes:StrListComp = StrListComp("available_classes", _classes, 4)
+        self.components.append(self.available_classes)
+        
+        self.new_game_plus:StrComp = StrComp("new_game_plus", "normal", 4)
+        self.components.append(self.new_game_plus)
+        
+        self.fairy_chests_per_zone:IntComp = IntComp("fairy_chests_per_zone", 1, 4)
+        self.components.append(self.fairy_chests_per_zone)
+
+        self.chests_per_zone:IntComp = IntComp("chests_per_zone", 20, 4)
+        self.components.append(self.chests_per_zone)
+        
+        self.universal_fairy_chests:BoolComp = BoolComp("universal_fairy_chests", False, 4)
+        self.components.append(self.universal_fairy_chests)
+         
+        self.universal_chests:BoolComp = BoolComp("universal_chests", False, 4)
+        self.components.append(self.universal_chests)
+        
+        self.vendors:StrComp = StrComp("vendors", "early", 4)
+        self.components.append(self.vendors)
+
+        self.architect:StrComp = StrComp("architect", "anywhere", 4)
+        self.components.append(self.architect)
+
+        self.architect_fee:IntComp = IntComp("architect_fee", 40, 4)
+        self.components.append(self.architect_fee)
+        
+        self.disable_charon:BoolComp = BoolComp("disable_charon", False, 4)
+        self.components.append(self.disable_charon)
+        
+        self.require_purchasing:BoolComp = BoolComp("require_purchasing", True, 4)
+        self.components.append(self.require_purchasing)
+        
+        self.progressive_blueprints:BoolComp = BoolComp("progressive_blueprints", False, 4)
+        self.components.append(self.progressive_blueprints)
+        
+        self.gold_gain_multiplier:StrComp = StrComp("gold_gain_multiplier", "normal", 4)
+        self.components.append(self.gold_gain_multiplier)
+        
+        self.number_of_children:IntComp = IntComp("number_of_children", 3, 4)
+        self.components.append(self.number_of_children)
+        
+        self.free_diary_on_generation:BoolComp = BoolComp("free_diary_on_generation", True, 4)
+        self.components.append(self.free_diary_on_generation)
+        
+        self.khidr:StrComp = StrComp("khidr", "vanilla", 4)
+        self.components.append(self.khidr)
+        
+        self.alexander:StrComp = StrComp("alexander", "vanilla", 4)
+        self.components.append(self.alexander)
+        
+        self.leon:StrComp = StrComp("leon", "vanilla", 4)
+        self.components.append(self.leon)
+        
+        self.herodotus:StrComp = StrComp("herodotus", "vanilla", 4)
+        self.components.append(self.herodotus)
+        
+        self.health_pool:IntComp = IntComp("health_pool", 15, 4)
+        self.components.append(self.health_pool)
+        
+        self.mana_pool:IntComp = IntComp("mana_pool", 15, 4)
+        self.components.append(self.mana_pool)
+        
+        self.attack_pool:IntComp = IntComp("attack_pool", 15, 4)
+        self.components.append(self.attack_pool)
+        
+        self.magic_damage_pool:IntComp = IntComp("magic_damage_pool", 15, 4)
+        self.components.append(self.magic_damage_pool)
+        
+        self.armor_pool:IntComp = IntComp("armor_pool", 10, 4)
+        self.components.append(self.armor_pool)
+        
+        self.equip_pool:IntComp = IntComp("equip_pool", 10, 4)
+        self.components.append(self.equip_pool)
+        
+        self.crit_chance_pool:IntComp = IntComp("crit_chance_pool", 5, 4)
+        self.components.append(self.crit_chance_pool)
+        
+        self.crit_damage_pool:IntComp = IntComp("crit_damage_pool", 5, 4)
+        self.components.append(self.crit_damage_pool)
+        
+        self.allow_default_names:BoolComp = BoolComp("allow_default_names", True, 4)
+        self.components.append(self.allow_default_names)
+        
+        self.additional_lady_names:StrListComp = StrListComp("additional_lady_names", [], 4)
+        self.components.append(self.additional_lady_names)
+
+        self.additional_sir_names:StrListComp = StrListComp("additional_sir_names", [], 4)
+        self.components.append(self.additional_sir_names)
+
+class RogueLegacy(RogueLegacyBase):
+    def __init__(self):
+        # parent
+        super().__init__()
 
     def reconfigure_difficulty(self, difficulty:int) -> None:
         # so the starting default should be very easy
@@ -131,49 +160,52 @@ class RogueLegacy(ApConfig):
             # unrecorded
             
             # actual config
-            self.starting_gender = "lady"
-            self.starting_class  = "lich"
-            self.available_classes:list[str] = [
-                "Lich",
-                "Dragon",
-                "Traitor",
-                "Miner",
-                "Knight",
+            self.starting_gender.set("lady")
+            self.starting_class.set("lich")
+            
+            _classes:list[str] = [
                 "Barbarian",
+                "Dragon",
+                "Knave",
+                "Knight",
+                "Lich",
                 "Mage",
+                "Miner",
                 "Shinobi",
                 "Spellthief",
-                "Knave",
+                "Traitor",
             ]
-            self.new_game_plus = "normal"
-            self.fairy_chests_per_zone = 1
-            self.chests_per_zone = 25
-            self.universal_fairy_chests = True
-            self.universal_chests = True
-            self.vendors = "start_unlocked"
-            self.architect = "start_unlocked"
-            self.architect_fee = 0
-            self.disable_charon = True
-            self.require_purchasing = False
-            self.progressive_blueprints = False
-            self.gold_gain_multiplier = "quadruple"
-            self.number_of_children = 5
-            self.free_diary_on_generation = True
-            self.khidr = "vanilla"
-            self.alexander = "vanilla"
-            self.leon = "vanilla"
-            self.herodotus = "vanilla"
-            self.heath_pool = 15
-            self.mana_pool = 15
-            self.attack_pool = 15
-            self.magic_damage_pool = 15
-            self.armor_pool = 10
-            self.equip_pool = 10
-            self.crit_chance_pool = 5
-            self.crit_damage_pool = 5
-            self.allow_default_names = True
-            self.additional_lady_names = []
-            self.additional_sir_names = []
+            self.available_classes.set(_classes)
+            
+            self.new_game_plus.set("normal")
+            self.fairy_chests_per_zone.set(1)
+            self.chests_per_zone.set(25)
+            self.universal_fairy_chests.set(True)
+            self.universal_chests.set(True)
+            self.vendors.set("start_unlocked")
+            self.architect.set("start_unlocked")
+            self.architect_fee.set(0)
+            self.disable_charon.set(True)
+            self.require_purchasing.set(False)
+            self.progressive_blueprints.set(False)
+            self.gold_gain_multiplier.set("quadruple")
+            self.number_of_children.set(5)
+            self.free_diary_on_generation.set(True)
+            self.khidr.set("vanilla")
+            self.alexander.set("vanilla")
+            self.leon.set("vanilla")
+            self.herodotus.set("vanilla")
+            self.health_pool.set(15)
+            self.mana_pool.set(15)
+            self.attack_pool.set(15)
+            self.magic_damage_pool.set(15)
+            self.armor_pool.set(10)
+            self.equip_pool.set(10)
+            self.crit_chance_pool.set(5)
+            self.crit_damage_pool.set(5)
+            self.allow_default_names.set(True)
+            self.additional_lady_names.set([])
+            self.additional_sir_names.set([])
         
         if (difficulty == Difficulty.EASY.value):
             self.duration_min = 0
@@ -189,49 +221,52 @@ class RogueLegacy(ApConfig):
             # unrecorded
             
             # actual config
-            self.starting_gender = "lady"
-            self.starting_class  = "lich"
-            self.available_classes:list[str] = [
-                "Lich",
-                "Dragon",
-                "Traitor",
-                "Miner",
-                "Knight",
+            self.starting_gender.set("lady")
+            self.starting_class.set("lich")
+            
+            _classes:list[str] = [
                 "Barbarian",
+                "Dragon",
+                "Knave",
+                "Knight",
+                "Lich",
                 "Mage",
+                "Miner",
                 "Shinobi",
                 "Spellthief",
-                "Knave",
+                "Traitor",
             ]
-            self.new_game_plus = "normal"
-            self.fairy_chests_per_zone = 1
-            self.chests_per_zone = 25
-            self.universal_fairy_chests = True
-            self.universal_chests = True
-            self.vendors = "start_unlocked"
-            self.architect = "start_unlocked"
-            self.architect_fee = 0
-            self.disable_charon = True
-            self.require_purchasing = True
-            self.progressive_blueprints = False
-            self.gold_gain_multiplier = "quadruple"
-            self.number_of_children = 5
-            self.free_diary_on_generation = True
-            self.khidr = "vanilla"
-            self.alexander = "vanilla"
-            self.leon = "vanilla"
-            self.herodotus = "vanilla"
-            self.heath_pool = 15
-            self.mana_pool = 15
-            self.attack_pool = 15
-            self.magic_damage_pool = 15
-            self.armor_pool = 10
-            self.equip_pool = 10
-            self.crit_chance_pool = 5
-            self.crit_damage_pool = 5
-            self.allow_default_names = True
-            self.additional_lady_names = []
-            self.additional_sir_names = []
+            self.available_classes.set(_classes)
+            
+            self.new_game_plus.set("normal")
+            self.fairy_chests_per_zone.set(1)
+            self.chests_per_zone.set(25)
+            self.universal_fairy_chests.set(True)
+            self.universal_chests.set(True)
+            self.vendors.set("start_unlocked")
+            self.architect.set("start_unlocked")
+            self.architect_fee.set(0)
+            self.disable_charon.set(True)
+            self.require_purchasing.set(True)
+            self.progressive_blueprints.set(False)
+            self.gold_gain_multiplier.set("quadruple")
+            self.number_of_children.set(5)
+            self.free_diary_on_generation.set(True)
+            self.khidr.set("vanilla")
+            self.alexander.set("vanilla")
+            self.leon.set("vanilla")
+            self.herodotus.set("vanilla")
+            self.health_pool.set(15)
+            self.mana_pool.set(15)
+            self.attack_pool.set(15)
+            self.magic_damage_pool.set(15)
+            self.armor_pool.set(10)
+            self.equip_pool.set(10)
+            self.crit_chance_pool.set(5)
+            self.crit_damage_pool.set(5)
+            self.allow_default_names.set(True)
+            self.additional_lady_names.set([])
+            self.additional_sir_names.set([])
         
         if (difficulty == Difficulty.NORMAL.value):
             self.duration_min = 0
@@ -247,49 +282,52 @@ class RogueLegacy(ApConfig):
             # unrecorded
             
             # actual config
-            self.starting_gender = "lady"
-            self.starting_class  = "lich"
-            self.available_classes:list[str] = [
-                "Lich",
-                "Dragon",
-                "Traitor",
-                "Miner",
-                "Knight",
+            self.starting_gender.set("lady")
+            self.starting_class.set("lich")
+            
+            _classes:list[str] = [
                 "Barbarian",
+                "Dragon",
+                "Knave",
+                "Knight",
+                "Lich",
                 "Mage",
+                "Miner",
                 "Shinobi",
                 "Spellthief",
-                "Knave",
+                "Traitor",
             ]
-            self.new_game_plus = "normal"
-            self.fairy_chests_per_zone = 1
-            self.chests_per_zone = 25
-            self.universal_fairy_chests = True
-            self.universal_chests = True
-            self.vendors = "start_unlocked"
-            self.architect = "start_unlocked"
-            self.architect_fee = 0
-            self.disable_charon = True
-            self.require_purchasing = True
-            self.progressive_blueprints = False
-            self.gold_gain_multiplier = "double"
-            self.number_of_children = 5
-            self.free_diary_on_generation = True
-            self.khidr = "vanilla"
-            self.alexander = "vanilla"
-            self.leon = "vanilla"
-            self.herodotus = "vanilla"
-            self.heath_pool = 15
-            self.mana_pool = 15
-            self.attack_pool = 15
-            self.magic_damage_pool = 15
-            self.armor_pool = 10
-            self.equip_pool = 10
-            self.crit_chance_pool = 5
-            self.crit_damage_pool = 5
-            self.allow_default_names = True
-            self.additional_lady_names = []
-            self.additional_sir_names = []
+            self.available_classes.set(_classes)
+            
+            self.new_game_plus.set("normal")
+            self.fairy_chests_per_zone.set(1)
+            self.chests_per_zone.set(25)
+            self.universal_fairy_chests.set(True)
+            self.universal_chests.set(True)
+            self.vendors.set("start_unlocked")
+            self.architect.set("start_unlocked")
+            self.architect_fee.set(0)
+            self.disable_charon.set(True)
+            self.require_purchasing.set(True)
+            self.progressive_blueprints.set(False)
+            self.gold_gain_multiplier.set("double")
+            self.number_of_children.set(5)
+            self.free_diary_on_generation.set(True)
+            self.khidr.set("vanilla")
+            self.alexander.set("vanilla")
+            self.leon.set("vanilla")
+            self.herodotus.set("vanilla")
+            self.health_pool.set(15)
+            self.mana_pool.set(15)
+            self.attack_pool.set(15)
+            self.magic_damage_pool.set(15)
+            self.armor_pool.set(10)
+            self.equip_pool.set(10)
+            self.crit_chance_pool.set(5)
+            self.crit_damage_pool.set(5)
+            self.allow_default_names.set(True)
+            self.additional_lady_names.set([])
+            self.additional_sir_names.set([])
         
         if (difficulty == Difficulty.HARD.value):
             self.duration_min = 0
@@ -305,49 +343,52 @@ class RogueLegacy(ApConfig):
             # unrecorded
             
             # actual config
-            self.starting_gender = "lady"
-            self.starting_class  = "random"
-            self.available_classes:list[str] = [
-                "Lich",
-                "Dragon",
-                "Traitor",
-                "Miner",
-                "Knight",
+            self.starting_gender.set("lady")
+            self.starting_class.set("random")
+            
+            _classes:list[str] = [
                 "Barbarian",
+                "Dragon",
+                "Knave",
+                "Knight",
+                "Lich",
                 "Mage",
+                "Miner",
                 "Shinobi",
                 "Spellthief",
-                "Knave",
+                "Traitor",
             ]
-            self.new_game_plus = "normal"
-            self.fairy_chests_per_zone = 1
-            self.chests_per_zone = 25
-            self.universal_fairy_chests = False
-            self.universal_chests = False
-            self.vendors = "start_unlocked"
-            self.architect = "start_unlocked"
-            self.architect_fee = 0
-            self.disable_charon = True
-            self.require_purchasing = True
-            self.progressive_blueprints = False
-            self.gold_gain_multiplier = "normal"
-            self.number_of_children = 5
-            self.free_diary_on_generation = True
-            self.khidr = "vanilla"
-            self.alexander = "vanilla"
-            self.leon = "vanilla"
-            self.herodotus = "vanilla"
-            self.heath_pool = 15
-            self.mana_pool = 15
-            self.attack_pool = 15
-            self.magic_damage_pool = 15
-            self.armor_pool = 10
-            self.equip_pool = 10
-            self.crit_chance_pool = 5
-            self.crit_damage_pool = 5
-            self.allow_default_names = True
-            self.additional_lady_names = []
-            self.additional_sir_names = []
+            self.available_classes.set(_classes)
+            
+            self.new_game_plus.set("normal")
+            self.fairy_chests_per_zone.set(1)
+            self.chests_per_zone.set(25)
+            self.universal_fairy_chests.set(False)
+            self.universal_chests.set(False)
+            self.vendors.set("start_unlocked")
+            self.architect.set("start_unlocked")
+            self.architect_fee.set(0)
+            self.disable_charon.set(True)
+            self.require_purchasing.set(True)
+            self.progressive_blueprints.set(False)
+            self.gold_gain_multiplier.set("normal")
+            self.number_of_children.set(5)
+            self.free_diary_on_generation.set(True)
+            self.khidr.set("vanilla")
+            self.alexander.set("vanilla")
+            self.leon.set("vanilla")
+            self.herodotus.set("vanilla")
+            self.health_pool.set(15)
+            self.mana_pool.set(15)
+            self.attack_pool.set(15)
+            self.magic_damage_pool.set(15)
+            self.armor_pool.set(10)
+            self.equip_pool.set(10)
+            self.crit_chance_pool.set(5)
+            self.crit_damage_pool.set(5)
+            self.allow_default_names.set(True)
+            self.additional_lady_names.set([])
+            self.additional_sir_names.set([])
             
         if (difficulty == Difficulty.VERY_HARD.value):
             self.duration_min = 0
@@ -363,49 +404,52 @@ class RogueLegacy(ApConfig):
             # unrecorded
             
             # actual config
-            self.starting_gender = "lady"
-            self.starting_class  = "knight"
-            self.available_classes:list[str] = [
-                "Lich",
-                "Dragon",
-                "Traitor",
-                "Miner",
-                "Knight",
+            self.starting_gender.set("lady")
+            self.starting_class.set("knight")
+            
+            _classes:list[str] = [
                 "Barbarian",
+                "Dragon",
+                "Knave",
+                "Knight",
+                "Lich",
                 "Mage",
+                "Miner",
                 "Shinobi",
                 "Spellthief",
-                "Knave",
+                "Traitor",
             ]
-            self.new_game_plus = "normal"
-            self.fairy_chests_per_zone = 1
-            self.chests_per_zone = 25
-            self.universal_fairy_chests = False
-            self.universal_chests = False
-            self.vendors = "early"
-            self.architect = "early"
-            self.architect_fee = 0
-            self.disable_charon = True
-            self.require_purchasing = True
-            self.progressive_blueprints = False
-            self.gold_gain_multiplier = "normal"
-            self.number_of_children = 5
-            self.free_diary_on_generation = True
-            self.khidr = "vanilla"
-            self.alexander = "vanilla"
-            self.leon = "vanilla"
-            self.herodotus = "vanilla"
-            self.heath_pool = 15
-            self.mana_pool = 15
-            self.attack_pool = 15
-            self.magic_damage_pool = 15
-            self.armor_pool = 10
-            self.equip_pool = 10
-            self.crit_chance_pool = 5
-            self.crit_damage_pool = 5
-            self.allow_default_names = True
-            self.additional_lady_names = []
-            self.additional_sir_names = []
+            self.available_classes.set(_classes)
+            
+            self.new_game_plus.set("normal")
+            self.fairy_chests_per_zone.set(1)
+            self.chests_per_zone.set(25)
+            self.universal_fairy_chests.set(False)
+            self.universal_chests.set(False)
+            self.vendors.set("early")
+            self.architect.set("early")
+            self.architect_fee.set(0)
+            self.disable_charon.set(True)
+            self.require_purchasing.set(True)
+            self.progressive_blueprints.set(False)
+            self.gold_gain_multiplier.set("normal")
+            self.number_of_children.set(5)
+            self.free_diary_on_generation.set(True)
+            self.khidr.set("vanilla")
+            self.alexander.set("vanilla")
+            self.leon.set("vanilla")
+            self.herodotus.set("vanilla")
+            self.health_pool.set(15)
+            self.mana_pool.set(15)
+            self.attack_pool.set(15)
+            self.magic_damage_pool.set(15)
+            self.armor_pool.set(10)
+            self.equip_pool.set(10)
+            self.crit_chance_pool.set(5)
+            self.crit_damage_pool.set(5)
+            self.allow_default_names.set(True)
+            self.additional_lady_names.set([])
+            self.additional_sir_names.set([])
             
         if (difficulty == Difficulty.IMPOSSIBLE.value):
             self.duration_min = 0
@@ -421,50 +465,53 @@ class RogueLegacy(ApConfig):
             # unrecorded
             
             # actual config
-            self.starting_gender = "lady"
-            self.starting_class  = "knight"
-            self.available_classes:list[str] = [
-                "Lich",
-                "Dragon",
-                "Traitor",
-                "Miner",
-                "Knight",
+            self.starting_gender.set("lady")
+            self.starting_class.set("knight")
+            
+            _classes:list[str] = [
                 "Barbarian",
+                "Dragon",
+                "Knave",
+                "Knight",
+                "Lich",
                 "Mage",
+                "Miner",
                 "Shinobi",
                 "Spellthief",
-                "Knave",
+                "Traitor",
             ]
-            self.new_game_plus = "normal"
-            self.fairy_chests_per_zone = 1
-            self.chests_per_zone = 25
-            self.universal_fairy_chests = False
-            self.universal_chests = False
-            self.vendors = "early"
-            self.architect = "early"
-            self.architect_fee = 40
-            self.disable_charon = False
-            self.require_purchasing = True
-            self.progressive_blueprints = True
-            self.gold_gain_multiplier = "normal"
-            self.number_of_children = 3
-            self.free_diary_on_generation = True
-            self.khidr = "vanilla"
-            self.alexander = "vanilla"
-            self.leon = "vanilla"
-            self.herodotus = "vanilla"
-            self.heath_pool = 15
-            self.mana_pool = 15
-            self.attack_pool = 15
-            self.magic_damage_pool = 15
-            self.armor_pool = 10
-            self.equip_pool = 10
-            self.crit_chance_pool = 5
-            self.crit_damage_pool = 5
-            self.allow_default_names = True
-            self.additional_lady_names = []
-            self.additional_sir_names = []
-
+            self.available_classes.set(_classes)
+            
+            self.new_game_plus.set("normal")
+            self.fairy_chests_per_zone.set(1)
+            self.chests_per_zone.set(25)
+            self.universal_fairy_chests.set(False)
+            self.universal_chests.set(False)
+            self.vendors.set("early")
+            self.architect.set("early")
+            self.architect_fee.set(40)
+            self.disable_charon.set(False)
+            self.require_purchasing.set(True)
+            self.progressive_blueprints.set(True)
+            self.gold_gain_multiplier.set("normal")
+            self.number_of_children.set(3)
+            self.free_diary_on_generation.set(True)
+            self.khidr.set("vanilla")
+            self.alexander.set("vanilla")
+            self.leon.set("vanilla")
+            self.herodotus.set("vanilla")
+            self.health_pool.set(15)
+            self.mana_pool.set(15)
+            self.attack_pool.set(15)
+            self.magic_damage_pool.set(15)
+            self.armor_pool.set(10)
+            self.equip_pool.set(10)
+            self.crit_chance_pool.set(5)
+            self.crit_damage_pool.set(5)
+            self.allow_default_names.set(True)
+            self.additional_lady_names.set([])
+            self.additional_sir_names.set([])
+            
         if (difficulty == Difficulty.HATE_ME_TODAY.value):
             self.duration_min = 0
             # none recorded
@@ -479,49 +526,52 @@ class RogueLegacy(ApConfig):
             # unrecorded
             
             # actual config
-            self.starting_gender = "lady"
-            self.starting_class  = "knight"
-            self.available_classes:list[str] = [
-                "Lich",
-                "Dragon",
-                "Traitor",
-                "Miner",
-                "Knight",
+            self.starting_gender.set("lady")
+            self.starting_class.set("knight")
+            
+            _classes:list[str] = [
                 "Barbarian",
+                "Dragon",
+                "Knave",
+                "Knight",
+                "Lich",
                 "Mage",
+                "Miner",
                 "Shinobi",
                 "Spellthief",
-                "Knave",
+                "Traitor",
             ]
-            self.new_game_plus = "normal"
-            self.fairy_chests_per_zone = 1
-            self.chests_per_zone = 25
-            self.universal_fairy_chests = False
-            self.universal_chests = False
-            self.vendors = "early"
-            self.architect = "early"
-            self.architect_fee = 40
-            self.disable_charon = False
-            self.require_purchasing = True
-            self.progressive_blueprints = True
-            self.gold_gain_multiplier = "normal"
-            self.number_of_children = 3
-            self.free_diary_on_generation = True
-            self.khidr = "vanilla"
-            self.alexander = "vanilla"
-            self.leon = "vanilla"
-            self.herodotus = "vanilla"
-            self.heath_pool = 15
-            self.mana_pool = 15
-            self.attack_pool = 15
-            self.magic_damage_pool = 15
-            self.armor_pool = 10
-            self.equip_pool = 10
-            self.crit_chance_pool = 5
-            self.crit_damage_pool = 5
-            self.allow_default_names = True
-            self.additional_lady_names = []
-            self.additional_sir_names = []
+            self.available_classes.set(_classes)
+            
+            self.new_game_plus.set("normal")
+            self.fairy_chests_per_zone.set(1)
+            self.chests_per_zone.set(25)
+            self.universal_fairy_chests.set(False)
+            self.universal_chests.set(False)
+            self.vendors.set("early")
+            self.architect.set("early")
+            self.architect_fee.set(40)
+            self.disable_charon.set(False)
+            self.require_purchasing.set(True)
+            self.progressive_blueprints.set(True)
+            self.gold_gain_multiplier.set("normal")
+            self.number_of_children.set(3)
+            self.free_diary_on_generation.set(True)
+            self.khidr.set("vanilla")
+            self.alexander.set("vanilla")
+            self.leon.set("vanilla")
+            self.herodotus.set("vanilla")
+            self.health_pool.set(15)
+            self.mana_pool.set(15)
+            self.attack_pool.set(15)
+            self.magic_damage_pool.set(15)
+            self.armor_pool.set(10)
+            self.equip_pool.set(10)
+            self.crit_chance_pool.set(5)
+            self.crit_damage_pool.set(5)
+            self.allow_default_names.set(True)
+            self.additional_lady_names.set([])
+            self.additional_sir_names.set([])
 
     def reconfigure_checks(self, checks:int) -> None:
         # aight, so hopefully I've got this right
@@ -549,54 +599,12 @@ class RogueLegacy(ApConfig):
         chestsPerZone:int = int(math.ceil((targetChecks - runningTotal) / 4))
         
         # set relevant values
-        self.chests_per_zone = chestsPerZone
-        self.fairy_chests_per_zone = fairyChestsPerZone
+        self.chests_per_zone.set(chestsPerZone)
+        self.fairy_chests_per_zone.set(fairyChestsPerZone)
         
     # self.reconfigure_duration(duration)
     # self.reconfigure_extra(extra)
-    
-    def reconfigure_end(self) -> None:
-        # handle randomizing starting class
-        if (self.starting_class == "random"):
-            self.starting_class = random.choice(self.available_classes).lower()
-    
-    def prep_game_specific_settings(self) -> str:
-        ret:str = ""
-        
-        ret = ret + self.prep_simple("starting_gender", self.starting_gender, 4)
-        ret = ret + self.prep_simple("starting_class", self.starting_class, 4)
-        ret = ret + self.prep_list("available_classes", self.available_classes, 4)
-        ret = ret + self.prep_simple("new_game_plus", self.new_game_plus, 4)
-        ret = ret + self.prep_int("fairy_chests_per_zone", self.fairy_chests_per_zone, 4)
-        ret = ret + self.prep_int("chests_per_zone", self.chests_per_zone, 4)
-        ret = ret + self.prep_bool("universal_fairly_chests", self.universal_fairy_chests, 4)
-        ret = ret + self.prep_bool("universal_chests", self.universal_chests, 4)
-        ret = ret + self.prep_simple("vendors", self.vendors, 4)
-        ret = ret + self.prep_simple("architect", self.architect, 4)
-        ret = ret + self.prep_int("architect_fee", self.architect_fee, 4)
-        ret = ret + self.prep_bool("disable_charon", self.disable_charon, 4)
-        ret = ret + self.prep_bool("require_purchasing", self.require_purchasing, 4)
-        ret = ret + self.prep_bool("progressive_blueprints", self.progressive_blueprints, 4)
-        ret = ret + self.prep_simple("gold_gain_multiplier", self.gold_gain_multiplier, 4)
-        ret = ret + self.prep_int("number_of_children", self.number_of_children, 4)
-        ret = ret + self.prep_bool("free_diary_on_generation", self.free_diary_on_generation, 4)
-        ret = ret + self.prep_simple("khidr", self.khidr, 4)
-        ret = ret + self.prep_simple("alexander", self.alexander, 4)
-        ret = ret + self.prep_simple("leon", self.leon, 4)
-        ret = ret + self.prep_simple("herodotus", self.herodotus, 4)
-        ret = ret + self.prep_int("health_pool", self.heath_pool, 4)
-        ret = ret + self.prep_int("mana_pool", self.mana_pool, 4)
-        ret = ret + self.prep_int("attack_pool", self.attack_pool, 4)
-        ret = ret + self.prep_int("magic_damage_pool", self.magic_damage_pool, 4)
-        ret = ret + self.prep_int("armor_pool", self.armor_pool, 4)
-        ret = ret + self.prep_int("equip_pool", self.equip_pool, 4)
-        ret = ret + self.prep_int("crit_chance_pool", self.crit_chance_pool, 4)
-        ret = ret + self.prep_int("crit_damage_pool", self.crit_damage_pool, 4)
-        ret = ret + self.prep_bool("allow_default_names", self.allow_default_names, 4)
-        ret = ret + self.prep_list("additional_lady_names", self.additional_lady_names, 4)
-        ret = ret + self.prep_list("additional_sir_names", self.additional_sir_names, 4)
-        
-        return ret
+    # self.reconfigure_end()
 
     def print_goal(self, difficulty:int) -> None:
         out:str = "\n\n"

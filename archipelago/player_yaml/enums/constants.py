@@ -24,7 +24,8 @@ GAMES_TO_GENRES:dict[Game, int] = {
                             Genre.SHOOTER.value +
                             Genre.THIRD_PERSON_SHOOTER.value,
     
-    Game.ROGUE_LEGACY : Genre.PLATFORMER.value +
+    Game.ROGUE_LEGACY : Genre.IMPLEMENTED.value +
+                        Genre.PLATFORMER.value +
                         Genre.ROGUELITE.value,
     
     Game.SONIC_ADVENTURE_2_BATTLE : Genre.PLATFORMER.value,
