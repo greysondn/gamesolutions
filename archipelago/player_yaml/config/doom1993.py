@@ -18,7 +18,7 @@ class Doom1993Base(ApConfig):
         # reconfigure non-difficulty parts of base class
         self.game = Game.DOOM_1993
         self.apgame = "DOOM 1993"
-        self.requires_version = "0.4.4"
+        self.requires_version = "0.4.6"
         
         self.components.append(self.death_link)
 
