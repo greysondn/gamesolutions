@@ -19,7 +19,7 @@ class RogueLegacyBase(ApConfig):
         # reconfigure non-difficulty parts of base class
         self.game = Game.ROGUE_LEGACY
         self.apgame = "Rogue Legacy"
-        self.requires_version = "0.4.4"
+        self.requires_version = "0.4.6"
         
         self.progression_balancing.set(50)
         
