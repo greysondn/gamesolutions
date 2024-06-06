@@ -2,6 +2,9 @@ from .apconfig import ApConfig
 from enums import Difficulty
 from enums import Game
 
+# this game isn't implemented in my toolkit. The code is here just as a
+# placeholder for now. ~greysondn
+
 class StardewValley(ApConfig):
     def __init__(self):
         # parent
