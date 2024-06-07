@@ -3,19 +3,24 @@ from .genre   import Genre
 from .machine import Machine
 
 MACHINES_TO_GAMES:dict[Machine, int] = {
-    Machine.STORM_TOWER     :   Game.DOOM_1993.value + 
+    Machine.STORM_TOWER     :   Game.CLIQUE.value +
+                                Game.DOOM_1993.value + 
                                 Game.RISK_OF_RAIN_2.value + 
                                 Game.ROGUE_LEGACY.value +
                                 Game.SONIC_ADVENTURE_2_BATTLE.value +
                                 Game.STARDEW_VALLEY.value +
                                 Game.SUPER_MARIO_WORLD.value,
                                 
-    Machine.URSINE_LAPTOP   :   Game.DOOM_1993.value +
+    Machine.URSINE_LAPTOP   :   Game.CLIQUE.value +
+                                Game.DOOM_1993.value +
                                 Game.ROGUE_LEGACY.value +
                                 Game.SUPER_MARIO_WORLD.value,
 }
 
 GAMES_TO_GENRES:dict[Game, int] = {
+    Game.CLIQUE :   Genre.IMPLEMENTED.value +
+                    Genre.JOKE.value,
+    
     Game.DOOM_1993 :    Genre.IMPLEMENTED.value +
                         Genre.FIRST_PERSON_SHOOTER.value +
                         Genre.SHOOTER.value,

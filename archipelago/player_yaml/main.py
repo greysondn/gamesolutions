@@ -127,6 +127,7 @@ class CommandLine():
         triples = [
             ("Farming Simulator", Genre.FARMING_SIMULATOR.value, 0),
             ("First Person Shooter", Genre.FIRST_PERSON_SHOOTER.value, 0),
+            ("Joke", Genre.JOKE, 0),
             ("Platformer", Genre.PLATFORMER.value, 0),
             ("Puzzle", Genre.PUZZLE.value, 0),
             ("Roguelite", Genre.ROGUELITE.value, 0),
@@ -142,6 +143,7 @@ class CommandLine():
         enums:list[Genre] = [
             Genre.FARMING_SIMULATOR,
             Genre.FIRST_PERSON_SHOOTER,
+            Genre.JOKE,
             Genre.PLATFORMER,
             Genre.PUZZLE,
             Genre.ROGUELITE,
@@ -195,6 +197,7 @@ class CommandLine():
         # need a list of games
         # should be all implemented ones for config
         games_swp:list[ApConfig] = [
+            Clique(),
             Doom1993(),
             RogueLegacy(),
             SuperMarioWorld()
