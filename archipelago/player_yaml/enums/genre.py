@@ -6,6 +6,7 @@ class Genre(IntEnum):
     
     FARMING_SIMULATOR           = 2 **   8
     FIRST_PERSON_SHOOTER        = 2 **   0
+    JOKE                        = 2 **  11
     PLATFORMER                  = 2 **   1
     PUZZLE                      = 2 **   2
     ROGUELITE                   = 2 **   3
