@@ -29,6 +29,13 @@ class ApGenre():
             ret = ret + genre.value
         return ret
     
+    def overlapsWith(self, other:"ApGenre"):
+        ret:bool = False
+        for genre in self.genres:
+            if (other.has(genre)):
+                ret = True
+        return ret
+    
     def fromNumber(self, val:int):
         enums:list[Genre] = [
             Genre.FARMING_SIMULATOR,
@@ -73,6 +80,13 @@ class ApMachine():
         for enum in enums:
             if (val & enum.value):
                 self.machines.append(enum)
+
+    def overlapsWith(self, other:"ApMachine"):
+        ret:bool = False
+        for machine in self.machines:
+            if (other.has(machine)):
+                ret = True
+        return ret
 
 class ApConfig():
     def __init__(self):
