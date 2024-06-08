@@ -85,24 +85,6 @@ class CommandLine():
                 ret = ret + triple[1]
                 
         return ret
-            
-    def enum_parse(self, bitfield:int, enums:list[IntEnum]) -> list[IntEnum]:
-        """unpack enum from bitfield
-
-        Args:
-            bitfield (int): value of packed enums
-            enums (list[IntEnum]): list of enums that can be in field
-
-        Returns:
-            list[IntEnum]: unpacked enums
-        """        
-        ret:list[IntEnum] = []
-        
-        for enum in enums:
-            if (bitfield & enum.value):
-                ret.append(enum)
-        
-        return ret
         
         
     def machine_create(self) -> int:
@@ -113,16 +95,6 @@ class CommandLine():
         
         return self.enum_create("MACHINE", triples)
 
-    def machine_parse(self, bitfield:int) -> list[Machine]:
-        enums:list[Machine] = [
-            Machine.STORM_TOWER,
-            Machine.URSINE_LAPTOP,
-        ]
-        
-        # have to cast into and out of function
-        # make sure you know your type 
-        return cast(list[Machine], self.enum_parse(bitfield, cast(list[IntEnum], enums)))
-    
     def genre_create(self) -> int:
         triples = [
             ("Farming Simulator", Genre.FARMING_SIMULATOR.value, 0),
@@ -138,24 +110,6 @@ class CommandLine():
         ]
         
         return self.enum_create("GENRE", triples)
-    
-    def genre_parse(self, bitfield:int) -> list[Genre]:
-        enums:list[Genre] = [
-            Genre.FARMING_SIMULATOR,
-            Genre.FIRST_PERSON_SHOOTER,
-            Genre.JOKE,
-            Genre.PLATFORMER,
-            Genre.PUZZLE,
-            Genre.ROGUELITE,
-            Genre.SHOOTER,
-            Genre.RPG,
-            Genre.THIRD_PERSON_SHOOTER,
-            Genre.WALKING_SIMULATOR,
-        ]
-
-        # have to cast into and out of function
-        # make sure you know your type 
-        return cast(list[Genre], self.enum_parse(bitfield, cast(list[IntEnum], enums)))
     
     def mood(self, args:argparse.Namespace) -> None:
         # name
@@ -207,23 +161,24 @@ class CommandLine():
         games:list[ApConfig] = []
         
         # need to interpret the genre and machine fields
-        genres:list[Genre] = self.genre_parse(args.genres)
-        machines:list[Machine] = self.machine_parse(args.machines)
+        genres:ApGenre = ApGenre()
+        genres.fromNumber(args.genres)
+        
+        machines:ApMachine = ApMachine()
+        machines.fromNumber(args.machines)
         
         # now we pare down the games list - twice
-        for machine in machines:
-            for game in games_swp:
-                if (MACHINES_TO_GAMES[machine] & game.game.value):
-                    if (not (game in games)):
-                        games.append(game)
+        for game in games_swp:
+            if (game.machines.overlapsWith(machines)):
+                if (not (game in games)):
+                    games.append(game)
         
         games_swp = []
         
         for game in games:
-            for genre in genres:
-                if (GAMES_TO_GENRES[game.game] & genre.value):
-                    if (not (game in games_swp)):
-                        games_swp.append(game)
+            if (game.genres.overlapsWith(genres)):
+                if (not (game in games_swp)):
+                    games_swp.append(game)
 
         games = games_swp.copy()
         
