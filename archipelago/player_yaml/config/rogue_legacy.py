@@ -8,6 +8,8 @@ from .apcomp import PlandoItemListComp
 from .apconfig import ApConfig
 from enums import Difficulty
 from enums import Game
+from enums import Genre
+from enums import Machine
 
 import math
 import random
@@ -16,6 +18,15 @@ import random
 
 class RogueLegacyBase(ApConfig):
     def __init__(self):
+        # genres
+        self.genres.add(Genre.IMPLEMENTED)
+        self.genres.add(Genre.PLATFORMER)
+        self.genres.add(Genre.ROGUELITE)
+        
+        # machines
+        self.machines.add(Machine.STORM_TOWER)
+        self.machines.add(Machine.URSINE_LAPTOP)
+        
         # reconfigure non-difficulty parts of base class
         self.game = Game.ROGUE_LEGACY
         self.apgame = "Rogue Legacy"

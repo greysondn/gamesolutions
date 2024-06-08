@@ -1,5 +1,7 @@
 from enums import Difficulty
 from enums import Game
+from enums import Genre
+from enums import Machine
 
 from .apcomp import ApComp
 from .apcomp import BoolComp
@@ -14,6 +16,15 @@ class Doom1993Base(ApConfig):
     def __init__(self):
         # parent
         super().__init__()
+        
+        # genres
+        self.genres.add(Genre.IMPLEMENTED)
+        self.genres.add(Genre.FIRST_PERSON_SHOOTER)
+        self.genres.add(Genre.SHOOTER)
+        
+        # machines
+        self.machines.add(Machine.STORM_TOWER)
+        self.machines.add(Machine.URSINE_LAPTOP)
         
         # reconfigure non-difficulty parts of base class
         self.game = Game.DOOM_1993

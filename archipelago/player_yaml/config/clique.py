@@ -1,6 +1,8 @@
 from .apconfig import ApConfig
 from enums import Difficulty
 from enums import Game
+from enums import Genre
+from enums import Machine
 
 import random
 
@@ -17,6 +19,14 @@ class CliqueBase(ApConfig):
     def __init__(self):
         # parent
         super().__init__()
+        
+        # genres
+        self.genres.add(Genre.IMPLEMENTED)
+        self.genres.add(Genre.JOKE)
+        
+        # machines
+        self.machines.add(Machine.STORM_TOWER)
+        self.machines.add(Machine.URSINE_LAPTOP)
         
         # reconfigure non-difficulty parts of base class
         self.game = Game.CLIQUE
