@@ -273,7 +273,7 @@ class SuperMarioWorld(SuperMarioWorldBase):
             self.bosses_required.set(0)
             self.max_yoshi_egg_cap.set(80)
             self.percentage_of_yoshi_eggs.set(25) # 20 eggs
-            self.dragon_coin_checks.set(True)
+            self.dragon_coin_checks.set(False)
             self.moon_checks.set(False)
             self.hidden_1up_checks.set(False)
             self.bonus_block_checks.set(False)
@@ -334,7 +334,7 @@ class SuperMarioWorld(SuperMarioWorldBase):
             self.bosses_required.set(0)
             self.max_yoshi_egg_cap.set(80)
             self.percentage_of_yoshi_eggs.set(63) # 50 eggs
-            self.dragon_coin_checks.set(True)
+            self.dragon_coin_checks.set(False)
             self.moon_checks.set(False)
             self.hidden_1up_checks.set(False)
             self.bonus_block_checks.set(False)
@@ -397,7 +397,7 @@ class SuperMarioWorld(SuperMarioWorldBase):
             self.bosses_required.set(0)
             self.max_yoshi_egg_cap.set(80)
             self.percentage_of_yoshi_eggs.set(80) # 60 eggs
-            self.dragon_coin_checks.set(True)
+            self.dragon_coin_checks.set(False)
             self.moon_checks.set(False)
             self.hidden_1up_checks.set(False)
             self.bonus_block_checks.set(False)
@@ -460,7 +460,7 @@ class SuperMarioWorld(SuperMarioWorldBase):
             self.bosses_required.set(0)
             self.max_yoshi_egg_cap.set(80)
             self.percentage_of_yoshi_eggs.set(100) # 80 eggs
-            self.dragon_coin_checks.set(True)
+            self.dragon_coin_checks.set(False)
             self.moon_checks.set(False)
             self.hidden_1up_checks.set(False)
             self.bonus_block_checks.set(False)
@@ -523,7 +523,7 @@ class SuperMarioWorld(SuperMarioWorldBase):
             self.bosses_required.set(0)
             self.max_yoshi_egg_cap.set(80)
             self.percentage_of_yoshi_eggs.set(100) # 80 eggs
-            self.dragon_coin_checks.set(True)
+            self.dragon_coin_checks.set(False)
             self.moon_checks.set(False)
             self.hidden_1up_checks.set(False)
             self.bonus_block_checks.set(False)
@@ -586,7 +586,7 @@ class SuperMarioWorld(SuperMarioWorldBase):
             self.bosses_required.set(0)
             self.max_yoshi_egg_cap.set(80)
             self.percentage_of_yoshi_eggs.set(100) # 80 eggs
-            self.dragon_coin_checks.set(True)
+            self.dragon_coin_checks.set(False)
             self.moon_checks.set(False)
             self.hidden_1up_checks.set(False)
             self.bonus_block_checks.set(False)
