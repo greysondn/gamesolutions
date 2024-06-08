@@ -7,10 +7,79 @@ from .apcomp import StrComp
 from .apcomp import StrListComp
 from .apcomp import PlandoItemListComp
 
+from ..enums import Genre
+from ..enums import Machine
+
 from typing import Any
+
+class ApGenre():
+    def __init__(self):
+        self.genres:list[Genre] = []
+    
+    def has(self, genre:Genre):
+        return (genre in self.genres)
+    
+    def add(self, genre:Genre):
+        if (not self.has(genre)):
+            self.genres.append(genre)
+    
+    def toNumber(self):
+        ret:int = 0
+        for genre in self.genres:
+            ret = ret + genre.value
+        return ret
+    
+    def fromNumber(self, val:int):
+        enums:list[Genre] = [
+            Genre.FARMING_SIMULATOR,
+            Genre.FIRST_PERSON_SHOOTER,
+            Genre.JOKE,
+            Genre.PLATFORMER,
+            Genre.PUZZLE,
+            Genre.ROGUELITE,
+            Genre.SHOOTER,
+            Genre.RPG,
+            Genre.THIRD_PERSON_SHOOTER,
+            Genre.WALKING_SIMULATOR,
+        ]
+        
+        for enum in enums:
+            if (val & enum.value):
+                self.genres.append(enum)
+
+class ApMachine():
+    def __init__(self):
+        self.machines:list[Machine] = []
+    
+    def has(self, machine:Machine):
+        return (machine in self.machines)
+    
+    def add(self, machine:Machine):
+        if (not self.has(machine)):
+            self.machines.append(machine)
+
+    def toNumber(self):
+        ret:int = 0
+        for machine in self.machines:
+            ret = ret + machine.value
+        return ret
+    
+    def fromNumber(self, val:int):
+        enums:list[Machine] = [
+            Machine.STORM_TOWER,
+            Machine.URSINE_LAPTOP,
+        ]
+        
+        for enum in enums:
+            if (val & enum.value):
+                self.machines.append(enum)
 
 class ApConfig():
     def __init__(self):
+        # enum fields, I guess
+        self.genres:ApGenre = ApGenre()
+        self.machines:ApMachine = ApMachine()
+        
         # details about duration
         self.duration_max:int = 0
         '''longest this has taken to get goal in seconds'''
