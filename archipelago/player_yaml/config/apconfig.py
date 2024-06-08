@@ -7,8 +7,8 @@ from .apcomp import StrComp
 from .apcomp import StrListComp
 from .apcomp import PlandoItemListComp
 
-from ..enums import Genre
-from ..enums import Machine
+from enums import Genre
+from enums import Machine
 
 from typing import Any
 

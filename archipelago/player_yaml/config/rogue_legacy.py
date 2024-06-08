@@ -18,6 +18,9 @@ import random
 
 class RogueLegacyBase(ApConfig):
     def __init__(self):
+        # parent
+        super().__init__()
+        
         # genres
         self.genres.add(Genre.IMPLEMENTED)
         self.genres.add(Genre.PLATFORMER)
@@ -56,7 +59,7 @@ class RogueLegacyBase(ApConfig):
             "Traitor",
         ]
         
-        self.starting_class:StrEnumRandomizableComp  = StrEnumRandomizableComp("starting_class", "knight", _classes, 4)
+        self.starting_class:StrEnumRandomizableComp  = StrEnumRandomizableComp("starting_class", "Knight", _classes, 4)
         self.components.append(self.starting_class)
         
         self.available_classes:StrListComp = StrListComp("available_classes", _classes, 4)
@@ -172,7 +175,7 @@ class RogueLegacy(RogueLegacyBase):
             
             # actual config
             self.starting_gender.set("lady")
-            self.starting_class.set("lich")
+            self.starting_class.set("Lich")
             
             _classes:list[str] = [
                 "Barbarian",
@@ -233,7 +236,7 @@ class RogueLegacy(RogueLegacyBase):
             
             # actual config
             self.starting_gender.set("lady")
-            self.starting_class.set("lich")
+            self.starting_class.set("Lich")
             
             _classes:list[str] = [
                 "Barbarian",
@@ -294,7 +297,7 @@ class RogueLegacy(RogueLegacyBase):
             
             # actual config
             self.starting_gender.set("lady")
-            self.starting_class.set("lich")
+            self.starting_class.set("Lich")
             
             _classes:list[str] = [
                 "Barbarian",
@@ -416,7 +419,7 @@ class RogueLegacy(RogueLegacyBase):
             
             # actual config
             self.starting_gender.set("lady")
-            self.starting_class.set("knight")
+            self.starting_class.set("Knight")
             
             _classes:list[str] = [
                 "Barbarian",
@@ -477,7 +480,7 @@ class RogueLegacy(RogueLegacyBase):
             
             # actual config
             self.starting_gender.set("lady")
-            self.starting_class.set("knight")
+            self.starting_class.set("Knight")
             
             _classes:list[str] = [
                 "Barbarian",
@@ -538,7 +541,7 @@ class RogueLegacy(RogueLegacyBase):
             
             # actual config
             self.starting_gender.set("lady")
-            self.starting_class.set("knight")
+            self.starting_class.set("Knight")
             
             _classes:list[str] = [
                 "Barbarian",
