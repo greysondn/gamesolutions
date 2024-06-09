@@ -599,9 +599,10 @@ class RogueLegacy(RogueLegacyBase):
         #
         # For a total of 33 checks. I don't know how many are on the mansion.
         #
-        # TODO: Factor in mansion checks
+        # A bit of math post session gives us a guess of 31.
+        # Our total immutable checks becomes 64
         #
-        IMMUTABLE_CHECKS:int = 33
+        IMMUTABLE_CHECKS:int = 64
         runningTotal:int = 0
         targetChecks:int = checks - IMMUTABLE_CHECKS
         
