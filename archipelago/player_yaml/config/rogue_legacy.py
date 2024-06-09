@@ -613,6 +613,10 @@ class RogueLegacy(RogueLegacyBase):
         # and now we just divide by 4... right?
         chestsPerZone:int = int(math.ceil((targetChecks - runningTotal) / 4))
         
+        # minimum value for chestsPerZone
+        if (chestsPerZone < 20):
+            chestsPerZone = 20
+        
         # set relevant values
         self.chests_per_zone.set(chestsPerZone)
         self.fairy_chests_per_zone.set(fairyChestsPerZone)
