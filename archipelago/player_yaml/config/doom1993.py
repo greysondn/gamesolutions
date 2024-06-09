@@ -26,6 +26,9 @@ class Doom1993Base(ApConfig):
         self.machines.add(Machine.STORM_TOWER)
         self.machines.add(Machine.URSINE_LAPTOP)
         
+        # times
+        self.durations.add(Difficulty.NORMAL, 9296)
+        
         # reconfigure non-difficulty parts of base class
         self.game = Game.DOOM_1993
         self.apgame = "DOOM 1993"
@@ -90,15 +93,6 @@ class Doom1993(Doom1993Base):
         # so the starting default should be very easy
         # so we just progressively increase the difficulty with the timer
         if (difficulty == Difficulty.VERY_EASY.value):
-            self.duration_min = 0
-            # none recorded
-            
-            self.duration_max = 31536000
-            # none recorded
-            
-            self.duration_avg = 31536000
-            # none recorded
-            
             self.checks = 113
             
             # actual config
@@ -119,15 +113,6 @@ class Doom1993(Doom1993Base):
             self.episode4.set(False)
             
         if (difficulty == Difficulty.EASY.value):
-            self.duration_min = 0
-            # none recorded
-            
-            self.duration_max = 31536000
-            # none recorded
-            
-            self.duration_avg = 31536000
-            # none recorded
-
             # actual config
             # explicitly set all options
             self.goal.set("complete_all_levels")
@@ -147,12 +132,6 @@ class Doom1993(Doom1993Base):
             
         
         if (difficulty == Difficulty.NORMAL.value):
-            doom1993_normal_records = [
-                9296,
-            ]
-            
-            self.duration_min, self.duration_max, self.duration_avg = self.helper_duration(doom1993_normal_records)
-        
             # actual config
             # explicitly set all options
             self.goal.set("complete_all_levels")
@@ -172,18 +151,6 @@ class Doom1993(Doom1993Base):
             
         
         if (difficulty == Difficulty.HARD.value):
-            self.duration_min = 0
-            # none recorded
-            
-            self.duration_max = 31536000
-            # none recorded
-            
-            self.duration_avg = 31536000
-            # none recorded
-        
-            self.checks = 0
-            # unrecorded
-            
             # actual config
             # explicitly set all options
             self.goal.set("complete_all_levels")
@@ -202,18 +169,6 @@ class Doom1993(Doom1993Base):
             self.episode4.set(False)
             
         if (difficulty == Difficulty.VERY_HARD.value):
-            self.duration_min = 0
-            # none recorded
-            
-            self.duration_max = 31536000
-            # none recorded
-            
-            self.duration_avg = 31536000
-            # none recorded
-        
-            self.checks = 0
-            # unrecorded            
-             
             # actual config
             # explicitly set all options
             self.goal.set("complete_all_levels")
@@ -232,18 +187,6 @@ class Doom1993(Doom1993Base):
             self.episode4.set(False)
             
         if (difficulty == Difficulty.IMPOSSIBLE.value):
-            self.duration_min = 0
-            # none recorded
-            
-            self.duration_max = 31536000
-            # none recorded
-            
-            self.duration_avg = 31536000
-            # none recorded
-        
-            self.checks = 0
-            # unrecorded
-            
             # actual config
             # explicitly set all options
             self.goal.set("complete_all_levels")
@@ -263,18 +206,6 @@ class Doom1993(Doom1993Base):
 
 
         if (difficulty == Difficulty.HATE_ME_TODAY.value):
-            self.duration_min = 0
-            # none recorded
-            
-            self.duration_max = 31536000
-            # none recorded
-            
-            self.duration_avg = 31536000
-            # none recorded
-        
-            self.checks = 0
-            # unrecorded
-            
             # actual config
             # explicitly set all options
             self.goal.set("complete_all_levels")

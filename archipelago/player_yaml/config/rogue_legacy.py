@@ -161,15 +161,6 @@ class RogueLegacy(RogueLegacyBase):
         # so the starting default should be very easy
         # so we just progressively increase the difficulty with the timer
         if (difficulty == Difficulty.VERY_EASY.value):
-            self.duration_min = 0
-            # none recorded
-            
-            self.duration_max = 31536000
-            # none recorded
-            
-            self.duration_avg = 31536000
-            # none recorded
-            
             self.checks = 0
             # unrecorded
             
@@ -222,15 +213,6 @@ class RogueLegacy(RogueLegacyBase):
             self.additional_sir_names.set([])
         
         if (difficulty == Difficulty.EASY.value):
-            self.duration_min = 0
-            # none recorded
-            
-            self.duration_max = 31536000
-            # none recorded
-            
-            self.duration_avg = 31536000
-            # none recorded
-            
             self.checks = 0
             # unrecorded
             
@@ -283,15 +265,6 @@ class RogueLegacy(RogueLegacyBase):
             self.additional_sir_names.set([])
         
         if (difficulty == Difficulty.NORMAL.value):
-            self.duration_min = 0
-            # none recorded
-            
-            self.duration_max = 31536000
-            # none recorded
-            
-            self.duration_avg = 31536000
-            # none recorded
-            
             self.checks = 0
             # unrecorded
             
@@ -344,15 +317,6 @@ class RogueLegacy(RogueLegacyBase):
             self.additional_sir_names.set([])
         
         if (difficulty == Difficulty.HARD.value):
-            self.duration_min = 0
-            # none recorded
-            
-            self.duration_max = 31536000
-            # none recorded
-            
-            self.duration_avg = 31536000
-            # none recorded
-            
             self.checks = 0
             # unrecorded
             
@@ -405,15 +369,6 @@ class RogueLegacy(RogueLegacyBase):
             self.additional_sir_names.set([])
             
         if (difficulty == Difficulty.VERY_HARD.value):
-            self.duration_min = 0
-            # none recorded
-            
-            self.duration_max = 31536000
-            # none recorded
-            
-            self.duration_avg = 31536000
-            # none recorded
-            
             self.checks = 0
             # unrecorded
             
@@ -466,15 +421,6 @@ class RogueLegacy(RogueLegacyBase):
             self.additional_sir_names.set([])
             
         if (difficulty == Difficulty.IMPOSSIBLE.value):
-            self.duration_min = 0
-            # none recorded
-            
-            self.duration_max = 31536000
-            # none recorded
-            
-            self.duration_avg = 31536000
-            # none recorded
-            
             self.checks = 0
             # unrecorded
             
@@ -527,15 +473,6 @@ class RogueLegacy(RogueLegacyBase):
             self.additional_sir_names.set([])
             
         if (difficulty == Difficulty.HATE_ME_TODAY.value):
-            self.duration_min = 0
-            # none recorded
-            
-            self.duration_max = 31536000
-            # none recorded
-            
-            self.duration_avg = 31536000
-            # none recorded
-            
             self.checks = 0
             # unrecorded
             

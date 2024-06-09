@@ -189,12 +189,6 @@ class SuperMarioWorld(SuperMarioWorldBase):
         # so the starting default should be very easy
         # so we just progressively increase the difficulty with the timer
         if (difficulty == Difficulty.VERY_EASY.value):
-            smw_very_easy_records:list[int] = [
-                1250,
-            ]
-            
-            self.duration_min, self.duration_max, self.duration_avg = self.helper_duration(smw_very_easy_records)
-            
             self.checks = 0
             # unrecorded
             
@@ -254,18 +248,6 @@ class SuperMarioWorld(SuperMarioWorldBase):
             self.components.append(plando)
         
         elif (difficulty == Difficulty.EASY.value):
-            self.duration_min = 0
-            # none recorded
-            
-            self.duration_max = 31536000
-            # none recorded
-            
-            self.duration_avg = 31536000
-            # none recorded
-            
-            self.checks = 0
-            # unrecorded
-        
             # actual config
             # explicit is better than implicit
             self.death_link.set(False)
@@ -319,12 +301,6 @@ class SuperMarioWorld(SuperMarioWorldBase):
             self.components.append(plando)
         
         if (difficulty == Difficulty.NORMAL.value):
-            smw_normal_records:list[int] = [
-                9618,
-            ]
-            
-            self.duration_min, self.duration_max, self.duration_avg = self.helper_duration(smw_normal_records)
-
             self.checks = 157
         
             # actual config
@@ -378,15 +354,6 @@ class SuperMarioWorld(SuperMarioWorldBase):
             self.components.append(plando)
         
         if (difficulty == Difficulty.HARD.value):
-            self.duration_min = 0
-            # none recorded
-            
-            self.duration_max = 31536000
-            # none recorded
-            
-            self.duration_avg = 31536000
-            # none recorded
-        
             self.checks = 0
             # unrecorded
             
@@ -441,18 +408,6 @@ class SuperMarioWorld(SuperMarioWorldBase):
             self.components.append(plando)
             
         if (difficulty == Difficulty.VERY_HARD.value):
-            self.duration_min = 0
-            # none recorded
-            
-            self.duration_max = 31536000
-            # none recorded
-            
-            self.duration_avg = 31536000
-            # none recorded
-        
-            self.checks = 0
-            # unrecorded
-
             # actual config
             # explicit is better than implicit
             self.death_link.set(False)
@@ -504,18 +459,6 @@ class SuperMarioWorld(SuperMarioWorldBase):
             self.components.append(plando)
             
         if (difficulty == Difficulty.IMPOSSIBLE.value):
-            self.duration_min = 0
-            # none recorded
-            
-            self.duration_max = 31536000
-            # none recorded
-            
-            self.duration_avg = 31536000
-            # none recorded
-        
-            self.checks = 0
-            # unrecorded
-            
             # actual config
             # explicit is better than implicit
             self.death_link.set(False)
@@ -567,15 +510,6 @@ class SuperMarioWorld(SuperMarioWorldBase):
             self.components.append(plando)
             
         if (difficulty == Difficulty.HATE_ME_TODAY.value):
-            self.duration_min = 0
-            # none recorded
-            
-            self.duration_max = 31536000
-            # none recorded
-            
-            self.duration_avg = 31536000
-            # none recorded
-        
             self.checks = 0
             # unrecorded
             

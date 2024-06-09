@@ -1,3 +1,4 @@
+from enums import Difficulty
 from enums import Game
 
 from .apcomp import ApComp
@@ -88,6 +89,61 @@ class ApMachine():
                 ret = True
         return ret
 
+class ApDuration():
+    def __init__(self):
+        self.isSet:bool = False
+        self.minimum:int = 9999999999
+        self.maximum:int = 0
+        self.average:int = 0
+        self.times:list[int] = []
+    
+    def _update(self):
+        if (len(self.times) > 0):
+            self.isSet = True
+            total:int = 0
+            count:int = 0
+            
+            for time in self.times:
+                total = total + time
+                count = count + 1
+                if (time < self.minimum):
+                    self.minimum = time
+                if (time > self.maximum):
+                    self.maximum = time
+
+            self.average = int(round(float(total)/float(count)))
+    
+    def add(self, time:int):
+        self.times.append(time)
+        self._update()
+
+class ApDurationCollection():
+    def __init__(self):
+        self.records:dict[Difficulty, ApDuration] = {
+            Difficulty.VERY_EASY        :   ApDuration(),
+            Difficulty.EASY             :   ApDuration(),
+            Difficulty.NORMAL           :   ApDuration(),
+            Difficulty.HARD             :   ApDuration(),
+            Difficulty.VERY_HARD        :   ApDuration(),
+            Difficulty.IMPOSSIBLE       :   ApDuration(),
+            Difficulty.HATE_ME_TODAY    :   ApDuration(),
+        }
+    
+    def add(self, difficulty:Difficulty, time:int):
+        self.records[difficulty].add(time)
+    
+    def isSet(self, difficulty:Difficulty):
+        return self.records[difficulty].isSet
+    
+    def minimum(self, difficulty:Difficulty):
+        return self.records[difficulty].minimum
+    
+    def maximum(self, difficulty:Difficulty):
+        return self.records[difficulty].maximum
+    
+    def average(self, difficulty:Difficulty):
+        return self.records[difficulty].average
+
 class ApConfig():
     def __init__(self):
         # enum fields, I guess
@@ -95,12 +151,7 @@ class ApConfig():
         self.machines:ApMachine = ApMachine()
         
         # details about duration
-        self.duration_max:int = 0
-        '''longest this has taken to get goal in seconds'''
-        self.duration_avg:int = 0
-        '''average time this has taken to get goal in seconds'''
-        self.duration_min:int = 0
-        '''shortest time this has taken to get goal in seconds'''
+        self.durations:ApDurationCollection = ApDurationCollection()
         
         # details about checks etc
         self.checks:int = 0
@@ -191,20 +242,6 @@ class ApConfig():
             self.death_link.set(False)
         else:
             raise ValueError("Invalid deathlink value!")
-    
-    def helper_duration(self, durations:list[int]) -> tuple[int, int, int]:
-        """Finds the mn, max, and average of a list of durations
-
-        Args:
-            durations (list[int]): list of durations, in seconds
-
-        Returns:
-            tuple[int, int, int]: (min, max, avg) of durations
-        """        
-        _min:int = min(durations)
-        _max:int = max(durations)
-        _avg:int = int(round(sum(durations) / len(durations)))
-        return (_min, _max, _avg)
         
     def reconfigure_duration(self, duration:int) -> None:
         pass

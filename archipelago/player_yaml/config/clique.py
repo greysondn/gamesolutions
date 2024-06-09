@@ -28,6 +28,15 @@ class CliqueBase(ApConfig):
         self.machines.add(Machine.STORM_TOWER)
         self.machines.add(Machine.URSINE_LAPTOP)
         
+        # times
+        self.durations.add(Difficulty.VERY_EASY,     60)
+        self.durations.add(Difficulty.EASY,          60)
+        self.durations.add(Difficulty.NORMAL,        60)
+        self.durations.add(Difficulty.HARD,          60)
+        self.durations.add(Difficulty.VERY_HARD,     60)
+        self.durations.add(Difficulty.IMPOSSIBLE,    60)
+        self.durations.add(Difficulty.HATE_ME_TODAY, 60)
+        
         # reconfigure non-difficulty parts of base class
         self.game = Game.CLIQUE
         self.apgame = "Clique"
@@ -68,12 +77,6 @@ class Clique(CliqueBase):
         # so the starting default should be very easy
         # so we just progressively increase the difficulty with the timer
         if (difficulty == Difficulty.VERY_EASY.value):
-            clique_very_easy_records:list[int] = [
-                60,
-            ]
-            
-            self.duration_min, self.duration_max, self.duration_avg = self.helper_duration(clique_very_easy_records)
-            
             self.checks = 1
             
             # actual config
@@ -82,12 +85,6 @@ class Clique(CliqueBase):
             self.hard_mode.set(False)
         
         elif (difficulty == Difficulty.EASY.value):
-            clique_easy_records:list[int] = [
-                60,
-            ]
-            
-            self.duration_min, self.duration_max, self.duration_avg = self.helper_duration(clique_easy_records)
-            
             self.checks = 1
             
             # actual config
@@ -97,12 +94,6 @@ class Clique(CliqueBase):
 
         
         if (difficulty == Difficulty.NORMAL.value):
-            clique_normal_records:list[int] = [
-                60,
-            ]
-            
-            self.duration_min, self.duration_max, self.duration_avg = self.helper_duration(clique_normal_records)
-            
             self.checks = 1
             
             # actual config
@@ -112,25 +103,14 @@ class Clique(CliqueBase):
 
         
         if (difficulty == Difficulty.HARD.value):
-            clique_hard_records:list[int] = [
-                60,
-            ]
-            
-            self.duration_min, self.duration_max, self.duration_avg = self.helper_duration(clique_hard_records)
-            
             self.checks = 1
             
             # actual config
             # explicit is better than implicit
             self.color.set("random")
             self.hard_mode.set(False)
+            
         if (difficulty == Difficulty.VERY_HARD.value):
-            clique_very_hard_records:list[int] = [
-                60,
-            ]
-            
-            self.duration_min, self.duration_max, self.duration_avg = self.helper_duration(clique_very_hard_records)
-            
             self.checks = 1
             
             # actual config
@@ -138,13 +118,7 @@ class Clique(CliqueBase):
             self.color.set("random")
             self.hard_mode.set(False)
             
-        if (difficulty == Difficulty.IMPOSSIBLE.value):
-            clique_impossible_records:list[int] = [
-                60,
-            ]
-            
-            self.duration_min, self.duration_max, self.duration_avg = self.helper_duration(clique_impossible_records)
-            
+        if (difficulty == Difficulty.IMPOSSIBLE.value): 
             self.checks = 1
             
             # actual config
@@ -153,12 +127,6 @@ class Clique(CliqueBase):
             self.hard_mode.set(False)
             
         if (difficulty == Difficulty.HATE_ME_TODAY.value):
-            clique_hate_me_today_records:list[int] = [
-                60,
-            ]
-            
-            self.duration_min, self.duration_max, self.duration_avg = self.helper_duration(clique_hate_me_today_records)
-            
             self.checks = 1
             
             # actual config
