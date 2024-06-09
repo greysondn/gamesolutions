@@ -602,7 +602,7 @@ class RogueLegacy(RogueLegacyBase):
         # TODO: Factor in mansion checks
         #
         IMMUTABLE_CHECKS:int = 33
-        runningTotal:int = IMMUTABLE_CHECKS
+        runningTotal:int = 0
         targetChecks:int = checks - IMMUTABLE_CHECKS
         
         # now, we divide that by 21 * 4 = 84 and round up to know how many fairy chests we need
