@@ -298,7 +298,9 @@ class ApConfig():
         ret = ret + f"{self.apgame}:"
         
         for i in self.components:
-            ret = ret + "\n" + f"{i}"
+            swp = f"{i}"
+            if (len(swp) > 0):
+                ret = ret + "\n" + f"{i}"
         
         return ret
     
