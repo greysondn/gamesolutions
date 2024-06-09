@@ -174,7 +174,7 @@ class SuperMarioWorldBase(ApConfig):
         self.level_palette_shuffle:StrEnumComp = StrEnumComp("level_palette_shuffle", "off", _paletteShuffleTypes, 4)
         self.components.append(self.level_palette_shuffle)
                 
-        self.overworld_palette_shuffle:StrEnumComp = StrEnumComp("level_palette_shuffle", "off", _paletteShuffleTypes, 4)
+        self.overworld_palette_shuffle:StrEnumComp = StrEnumComp("overworld_palette_shuffle", "off", _paletteShuffleTypes, 4)
         self.components.append(self.overworld_palette_shuffle)
         
         self.starting_life_count:IntComp = IntComp("starting_life_count", 5, 4)
