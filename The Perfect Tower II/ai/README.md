@@ -10,4 +10,6 @@ Set global values to read elsewhere
 
 ## greysondn.Miner
 
+[link](greysondn.Miner.md)
+
 Manages the mines, entirely, by itself.
