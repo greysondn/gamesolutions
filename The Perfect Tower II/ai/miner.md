@@ -27,7 +27,7 @@ Script
 ; -----------------------------------------------------------------------------
 
 :name greysondn:miner
-;global double greysondn.worker_speed
+:global double greysondn.worker_speed
 :local  int    ore_type
 
 ; -----------------------------------------------------------------------------
