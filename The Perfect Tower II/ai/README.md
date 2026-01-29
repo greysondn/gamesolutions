@@ -2,14 +2,14 @@ These are scripts for the facility AI, written using DOSBoots' editor, for game 
 
 https://d0sboots.github.io/perfect-tower/
 
-## greysondn.Globals
+## globals
 
-TODO
+[link](globals.md)
 
 Set global values to read elsewhere
 
-## greysondn.Miner
+## miner
 
-[link](greysondn.Miner.md)
+[link](miner.md)
 
 Manages the mines, entirely, by itself.
