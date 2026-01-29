@@ -1,10 +1,15 @@
 This script manages the mines by itself.
 
+requires
+--------
+
+[globals](globals.md) - uses variables from there
+
 import string
 -------------
 
 ```
-rVNbasNADLzL/tYsdpNCCf3oAdoT1KYoG9kRtrVmJRNCyN3LOrgExwGH9mcQ7I40o8fJiAvUqZjN18mAU/IcY5OHxjtoLLFaQc23zrMosOZ9mqbrfOsDfuuxw8nL84DpLZrExCBbHXyoMYgFEarYMrTTHOsBSwWpbUuMdheoaZYWmk328kmMIWooK2QM5OwBaGprdTfnBLPX94f86K+X675WD/R1aiOWzq6t9KzUXFywv3BwaN4e5AOOGCTSFk914EMg3beo5CLjb9Kzp9kBZnc3JcXRXuXVUzlLX9+ZEjrfdhBIPP+D9Leb2uW87PJa8mK/RWKc5x2Nx1ckhtqubwSHUzxAjX0Xf8XdMhtTBTyK5x3bcR06cDVU8c2ci/MP
+1VRLbsMgEL0Ly9ZCduN2EVVqL9AT1FGE8ZiOjAcEWFEU5V7d92IVzkdWgqVU7aabEQzD8N7jwY556dAGz5bvOyZkQENxzCqnjRSaIwXuIVS1NOSDoFANeZ6XVW0crMPWwsXKwxjz68gyFgfFYmNcB85z4T0q4iT6yx7lGNsgfMd7JOCNQ61vPSjZ7PENCVzE0CogcCj5RuBYURTCYfjoIaDkjRlqDYe00qYW+pjiKiFCLHtSDrbeUEP8wGztLUCTRFHcXaQXsyQm8evz5UfihbNw00tM4Z+7xP+vWfkacd/s4TiHCSWk8DvtivukXYvZd5HDSWNlgsE2ub2coQvS9FY49Ib+APrz1dltGnY7hXwz31XGpKEGT1/NKmPY20F7GD+ejehgsLEqmpstWX90oRWyEypmzu5h+9X+Gw==
 ```
 
 Script
@@ -12,15 +17,18 @@ Script
 
 ```
 ; -----------------------------------------------------------------------------
-; greysondn.Miner
+; miner
+; @author greysondn
+;
 ; made to handle the mines (naturally)
 ; anyway, enjoy that
 ;
 ; Name workers "Miner" to have them assigned to the task
 ; -----------------------------------------------------------------------------
 
-:name greysondn.Miner
-:local int ore_type
+:name greysondn:miner
+;global double greysondn.worker_speed
+:local  int    ore_type
 
 ; -----------------------------------------------------------------------------
 ; start impulse and conditions
@@ -40,7 +48,7 @@ start:
 ; -----------------------------------------------------------------------------
 drill_earth:
     worker.assignName("task.mine.drill", 0, "Miner")
-    wait(6.0) ; sleep long enough to be sure we did it
+    wait(greysondn.worker_speed * 1.5) ; sleep long enough to be sure we did it
 
 ; -----------------------------------------------------------------------------
 ; 1st floor - ore mining process
@@ -50,7 +58,7 @@ drill_earth:
 ; -----------------------------------------------------------------------------
 mine_ore:
     worker.assignName("task.mine", ore_type, "Miner")
-    waituntil(not(hasLayers()))
+    wait(greysondn.worker_speed * 20.0) ; enough to generate a layer and mine it out, hopefully
     ore_type += 1
     gotoif(mine_ore, ore_type < 12)
 
@@ -69,5 +77,5 @@ TODO
 ----
 
 [ ] Work out why the wait for layers to exhaust isn't working
-[ ] Set up a global for worker speed and calculate a single layer from it
+[x] Set up a global for worker speed and calculate a single layer from it
 [ ] The entire second floor
